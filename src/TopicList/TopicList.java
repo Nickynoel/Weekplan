@@ -14,7 +14,7 @@ import java.util.List;
 
 public class TopicList
 {
-    public static final File FILENAME = new File ("Weekplan.txt"); //Globally accessible file
+    public static final File FILENAME = new File("Weekplan.txt"); //Globally accessible file
     
     private List<Topic> _topicList;
     
@@ -153,6 +153,20 @@ public class TopicList
     }
     
     /**
+     * Removes the topics in the positions, given by an array, of the _topicList
+     *
+     * @param array: indeces of topics in the list to be removed
+     */
+    
+    public void remove(int[] array)
+    {
+        for (int i = array.length - 1; i >= 0; i--) //going the list backwards and deleting them from the _topicList
+        {
+            _topicList.remove(array[i]);
+        }
+    }
+    
+    /**
      * Returns the titles of all topics as an array
      *
      * @return array with all topic-titles
@@ -192,12 +206,13 @@ public class TopicList
     
     /**
      * Returns the total progresstime of all topics
+     *
      * @return sum of progresses
      */
     public int getTotalProgress()
     {
         int sum = 0;
-        for (Topic t: _topicList)
+        for (Topic t : _topicList)
         {
             sum += t.getProgress();
         }
@@ -225,7 +240,7 @@ public class TopicList
      */
     public void fullReset()
     {
-        for (Topic t: _topicList)
+        for (Topic t : _topicList)
         {
             t.setProgress(0);
         }

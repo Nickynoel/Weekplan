@@ -1,13 +1,15 @@
 package DeleteArea;
 
+import Startup.Startup;
 import TopicList.TopicList;
-import Weekplan.Weekplan;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
  * Functional class DeleteArea, in which the user is able to delete topics out of the TopicList
+ *
+ * Returns to Startup afterwards
  */
 
 public class DeleteArea
@@ -52,20 +54,20 @@ public class DeleteArea
         _ui.getDeleteButton().addActionListener(event ->
         {
             int[] list = _ui.getList().getSelectedIndices(); //returns a list of indeces in increasing order
-            for (int i = list.length-1;i>=0;i--) //going the list backwards and deleting them from the _topicList
-            {
-                _topicList.remove(list[i]);
-            }
+            _topicList.remove(list);
+//            for (int i = list.length-1;i>=0;i--) //going the list backwards and deleting them from the _topicList
+//            {
+//                _topicList.remove(list[i]);
+//            }
             _topicList.save(TopicList.FILENAME);
-            _ui.close();
-            new Weekplan();
+            _ui.getBackButton().doClick();
         });
         
         //Back to mainscreen
         _ui.getBackButton().addActionListener(event ->
         {
             _ui.close();
-            new Weekplan();
+            Startup.main(null);
         });
     }
 }

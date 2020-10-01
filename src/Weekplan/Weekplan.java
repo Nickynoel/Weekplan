@@ -2,7 +2,7 @@ package Weekplan;
 
 import AddArea.AddArea;
 import OptionArea.OptionArea;
-import TopicArea.TopicArea;
+import TopicEditArea.TopicEditArea;
 import TopicList.Topic.Topic;
 import TopicList.TopicList;
 
@@ -59,7 +59,7 @@ public class Weekplan
                     super.mouseClicked(e);
                     int topicnumber = _ui.getLabellist().indexOf(label);
                     Topic topic = _topiclist.get(topicnumber);
-                    final TopicArea area = new TopicArea(topic, _ui.getMainframe());
+                    final TopicEditArea area = new TopicEditArea(topic, _ui.getMainframe());
                     
                     area.addPropertyChangeListener(evt ->
                     {
@@ -96,10 +96,5 @@ public class Weekplan
     private void save()
     {
         _topiclist.save(TopicList.FILENAME);
-    }
-    
-    public WeekplanUI getMainframe()
-    {
-        return _ui;
     }
 }

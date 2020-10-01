@@ -1,6 +1,6 @@
 package AddArea;
 
-import TopicList.Topic.*;
+import TopicList.Topic.Topic;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -17,7 +17,7 @@ public class AddArea
     private AddAreaUI _ui;
     private Topic _topic;
     
-    private PropertyChangeSupport _support;
+    private PropertyChangeSupport _support; //basically observable just newer
     
     public AddArea(Topic topic, JFrame frame)
     {
@@ -77,7 +77,7 @@ public class AddArea
             {
                 int number = Integer.parseInt(tmp);
                 _topic.addProgress(number);
-                setNews(number);
+                confirmChange(number);
                 _ui.close();
             }
             catch (NumberFormatException e) //should never happen, cause the textfield-keylistener checks this
@@ -137,7 +137,7 @@ public class AddArea
      *
      * @param number: the number typed into the textfield
      */
-    public void setNews(int number)
+    public void confirmChange(int number)
     {
         _support.firePropertyChange("Test", 0, number);
     }

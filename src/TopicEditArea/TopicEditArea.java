@@ -1,27 +1,26 @@
-package TopicArea;
+package TopicEditArea;
 
 import TopicList.Topic.Topic;
 
 import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.Observable;
 
 /**
  * Functional class TopicArea for the window that allows editing basic values of the given Topic:
  * Name, goallength
  */
-public class TopicArea
+public class TopicEditArea
 {
     private Topic _topic;
-    private TopicAreaUI _ui;
+    private TopicEditAreaUI _ui;
     
     private String _topicName; //temporary name of the topic
     private int _topicLength; //temporary length of the topic
     
     private PropertyChangeSupport _support;
     
-    public TopicArea(Topic topic, JFrame frame)
+    public TopicEditArea(Topic topic, JFrame frame)
     {
         _support = new PropertyChangeSupport(this);
         _topic = topic;
@@ -38,7 +37,7 @@ public class TopicArea
      */
     private void createUI(JFrame frame)
     {
-        _ui = new TopicAreaUI(frame);
+        _ui = new TopicEditAreaUI(frame);
         _ui.setTitle(_topic.getTitel() + ": " + _topic.getProgress() + " Min.");
         updateTopicLabel();
         updateLengthLabel();
@@ -62,7 +61,7 @@ public class TopicArea
         {
             _topic.setName(_topicName);
             _topic.setGoal(_topicLength);
-            setNews(1);
+            confirmChange(1);
             _ui.close();
         });
         
@@ -179,7 +178,7 @@ public class TopicArea
      *
      * @param number: the number typed into the textfield
      */
-    public void setNews(int number)
+    public void confirmChange(int number)
     {
         _support.firePropertyChange("Test", 0, number);
     }

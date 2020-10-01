@@ -1,6 +1,5 @@
 package Startup;
 
-import TopicList.Topic.Topic;
 import TopicList.TopicList;
 import Weekplan.Weekplan;
 
@@ -20,15 +19,14 @@ public class Startup
     }
     
     /**
-     * Checks the file and inserts default data if empty
+     * Checks the file and inserts 2 default topics if the list is empty
      */
     private static void checkList()
     {
         if (_list.isEmpty())
         {
-            _list.add(Topic.getInstance("Test 0 60"));
-            _list.add(Topic.getInstance("Test2 0 60"));
-            
+            _list.addTopic();
+            _list.addTopic();
         }
         _list.save(TopicList.FILENAME);
     }

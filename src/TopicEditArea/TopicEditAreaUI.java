@@ -1,4 +1,4 @@
-package TopicArea;
+package TopicEditArea;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +7,7 @@ import java.awt.*;
  * UI of TopicArea
  */
 
-public class TopicAreaUI
+public class TopicEditAreaUI
 {
     private JDialog _dialog;
     private JButton _confirmButton;
@@ -24,7 +24,7 @@ public class TopicAreaUI
     /**
      * Initializing the UI
      */
-    public TopicAreaUI(JFrame frame)
+    public TopicEditAreaUI(JFrame frame)
     {
         createWindow(frame);
         createButtons();
