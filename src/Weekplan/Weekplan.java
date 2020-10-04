@@ -7,8 +7,6 @@ import TopicList.Topic.Topic;
 import TopicList.TopicList;
 
 import javax.swing.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * Functional class of the main UI
@@ -49,52 +47,50 @@ public class Weekplan
         }
         
         //listeners for topic-options
-        for (JLabel label : _ui.getLabellist())
+        for (JButton label : _ui.getTitleButtonList())
         {
-            label.addMouseListener(new MouseAdapter()
+            label.addActionListener(event ->
             {
-                @Override
-                public void mouseClicked(MouseEvent e)
+                int topicnumber = _ui.getTitleButtonList().indexOf(label);
+                Topic topic = _topiclist.get(topicnumber);
+                final TopicEditArea area = new TopicEditArea(topic, _ui.getMainframe());
+                
+                area.addPropertyChangeListener(evt ->
                 {
-                    super.mouseClicked(e);
-                    int topicnumber = _ui.getLabellist().indexOf(label);
-                    Topic topic = _topiclist.get(topicnumber);
-                    final TopicEditArea area = new TopicEditArea(topic, _ui.getMainframe());
-                    
-                    area.addPropertyChangeListener(evt ->
-                    {
-                        _ui.updateTopicName(topic);
-                        _ui.updateGoal(topic);
-                        _ui.colorBar(topic);
-                    });
-                    area.showUI();
-                }
+                    _ui.updateTopicName(topic);
+                    _ui.updateGoal(topic);
+                    _ui.colorBar(topic);
+                });
+                area.showUI();
             });
         }
         
         //listener for saving
         _ui.getSaveButton().addActionListener(event ->
         {
-            save();
+            _topiclist.save();
         });
         
         //listener for options
         _ui.getOptionButton().addActionListener(event ->
         {
-            save();
+            _topiclist.save();
             new OptionArea();
             _ui.close();
         });
         
         _ui.getCloseButton().addActionListener(event ->
         {
-            save();
+            _topiclist.save();
             _ui.close();
         });
     }
     
-    private void save()
+    /**
+     * Opens the TopicArea of the newest created Topic, aka the upmost Topic with the title "New"
+     */
+    public void activateNewTopic()
     {
-        _topiclist.save(TopicList.FILENAME);
+        _ui.openNewTopicMenu();
     }
 }

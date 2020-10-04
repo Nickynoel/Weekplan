@@ -31,8 +31,10 @@ public class OptionArea
         {
             TopicList list = TopicList.getInstance();
             list.addTopic();
-            list.save(TopicList.FILENAME);
-            _ui.getBackButton().doClick();
+            list.save();
+            _ui.close();
+            Weekplan plan = new Weekplan();
+            plan.activateNewTopic();
         });
         
         _ui.getDeleteButton().addActionListener(event ->

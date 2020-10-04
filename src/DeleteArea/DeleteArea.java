@@ -2,6 +2,7 @@ package DeleteArea;
 
 import Startup.Startup;
 import TopicList.TopicList;
+import Weekplan.Weekplan;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -59,7 +60,7 @@ public class DeleteArea
 //            {
 //                _topicList.remove(list[i]);
 //            }
-            _topicList.save(TopicList.FILENAME);
+            _topicList.save();
             _ui.getBackButton().doClick();
         });
         
@@ -67,7 +68,7 @@ public class DeleteArea
         _ui.getBackButton().addActionListener(event ->
         {
             _ui.close();
-            Startup.main(null);
+            new Weekplan();
         });
     }
 }
