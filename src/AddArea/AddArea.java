@@ -103,12 +103,13 @@ public class AddArea
     }
     
     /**
-     * Shows the AddAreaUI
-     * Neccessary for observer Weekplan
+     * Tells the PropertyChangeListeners that a change happens if number!=0
+     *
+     * @param number: the number typed into the textfield
      */
-    public void showUI()
+    private void confirmChange(int number)
     {
-        _ui.showUI();
+        _support.firePropertyChange("Test", 0, number);
     }
     
     /**
@@ -122,23 +123,11 @@ public class AddArea
     }
     
     /**
-     * Allows listeners to be removed
-     *
-     * @param pcl: the removed listener
+     * Shows the AddAreaUI
+     * Neccessary for observer Weekplan
      */
-    public void removePropertyChangeListener(PropertyChangeListener pcl)
+    public void showUI()
     {
-        _support.removePropertyChangeListener(pcl);
-    }
-    
-    
-    /**
-     * Tells the PropertyChangeListeners that a change happens if number!=0
-     *
-     * @param number: the number typed into the textfield
-     */
-    public void confirmChange(int number)
-    {
-        _support.firePropertyChange("Test", 0, number);
+        _ui.showUI();
     }
 }

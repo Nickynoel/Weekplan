@@ -25,31 +25,12 @@ public class AddAreaUI
      */
     public AddAreaUI(JFrame frame)
     {
-        createWindow(frame);
+        createLabels();
+        createTextField();
         createButtons();
         createPanels();
-        
-        initializeTextField();
-        initializeLabels();
-        initializePanels();
-    }
-    
-    /**
-     * Builds the JDialog
-     */
-    private void createWindow(JFrame frame)
-    {
-        _dialog = new JDialog();
-        _dialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //disables upper right X
-        _dialog.setLocation(new Point(frame.getLocation().x+100,frame.getLocation().y+100)); //location relative to the frame in the background
-        _dialog.setTitle("Add");
-        _dialog.setLayout(new BorderLayout());
-        
-        _dialog.setSize(200,140);
-        
-        _dialog.setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
-        _dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        _dialog.setResizable(false);
+
+        createWindow(frame);
     }
     
     /**
@@ -64,19 +45,9 @@ public class AddAreaUI
     }
     
     /**
-     * Creates the panels
-     */
-    private void createPanels()
-    {
-        _topPanel = new JPanel();
-        _centerPanel = new JPanel();
-        _botPanel = new JPanel();
-    }
-    
-    /**
      * Creates the textfield
      */
-    private void initializeTextField()
+    private void createTextField()
     {
         _textField = new JTextField("", 5); //number of colomns or dimension
     }
@@ -84,24 +55,24 @@ public class AddAreaUI
     /**
      * Initialization of the Labels
      */
-    private void initializeLabels()
+    private void createLabels()
     {
         _label = new JLabel("Time in minutes");
     }
     
     /**
-     * Initialization of the Panels, which is devided into its 3 subpanels: top, center and bot
+     * Creates the panels
      */
-    private void initializePanels()
+    private void createPanels()
     {
+        _topPanel = new JPanel();
         _topPanel = generateToppanel();
-        _dialog.add(_topPanel,BorderLayout.PAGE_START);
-        
+    
+        _centerPanel = new JPanel();
         _centerPanel = generateCenterpanel();
-        _dialog.add(_centerPanel);
         
+        _botPanel = new JPanel();
         _botPanel = generateBotpanel();
-        _dialog.add(_botPanel,BorderLayout.PAGE_END);
     }
     
     /**
@@ -148,29 +119,33 @@ public class AddAreaUI
     }
     
     /**
-     * Returns the declining _backButton
-     * @return _backButton
+     * Builds the JDialog
      */
-    public JButton getBackButton()
+    private void createWindow(JFrame frame)
     {
-        return _backButton;
+        _dialog = new JDialog();
+        _dialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //disables upper right X
+        _dialog.setLocation(new Point(frame.getLocation().x+100,frame.getLocation().y+100)); //location relative to the frame in the background
+        _dialog.setTitle("Add");
+        _dialog.setLayout(new BorderLayout());
+    
+        _dialog.add(_topPanel,BorderLayout.PAGE_START);
+        _dialog.add(_centerPanel);
+        _dialog.add(_botPanel,BorderLayout.PAGE_END);
+        
+        _dialog.setSize(200,140);
+        
+        _dialog.setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
+        _dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        _dialog.setResizable(false);
     }
     
     /**
-     * Returns the confirmationbutton
-     * @return _confirmButton
+     * Sets the UI's title
      */
-    public JButton getConfirmButton()
+    public void setTitle(String s)
     {
-        return _confirmButton;
-    }
-    
-    /**
-     * Closes the UI
-     */
-    public void close()
-    {
-        _dialog.dispose();
+        _dialog.setTitle(s);
     }
     
     /**
@@ -180,6 +155,15 @@ public class AddAreaUI
     public JTextField getTextfield()
     {
         return _textField;
+    }
+    
+    /**
+     * Returns the confirmationbutton
+     * @return _confirmButton
+     */
+    public JButton getConfirmButton()
+    {
+        return _confirmButton;
     }
     
     /**
@@ -199,6 +183,15 @@ public class AddAreaUI
     }
     
     /**
+     * Returns the declining _backButton
+     * @return _backButton
+     */
+    public JButton getBackButton()
+    {
+        return _backButton;
+    }
+    
+    /**
      * Sets the UI's visibility to true
      */
     public void showUI()
@@ -207,10 +200,10 @@ public class AddAreaUI
     }
     
     /**
-     * Sets the UI's title
+     * Closes the UI
      */
-    public void setTitle(String s)
+    public void close()
     {
-        _dialog.setTitle(s);
+        _dialog.dispose();
     }
 }
