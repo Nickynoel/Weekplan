@@ -24,8 +24,8 @@ public class TopicEditArea
     {
         _support = new PropertyChangeSupport(this);
         _topic = topic;
-        _topicName = topic.getTitel();
-        _topicLength = topic.getLength();
+        _topicName = topic.getTitle();
+        _topicLength = topic.getGoalTime();
         
         createUI(frame);
         addListener();
@@ -38,7 +38,7 @@ public class TopicEditArea
     private void createUI(JFrame frame)
     {
         _ui = new TopicEditAreaUI(frame);
-        _ui.setTitle(_topic.getTitel() + ": " + _topic.getProgress() + " Min.");
+        _ui.setTitle(_topic.getTitle() + ": " + _topic.getProgress() + " Min.");
         updateTopicLabel();
         updateLengthLabel();
     }
@@ -52,19 +52,6 @@ public class TopicEditArea
      */
     private void addListener()
     {
-        _ui.getBackButton().addActionListener(event ->
-        {
-            _ui.close();
-        });
-        
-        _ui.getConfirmButton().addActionListener(event ->
-        {
-            _topic.setName(_topicName);
-            _topic.setGoal(_topicLength);
-            confirmChange(1);
-            _ui.close();
-        });
-        
         _ui.getTopicField().addActionListener(event ->
         {
             String tmp = _ui.getTopicField().getText();
@@ -75,7 +62,7 @@ public class TopicEditArea
                 _ui.getTopicField().setText("");
             }
         });
-        
+    
         _ui.getLengthField().addActionListener(event ->
         {
             String tmp = _ui.getLengthField().getText();
@@ -85,6 +72,19 @@ public class TopicEditArea
                 updateLengthLabel();
                 _ui.getLengthField().setText("");
             }
+        });
+    
+        _ui.getConfirmButton().addActionListener(event ->
+        {
+            _topic.setTitle(_topicName);
+            _topic.setGoalTime(_topicLength);
+            confirmChange(1);
+            _ui.close();
+        });
+    
+        _ui.getBackButton().addActionListener(event ->
+        {
+            _ui.close();
         });
     }
     
@@ -161,17 +161,6 @@ public class TopicEditArea
     {
         _support.addPropertyChangeListener(pcl);
     }
-    
-    /**
-     * Allows listeners to be removed
-     *
-     * @param pcl: the removed listener
-     */
-    public void removePropertyChangeListener(PropertyChangeListener pcl)
-    {
-        _support.removePropertyChangeListener(pcl);
-    }
-    
     
     /**
      * Tells the PropertyChangeListeners that a change happens if confirm was clicked

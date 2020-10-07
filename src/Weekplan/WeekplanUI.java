@@ -16,8 +16,7 @@ public class WeekplanUI
 {
     private TopicList _topicList;
     
-    private JFrame _mainframe;
-    private List<JButton> _topicTitels;
+    private List<JButton> _topicTitles;
     private List<JProgressBar> _topicProgressbars;
     private List<JButton> _topicButtons;
     
@@ -27,6 +26,8 @@ public class WeekplanUI
     private JButton _optionButton;
     private JButton _closeButton;
     
+    private JFrame _mainframe;
+    
     /**
      * Initializing the UI
      *
@@ -35,26 +36,28 @@ public class WeekplanUI
     public WeekplanUI(TopicList list)
     {
         _topicList = list;
-        buildTitles();
-        buildProgressbars();
-        buildButtons();
-        generateUI();
+        createTitles();
+        createProgressbars();
+        createButtons();
+        
+        createWindow();
+        initializeWindow();
     }
     
     /**
      * Creates the titles as borderless JButtons with the names of the topics
      * as well as the _totalLabel
      */
-    private void buildTitles()
+    private void createTitles()
     {
-        _topicTitels = new ArrayList<>();
+        _topicTitles = new ArrayList<>();
         
         for (Topic t : _topicList.getList())
         {
-            JButton tmp = new JButton(t.getTitel());
+            JButton tmp = new JButton(t.getTitle());
             tmp.setBorderPainted(false);
             tmp.setContentAreaFilled(false);
-            _topicTitels.add(tmp);
+            _topicTitles.add(tmp);
         }
         _totalLabel = new JLabel("Error");
         updateTotalLabel();
@@ -63,13 +66,13 @@ public class WeekplanUI
     /**
      * Creates the JProgressbars with the data of the topics
      */
-    private void buildProgressbars()
+    private void createProgressbars()
     {
         _topicProgressbars = new ArrayList<>();
         
         for (Topic t : _topicList.getList())
         {
-            JProgressBar bar = new JProgressBar(0, t.getLength());
+            JProgressBar bar = new JProgressBar(0, t.getGoalTime());
             bar.setValue(t.getProgress());
             bar.setStringPainted(true);
             _topicProgressbars.add(bar);
@@ -86,7 +89,7 @@ public class WeekplanUI
      * SaveButton: A JButton to save the progress
      * OptionButton: A JButton to go to the options
      */
-    private void buildButtons()
+    private void createButtons()
     {
         _topicButtons = new ArrayList<>();
         
@@ -121,7 +124,7 @@ public class WeekplanUI
     /**
      * Builds the JFrame
      */
-    private void generateUI()
+    private void createWindow()
     {
         _mainframe = new JFrame();
         _mainframe.setTitle("Weekplan");
@@ -129,15 +132,18 @@ public class WeekplanUI
         _mainframe.setSize(400, 350);
         _mainframe.setLayout(new BorderLayout());
         
+        _mainframe.setLocationRelativeTo(null);
+        //_mainframe.setResizable(false);
+        _mainframe.setVisible(true);
+    }
+    
+    private void initializeWindow()
+    {
         JPanel centerPanel = buildCenterPanel();
         JScrollPane scrollpane = new JScrollPane(centerPanel);
         scrollpane.getVerticalScrollBar().setUnitIncrement(15); //increases vertical scrollspeed
         _mainframe.add(scrollpane);
         _mainframe.add(buildBotPanel(), BorderLayout.PAGE_END);
-        
-        _mainframe.setLocationRelativeTo(null);
-        //_mainframe.setResizable(false);
-        _mainframe.setVisible(true);
     }
     
     /**
@@ -173,7 +179,7 @@ public class WeekplanUI
             JPanel tmp = new JPanel();
             tmp.setLayout(new GridBagLayout()); //makes sure that the labels are in the center
             tmp.setPreferredSize(new Dimension(120, 40)); //makes sure all panels have the same height
-            tmp.add(_topicTitels.get(i));
+            tmp.add(_topicTitles.get(i));
             panel.add(tmp);
         }
         return panel;
@@ -307,7 +313,7 @@ public class WeekplanUI
      */
     public List<JButton> getTitleButtonList()
     {
-        return _topicTitels;
+        return _topicTitles;
     }
     
     /**
@@ -338,7 +344,7 @@ public class WeekplanUI
     public void updateTopicName(Topic topic)
     {
         int topicNumber = _topicList.indexOf(topic);
-        _topicTitels.get(topicNumber).setText(topic.getTitel());
+        _topicTitles.get(topicNumber).setText(topic.getTitle());
     }
     
     /**
@@ -349,7 +355,7 @@ public class WeekplanUI
     public void updateGoal(Topic topic)
     {
         int topicNumber = _topicList.indexOf(topic);
-        _topicProgressbars.get(topicNumber).setMaximum(topic.getLength());
+        _topicProgressbars.get(topicNumber).setMaximum(topic.getGoalTime());
     }
     
     /**
@@ -393,6 +399,6 @@ public class WeekplanUI
     public void openNewTopicMenu()
     {
         int index = _topicList.indexOf("New");
-        _topicTitels.get(index).doClick();
+        _topicTitles.get(index).doClick();
     }
 }

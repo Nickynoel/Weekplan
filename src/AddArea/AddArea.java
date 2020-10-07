@@ -24,7 +24,7 @@ public class AddArea
         _support = new PropertyChangeSupport(this);
         _topic = topic;
         _ui = new AddAreaUI(frame);
-        _ui.setTitle(topic.getTitel());
+        _ui.setTitle(topic.getTitle());
         addListener();
     }
     

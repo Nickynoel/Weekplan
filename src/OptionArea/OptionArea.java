@@ -29,7 +29,7 @@ public class OptionArea
     {
         _ui.getAddButton().addActionListener(event ->
         {
-            TopicList list = TopicList.getInstance();
+            TopicList list = TopicList.getInstance(TopicList.FILENAME);
             list.addTopic();
             list.save();
             _ui.close();
@@ -39,8 +39,8 @@ public class OptionArea
         
         _ui.getDeleteButton().addActionListener(event ->
         {
-            new DeleteArea();
             _ui.close();
+            new DeleteArea();
         });
         
         _ui.getBackButton().addActionListener(event ->

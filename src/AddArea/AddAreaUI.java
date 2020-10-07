@@ -9,7 +9,8 @@ import java.awt.*;
 
 public class AddAreaUI
 {
-    private JDialog _dialog;
+    private JLabel _label;
+    private JTextField _textField;
     private JButton _confirmButton;
     private JButton _backButton;
     
@@ -17,8 +18,7 @@ public class AddAreaUI
     private JPanel _centerPanel;
     private JPanel _botPanel;
     
-    private JTextField _textField;
-    private JLabel _label;
+    private JDialog _dialog;
     
     /**
      * Initializing the UI
@@ -31,6 +31,7 @@ public class AddAreaUI
         createPanels();
 
         createWindow(frame);
+        initializeWindow();
     }
     
     /**
@@ -128,16 +129,22 @@ public class AddAreaUI
         _dialog.setLocation(new Point(frame.getLocation().x+100,frame.getLocation().y+100)); //location relative to the frame in the background
         _dialog.setTitle("Add");
         _dialog.setLayout(new BorderLayout());
-    
-        _dialog.add(_topPanel,BorderLayout.PAGE_START);
-        _dialog.add(_centerPanel);
-        _dialog.add(_botPanel,BorderLayout.PAGE_END);
         
         _dialog.setSize(200,140);
         
         _dialog.setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
         _dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         _dialog.setResizable(false);
+    }
+    
+    /**
+     * insert the panels onto the _mainFrame
+     */
+    private void initializeWindow()
+    {
+        _dialog.add(_topPanel,BorderLayout.PAGE_START);
+        _dialog.add(_centerPanel);
+        _dialog.add(_botPanel,BorderLayout.PAGE_END);
     }
     
     /**

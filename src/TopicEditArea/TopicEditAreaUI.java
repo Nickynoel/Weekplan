@@ -9,49 +9,50 @@ import java.awt.*;
 
 public class TopicEditAreaUI
 {
-    private JDialog _dialog;
+    private JLabel _topicLabel;
+    private JTextField _topicField;
+    
+    private JLabel _lengthLabel;
+    private JTextField _lengthField;
+    
     private JButton _confirmButton;
     private JButton _backButton;
     
     private JPanel _centerPanel;
     private JPanel _botPanel;
     
-    private JLabel _topicLabel;
-    private JTextField _topicField;
-    private JLabel _lengthLabel;
-    private JTextField _lengthField;
+    private JDialog _dialog;
     
     /**
      * Initializing the UI
      */
     public TopicEditAreaUI(JFrame frame)
     {
-        createWindow(frame);
+        createLabels();
+        createTextfields();
         createButtons();
         createPanels();
-        
-        initializeTextField();
-        initializeLabels();
-        initializePanels();
+    
+        createWindow(frame);
+        initializeWindow();
     }
     
     /**
-     * Builds the JDialog
+     * Initialization of the Labels
      */
-    private void createWindow(JFrame frame)
+    private void createLabels()
     {
-        _dialog = new JDialog();
-        _dialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //disables upper right X
-        
-        _dialog.setLocation(new Point(frame.getLocation().x+50,frame.getLocation().y+100)); //location relative to the frame in the background
-        
-        _dialog.setLayout(new BorderLayout());
-        
-        _dialog.setSize(300, 200);
-        
-        _dialog.setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
-        _dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        _dialog.setResizable(false);
+        _topicLabel = new JLabel("Error");
+        _lengthLabel = new JLabel("Error");
+    }
+    
+    /**
+     * Creates the textfield
+     */
+    private void createTextfields()
+    {
+        _topicField = new JTextField("", 5); //number of colomns or dimension
+        _lengthField = new JTextField("", 5);
     }
     
     /**
@@ -60,7 +61,6 @@ public class TopicEditAreaUI
     private void createButtons()
     {
         _confirmButton = new JButton("confirm");
-        
         _backButton = new JButton("back");
     }
     
@@ -70,37 +70,10 @@ public class TopicEditAreaUI
     private void createPanels()
     {
         _centerPanel = new JPanel();
-        _botPanel = new JPanel();
-    }
-    
-    /**
-     * Creates the textfield
-     */
-    private void initializeTextField()
-    {
-        _topicField = new JTextField("", 5); //number of colomns or dimension
-        _lengthField = new JTextField("", 5);
-    }
-    
-    /**
-     * Initialization of the Labels
-     */
-    private void initializeLabels()
-    {
-        _topicLabel = new JLabel("Error");
-        _lengthLabel = new JLabel("Error");
-    }
-    
-    /**
-     * Initialization of the Panels, which is devided into its 3 subpanels top, center and bot
-     */
-    private void initializePanels()
-    {
         _centerPanel = generateCenterpanel();
-        _dialog.add(_centerPanel);
         
+        _botPanel = new JPanel();
         _botPanel = generateBotpanel();
-        _dialog.add(_botPanel, BorderLayout.PAGE_END);
     }
     
     /**
@@ -153,39 +126,31 @@ public class TopicEditAreaUI
     }
     
     /**
-     * Returns the declining _backButton
-     *
-     * @return _backButton
+     * Builds the JDialog
      */
-    public JButton getBackButton()
+    private void createWindow(JFrame frame)
     {
-        return _backButton;
+        _dialog = new JDialog();
+        _dialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //disables upper right X
+        
+        _dialog.setLocation(new Point(frame.getLocation().x+50,frame.getLocation().y+100)); //location relative to the frame in the background
+        
+        _dialog.setLayout(new BorderLayout());
+        
+        _dialog.setSize(300, 200);
+        
+        _dialog.setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
+        _dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        _dialog.setResizable(false);
     }
     
     /**
-     * Returns the confirmationbutton
-     *
-     * @return _confirmButton
+     * Initialization of the Panels, which is devided into its 3 subpanels top, center and bot
      */
-    public JButton getConfirmButton()
+    private void initializeWindow()
     {
-        return _confirmButton;
-    }
-    
-    /**
-     * Closes the UI
-     */
-    public void close()
-    {
-        _dialog.dispose();
-    }
-    
-    /**
-     * Shows the UI
-     */
-    public void showUI()
-    {
-        _dialog.setVisible(true);
+        _dialog.add(_centerPanel);
+        _dialog.add(_botPanel, BorderLayout.PAGE_END);
     }
     
     /**
@@ -208,15 +173,6 @@ public class TopicEditAreaUI
     }
     
     /**
-     * Sets the text of the _lengthLabel to the given String
-     * @param s: text on _lengthLabel
-     */
-    public void setLengthLabel(String s)
-    {
-        _lengthLabel.setText(s);
-    }
-    
-    /**
      * GetA for _topicField
      * @return _topicField
      */
@@ -226,11 +182,56 @@ public class TopicEditAreaUI
     }
     
     /**
+     * Sets the text of the _lengthLabel to the given String
+     * @param s: text on _lengthLabel
+     */
+    public void setLengthLabel(String s)
+    {
+        _lengthLabel.setText(s);
+    }
+    
+    /**
      * GetA for _lengthField
      * @return _lengthField
      */
     public JTextField getLengthField()
     {
         return _lengthField;
+    }
+    
+    /**
+     * Returns the confirmationbutton
+     *
+     * @return _confirmButton
+     */
+    public JButton getConfirmButton()
+    {
+        return _confirmButton;
+    }
+    
+    /**
+     * Returns the declining _backButton
+     *
+     * @return _backButton
+     */
+    public JButton getBackButton()
+    {
+        return _backButton;
+    }
+    
+    /**
+     * Shows the UI
+     */
+    public void showUI()
+    {
+        _dialog.setVisible(true);
+    }
+    
+    /**
+     * Closes the UI
+     */
+    public void close()
+    {
+        _dialog.dispose();
     }
 }

@@ -12,10 +12,23 @@ import java.util.List;
 
 public class Topic
 {
-    private String _name;
+    private String _title;
     private int _progress;
-    private int _goal;
+    private int _goaltime;
     
+    /**
+     * factory method for creating a topic from a given string
+     */
+    
+    public static Topic getInstance(String input)
+    {
+        return new Topic(input);
+    }
+    
+    /**
+     * Private constructer for class Topic
+     * @param input: String loaded from a file with the data of the Topic
+     */
     private Topic(String input)
     {
         String tmp = input.trim(); //making sure emptyspaces are only inbetween
@@ -24,15 +37,15 @@ public class Topic
         
         if (isValidInput(tmplist)) //checks that below commands can be done without exception
         {
-            setName(tmplist.get(0).replace('#', ' ')); //'#' as blank symbol
+            setTitle(tmplist.get(0).replace('#', ' ')); //'#' as blank symbol
             _progress = Integer.parseInt(tmplist.get(1));
-            setGoal(Integer.parseInt(tmplist.get(2)));
+            setGoalTime(Integer.parseInt(tmplist.get(2)));
         }
         else //an error occurred and get's replaced by a blank topic
         {
-            _name = " ";
+            _title = " ";
             _progress = 0;
-            _goal = 60;
+            _goaltime = 60;
         }
     }
     
@@ -64,22 +77,26 @@ public class Topic
     }
     
     /**
-     * factory method for creating a topic from a given string
-     */
-    
-    public static Topic getInstance(String input)
-    {
-        return new Topic(input);
-    }
-    
-    /**
      * Returns the titel of the Topic
      *
      * @return _name
      */
-    public String getTitel()
+    public String getTitle()
     {
-        return _name;
+        return _title;
+    }
+    
+    /**
+     * Changes the titel of the topic to a given String
+     *
+     * @param s (cant include '#')
+     */
+    public void setTitle(String s)
+    {
+        if (!s.contains("#"))
+        {
+            _title = s;
+        }
     }
     
     /**
@@ -93,23 +110,13 @@ public class Topic
     }
     
     /**
-     * Returns the length of the Topic
+     * SetA method for _progress
      *
-     * @return _goal
+     * @param i: value for the topic
      */
-    public int getLength()
+    public void setProgress(int i)
     {
-        return _goal;
-    }
-    
-    /**
-     * Returns the percentual progress of the Topic
-     *
-     * @return _progress*100/_goal
-     */
-    public int getPercentProgress()
-    {
-        return _progress * 100 / _goal;
+        _progress = i;
     }
     
     /**
@@ -123,35 +130,23 @@ public class Topic
     }
     
     /**
-     * Returns a string representation of the Topic
+     * Returns the percentual progress of the Topic
      *
-     * @return _name _progress _goal
+     * @return _progress*100/_goal
      */
-    public String toString()
+    public int getPercentProgress()
     {
-        return _name + " " + _progress + " " + _goal;
+        return _progress * 100 / _goaltime;
     }
     
     /**
-     * Returns the string in a state suited for saving
-     */
-    
-    public String toSavableString()
-    {
-        return _name.replace(' ', '#') + " " + _progress + " " + _goal;
-    }
-    
-    /**
-     * Changes the titel of the topic to a given String
+     * Returns the length of the Topic
      *
-     * @param s (cant include '#')
+     * @return _goal
      */
-    public void setName(String s)
+    public int getGoalTime()
     {
-        if (!s.contains("#"))
-        {
-            _name = s;
-        }
+        return _goaltime;
     }
     
     /**
@@ -159,21 +154,29 @@ public class Topic
      *
      * @param number
      */
-    public void setGoal(int number)
+    public void setGoalTime(int number)
     {
         if (number > 0)
         {
-            _goal = number;
+            _goaltime = number;
         }
     }
     
     /**
-     * SetA method for _progress
+     * Returns a string representation of the Topic
      *
-     * @param i: value for the topic
+     * @return _name _progress _goal
      */
-    public void setProgress(int i)
+    public String toString()
     {
-        _progress = i;
+        return _title + " " + _progress + " " + _goaltime;
+    }
+    
+    /**
+     * Returns the string in a state suited for saving
+     */
+    public String toSavableString()
+    {
+        return _title.replace(' ', '#') + " " + _progress + " " + _goaltime;
     }
 }

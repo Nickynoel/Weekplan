@@ -1,6 +1,5 @@
 package DeleteArea;
 
-import Startup.Startup;
 import TopicList.TopicList;
 import Weekplan.Weekplan;
 
@@ -20,8 +19,9 @@ public class DeleteArea
     
     public DeleteArea()
     {
-        _topicList = TopicList.getInstance();
-        _ui = new DeleteAreaUI(_topicList);
+        _topicList = TopicList.getInstance(TopicList.FILENAME);
+        _ui = new DeleteAreaUI();
+        _ui.setList(_topicList.getTitleArray());
         addListener();
     }
     
@@ -35,12 +35,12 @@ public class DeleteArea
     private void addListener()
     {
         //Checks number of selected entries, cause you can only delete if something is selected
-        _ui.getList().addListSelectionListener(new ListSelectionListener()
+        _ui.getJList().addListSelectionListener(new ListSelectionListener()
         {
             @Override
             public void valueChanged(ListSelectionEvent e)
             {
-                if (_ui.getList().getMinSelectionIndex() == -1)
+                if (_ui.getJList().getMinSelectionIndex() == -1)
                 {
                     _ui.disableDeleteButton();
                 }
@@ -51,15 +51,11 @@ public class DeleteArea
             }
         });
         
-        //Actual deletion of entries: Delete, save progress, back to mainscreen
+        //Actual deletion of entries: Delete, save progress, back to Weekplan
         _ui.getDeleteButton().addActionListener(event ->
         {
-            int[] list = _ui.getList().getSelectedIndices(); //returns a list of indeces in increasing order
+            int[] list = _ui.getJList().getSelectedIndices(); //returns a list of indeces in increasing order
             _topicList.remove(list);
-//            for (int i = list.length-1;i>=0;i--) //going the list backwards and deleting them from the _topicList
-//            {
-//                _topicList.remove(list[i]);
-//            }
             _topicList.save();
             _ui.getBackButton().doClick();
         });

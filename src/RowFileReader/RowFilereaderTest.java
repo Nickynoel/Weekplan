@@ -29,7 +29,7 @@ public class RowFilereaderTest
             e.printStackTrace();
         }
         
-        //actual testclass
+        //actual testclass reading the testfile
         File file = new File("Test123.txt");
         RowFilereader reader = RowFilereader.getInstance(file);
         

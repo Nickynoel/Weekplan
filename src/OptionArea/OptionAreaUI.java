@@ -9,22 +9,33 @@ import java.awt.*;
 
 public class OptionAreaUI
 {
-    private JFrame _mainframe;
     private JButton _addButton;
     private JButton _deleteButton;
     private JButton _backButton;
+    
+    private JFrame _mainframe;
     
     /**
      * Initializing the UI
      */
     public OptionAreaUI()
     {
-        createWindow();
         createButtons();
+        createWindow();
         
         initializeWindow();
         
         _mainframe.setVisible(true);
+    }
+    
+    /**
+     * Creates the buttons
+     */
+    private void createButtons()
+    {
+        _addButton = new JButton("Add Topic");
+        _deleteButton = new JButton("Delete Topic");
+        _backButton = new JButton("Back");
     }
     
     /**
@@ -42,16 +53,6 @@ public class OptionAreaUI
         
         _mainframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _mainframe.setResizable(false);
-    }
-    
-    /**
-     * Creates the buttons
-     */
-    private void createButtons()
-    {
-        _addButton = new JButton("Add Topic");
-        _deleteButton = new JButton("Delete Topic");
-        _backButton = new JButton("Back");
     }
     
     /**
@@ -73,15 +74,6 @@ public class OptionAreaUI
     }
     
     /**
-     * Returns the declining _backButton
-     * @return _backButton
-     */
-    public JButton getBackButton()
-    {
-        return _backButton;
-    }
-    
-    /**
      * Returns the addbutton
      * @return _addButton
      */
@@ -97,6 +89,15 @@ public class OptionAreaUI
     public JButton getDeleteButton()
     {
         return _deleteButton;
+    }
+    
+    /**
+     * Returns the declining _backButton
+     * @return _backButton
+     */
+    public JButton getBackButton()
+    {
+        return _backButton;
     }
     
     /**

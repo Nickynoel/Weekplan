@@ -9,7 +9,7 @@ public class Startup
     
     public static void main(String[] args)
     {
-        _list = TopicList.getInstance();
+        _list = TopicList.getInstance(TopicList.FILENAME);
         _list.addIfEmpty();
         _list.checkReset();
         

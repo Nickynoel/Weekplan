@@ -1,7 +1,5 @@
 package DeleteArea;
 
-import TopicList.TopicList;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,9 +9,7 @@ import java.awt.*;
 
 public class DeleteAreaUI
 {
-    private TopicList _topicList;
-    
-    private JFrame _mainframe;
+    private JLabel _label;
     private JList _list;
     private JButton _deleteButton;
     private JButton _backButton;
@@ -22,42 +18,30 @@ public class DeleteAreaUI
     private JPanel _centerPanel;
     private JPanel _botPanel;
     
-    private JLabel _label;
+    private JFrame _mainframe;
     
     /**
      * Initializing the UI
      */
-    public DeleteAreaUI(TopicList list)
+    public DeleteAreaUI()
     {
-        _topicList = list;
-        
-        createWindow();
+        createLabels();
         createList();
         createButtons();
         createPanels();
+        createWindow();
         
-        initializeLabels();
-        initializePanels();
+        initializeWindow();
         
         _mainframe.setVisible(true);
     }
     
     /**
-     * Builds the JDialog
+     * Initialization of the Labels
      */
-    private void createWindow()
+    private void createLabels()
     {
-        _mainframe = new JFrame();
-        _mainframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //Schließt Fenster
-        _mainframe.setLocationRelativeTo(null);
-        _mainframe.setTitle("Delete");
-        _mainframe.setLayout(new BorderLayout());
-        
-        _mainframe.setSize(250,300);
-        
-        _mainframe.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        //_mainframe.pack();
-        //_mainframe.setResizable(false);
+        _label = new JLabel("List of current topics");
     }
     
     /**
@@ -65,7 +49,7 @@ public class DeleteAreaUI
      */
     private void createList()
     {
-        _list = new JList(_topicList.getTitleArray());
+        _list = new JList();
     }
     
     /**
@@ -85,32 +69,13 @@ public class DeleteAreaUI
     private void createPanels()
     {
         _topPanel = new JPanel();
-        _centerPanel = new JPanel();
-        _botPanel = new JPanel();
-    }
-    
-    /**
-     * Initialization of the Labels
-     */
-    private void initializeLabels()
-    {
-        _label = new JLabel("List of current topics");
-    }
-    
-    /**
-     * Initialization of the Panels, which is divided into its 3 subpanels: top, center and bot
-     */
-    private void initializePanels()
-    {
         _topPanel = generateToppanel();
-        _mainframe.add(_topPanel,BorderLayout.PAGE_START);
         
+        _centerPanel = new JPanel();
         _centerPanel = generateCenterpanel();
-        JScrollPane scrollPane = new JScrollPane(_centerPanel);
-        _mainframe.add(scrollPane);
         
+        _botPanel = new JPanel();
         _botPanel = generateBotpanel();
-        _mainframe.add(_botPanel,BorderLayout.PAGE_END);
     }
     
     /**
@@ -156,6 +121,54 @@ public class DeleteAreaUI
     }
     
     /**
+     * Builds the JDialog
+     */
+    private void createWindow()
+    {
+        _mainframe = new JFrame();
+        _mainframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //Schließt Fenster
+        _mainframe.setLocationRelativeTo(null);
+        _mainframe.setTitle("Delete");
+        _mainframe.setLayout(new BorderLayout());
+        
+        _mainframe.setSize(250,300);
+    
+        _mainframe.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        _mainframe.setResizable(false);
+    }
+    
+    /**
+     * insert the panels onto the _mainFrame
+     */
+    private void initializeWindow()
+    {
+        _mainframe.add(_topPanel,BorderLayout.PAGE_START);
+        
+        JScrollPane scrollPane = new JScrollPane(_centerPanel);
+        _mainframe.add(scrollPane);
+        
+        _mainframe.add(_botPanel,BorderLayout.PAGE_END);
+    }
+    
+    /**
+     * Returns the list
+     * @return _list
+     */
+    public JList<String> getJList()
+    {
+        return _list;
+    }
+    
+    /**
+     * Sets the list with a given String-array
+     * @param list: List of Topic-titles
+     */
+    public void setList(String[] list)
+    {
+        _list.setListData(list);
+    }
+    
+    /**
      * Returns the declining _backButton
      * @return _backButton
      */
@@ -165,8 +178,8 @@ public class DeleteAreaUI
     }
     
     /**
-     * Returns the confirmationbutton
-     * @return _confirmButton
+     * Returns the _deleteButton
+     * @return _deleteButton
      */
     public JButton getDeleteButton()
     {
@@ -174,20 +187,11 @@ public class DeleteAreaUI
     }
     
     /**
-     * Closes the UI
+     * Enables the _deleteButton
      */
-    public void close()
+    public void enableDeleteButton()
     {
-        _mainframe.dispose();
-    }
-    
-    /**
-     * Returns the list
-     * @return _list
-     */
-    public JList<String> getList()
-    {
-        return _list;
+        _deleteButton.setEnabled(true);
     }
     
     /**
@@ -199,10 +203,10 @@ public class DeleteAreaUI
     }
     
     /**
-     * Enables the _deleteButton
+     * Closes the UI
      */
-    public void enableDeleteButton()
+    public void close()
     {
-        _deleteButton.setEnabled(true);
+        _mainframe.dispose();
     }
 }

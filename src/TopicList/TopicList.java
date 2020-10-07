@@ -21,6 +21,21 @@ public class TopicList
     private List<Topic> _topicList;
     private File _file;
     
+    /**
+     * Factory method that returns the _topicList given a file
+     *
+     * @param file: file with the topics
+     * @return _topicList
+     */
+    public static TopicList getInstance(File file)
+    {
+        return new TopicList(file);
+    }
+    
+    /**
+     * Private constructor for the class TopicList
+     * @param file: the corresponding file
+     */
     private TopicList(File file)
     {
         _topicList = new ArrayList<>();
@@ -44,26 +59,15 @@ public class TopicList
         }
     }
     
-    /**
-     * Factory method that returns the _topicList given a file
-     *
-     * @param file: file with the topics
-     * @return _topicList
-     */
-    public static TopicList getInstance(File file)
-    {
-        return new TopicList(file);
-    }
-    
-    /**
-     * Factory method that returns the _topicList of the default FILENAME
-     *
-     * @return _topicList
-     */
-    public static TopicList getInstance()
-    {
-        return new TopicList(FILENAME);
-    }
+//    /**
+//     * Factory method that returns the _topicList of the default FILENAME
+//     *
+//     * @return _topicList
+//     */
+//    public static TopicList getInstance()
+//    {
+//        return new TopicList(FILENAME);
+//    }
     
     /**
      * Checks if the (usually weekly) reset criteria is fulfilled
@@ -145,7 +149,7 @@ public class TopicList
         String[] list = new String[_topicList.size()];
         for (int i = 0; i < _topicList.size(); i++)
         {
-            list[i] = _topicList.get(i).getTitel();
+            list[i] = _topicList.get(i).getTitle();
         }
         return list;
     }
@@ -212,7 +216,7 @@ public class TopicList
     {
         if (_topicList.get(i) != null)
         {
-            return _topicList.get(i).getTitel();
+            return _topicList.get(i).getTitle();
         }
         return "ERROR!";
     }
@@ -262,7 +266,7 @@ public class TopicList
         int sum = 0;
         for (Topic t : _topicList)
         {
-            sum += t.getLength();
+            sum += t.getGoalTime();
         }
         return sum;
     }

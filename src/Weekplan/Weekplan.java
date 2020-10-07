@@ -18,7 +18,7 @@ public class Weekplan
     
     public Weekplan()
     {
-        _topiclist = TopicList.getInstance();
+        _topiclist = TopicList.getInstance(TopicList.FILENAME);
         _ui = new WeekplanUI(_topiclist);
         addListener();
     }
@@ -32,6 +32,25 @@ public class Weekplan
      */
     private void addListener()
     {
+        //listeners for topic-options
+        for (JButton title : _ui.getTitleButtonList())
+        {
+            title.addActionListener(event ->
+            {
+                int topicnumber = _ui.getTitleButtonList().indexOf(title);
+                Topic topic = _topiclist.get(topicnumber);
+                final TopicEditArea area = new TopicEditArea(topic, _ui.getMainframe());
+            
+                area.addPropertyChangeListener(evt ->
+                {
+                    _ui.updateTopicName(topic);
+                    _ui.updateGoal(topic);
+                    _ui.colorBar(topic);
+                });
+                area.showUI();
+            });
+        }
+        
         //listeners for adding values
         for (JButton button : _ui.getButtonlist())
         {
@@ -40,27 +59,8 @@ public class Weekplan
                 int topicnumber = _ui.getButtonlist().indexOf(button);
                 Topic topic = _topiclist.get(topicnumber);
                 final AddArea area = new AddArea(topic, _ui.getMainframe());
-                
+    
                 area.addPropertyChangeListener(evt -> _ui.colorBar(topic));
-                area.showUI();
-            });
-        }
-        
-        //listeners for topic-options
-        for (JButton label : _ui.getTitleButtonList())
-        {
-            label.addActionListener(event ->
-            {
-                int topicnumber = _ui.getTitleButtonList().indexOf(label);
-                Topic topic = _topiclist.get(topicnumber);
-                final TopicEditArea area = new TopicEditArea(topic, _ui.getMainframe());
-                
-                area.addPropertyChangeListener(evt ->
-                {
-                    _ui.updateTopicName(topic);
-                    _ui.updateGoal(topic);
-                    _ui.colorBar(topic);
-                });
                 area.showUI();
             });
         }
@@ -75,8 +75,8 @@ public class Weekplan
         _ui.getOptionButton().addActionListener(event ->
         {
             _topiclist.save();
-            new OptionArea();
             _ui.close();
+            new OptionArea();
         });
         
         _ui.getCloseButton().addActionListener(event ->
