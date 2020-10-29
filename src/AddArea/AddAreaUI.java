@@ -23,14 +23,14 @@ public class AddAreaUI
     /**
      * Initializing the UI
      */
-    public AddAreaUI(JFrame frame)
+    public AddAreaUI()
     {
         createLabels();
         createTextField();
         createButtons();
         createPanels();
 
-        createWindow(frame);
+        createWindow();
         initializeWindow();
     }
     
@@ -122,11 +122,9 @@ public class AddAreaUI
     /**
      * Builds the JDialog
      */
-    private void createWindow(JFrame frame)
+    private void createWindow()
     {
         _dialog = new JDialog();
-        _dialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //disables upper right X
-        _dialog.setLocation(new Point(frame.getLocation().x+100,frame.getLocation().y+100)); //location relative to the frame in the background
         _dialog.setTitle("Add");
         _dialog.setLayout(new BorderLayout());
         
@@ -153,6 +151,15 @@ public class AddAreaUI
     public void setTitle(String s)
     {
         _dialog.setTitle(s);
+    }
+    
+    /**
+     * Sets the UI to a certain point
+     * @param p: Point for positioning the JDialog
+     */
+    public void setPosition(Point p)
+    {
+        _dialog.setLocation(p);
     }
     
     /**

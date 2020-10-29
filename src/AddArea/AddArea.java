@@ -3,6 +3,7 @@ package AddArea;
 import TopicList.Topic.Topic;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeListener;
@@ -23,8 +24,9 @@ public class AddArea
     {
         _support = new PropertyChangeSupport(this);
         _topic = topic;
-        _ui = new AddAreaUI(frame);
+        _ui = new AddAreaUI();
         _ui.setTitle(topic.getTitle());
+        _ui.setPosition(new Point(frame.getLocation().x + 100, frame.getLocation().y + 100)); //Sets position based on the mainframe
         addListener();
     }
     

@@ -18,7 +18,7 @@ public class WeekplanUI
     
     private List<JButton> _topicTitles;
     private List<JProgressBar> _topicProgressbars;
-    private List<JButton> _topicButtons;
+    private List<JButton> _addButtons;
     
     private JLabel _totalLabel;
     private JProgressBar _totalProgress;
@@ -39,6 +39,7 @@ public class WeekplanUI
         createTitles();
         createProgressbars();
         createButtons();
+        createBottomElements();
         
         createWindow();
         initializeWindow();
@@ -59,8 +60,6 @@ public class WeekplanUI
             tmp.setContentAreaFilled(false);
             _topicTitles.add(tmp);
         }
-        _totalLabel = new JLabel("Error");
-        updateTotalLabel();
     }
     
     /**
@@ -77,10 +76,6 @@ public class WeekplanUI
             bar.setStringPainted(true);
             _topicProgressbars.add(bar);
         }
-        
-        _totalProgress = new JProgressBar(0, _topicList.size() * 100);
-        _totalProgress.setStringPainted(true);
-        colorTotalBar();
     }
     
     /**
@@ -91,12 +86,12 @@ public class WeekplanUI
      */
     private void createButtons()
     {
-        _topicButtons = new ArrayList<>();
+        _addButtons = new ArrayList<>();
         
         for (Topic t : _topicList.getList())
         {
             JButton button = new JButton("add");
-            _topicButtons.add(button);
+            _addButtons.add(button);
         }
         _saveButton = new JButton("Save");
         
@@ -105,20 +100,14 @@ public class WeekplanUI
     }
     
     /**
-     * Updates the total area consisting of the JLabel and the JProgressbar
+     * Creates the elements used in the bottom part of the JDialog
      */
-    private void updateTotal()
+    private void createBottomElements()
     {
-        updateTotalLabel();
-        colorTotalBar();
-    }
-    
-    /**
-     * Colors the final JProgressbar, that takes data from all topics
-     */
-    private void colorTotalBar()
-    {
-        _totalProgress.setValue(_topicList.getTotalPercentProgress());
+        _totalLabel = new JLabel("Error");
+        
+        _totalProgress = new JProgressBar(0, _topicList.size() * 100);
+        _totalProgress.setStringPainted(true);
     }
     
     /**
@@ -221,11 +210,13 @@ public class WeekplanUI
             JPanel tmp = new JPanel();
             tmp.setLayout(new GridBagLayout()); //makes sure that the buttons are in the center
             tmp.setPreferredSize(new Dimension(70, 40)); //makes sure all panels have the same height
-            tmp.add(_topicButtons.get(i));
+            tmp.add(_addButtons.get(i));
             panel.add(tmp);
         }
         return panel;
     }
+    
+    
     
     /**
      * Builds the bottom JPanel of the _mainframe
@@ -239,6 +230,22 @@ public class WeekplanUI
         JPanel mainpanel = new JPanel();
         mainpanel.setLayout(new GridLayout(2, 1));
         //upper half
+        mainpanel.add(buildUpperBotPanel());
+        //lower half
+        mainpanel.add(buildLowerBotPanel());
+    
+        updateTotalLabel();
+        colorTotalBar();
+        
+        return mainpanel;
+    }
+    
+    /**
+     * Builds the upper part of the BotPanel consisting of the total info
+     * @return upper part of bottom JPanel
+     */
+    private JPanel buildUpperBotPanel()
+    {
         JPanel toppanel = new JPanel();
         toppanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         JPanel panel1 = new JPanel();
@@ -251,8 +258,15 @@ public class WeekplanUI
         toppanel.add(panel1);
         toppanel.add(panel2);
         toppanel.add(panel3);
-        mainpanel.add(toppanel);
-        //lower half
+        return toppanel;
+    }
+    
+    /**
+     * Builds the lower part of the BotPanel consisting of remaining JButtons
+     * @return lower part of the bottom JPanel
+     */
+    private JPanel buildLowerBotPanel()
+    {
         JPanel botpanel = new JPanel();
         botpanel.setLayout(new GridLayout(1, 3));
         JPanel panel4 = new JPanel();
@@ -261,9 +275,7 @@ public class WeekplanUI
         JPanel panel5 = new JPanel();
         panel5.add(_closeButton);
         botpanel.add(panel5);
-        mainpanel.add(botpanel);
-        
-        return mainpanel;
+        return botpanel;
     }
     
     /**
@@ -295,6 +307,15 @@ public class WeekplanUI
     }
     
     /**
+     * Colors the final JProgressbar, that takes data from all topics
+     */
+    private void colorTotalBar()
+    {
+        _totalProgress.setValue(_topicList.getTotalPercentProgress());
+    }
+    
+
+    /**
      * Colors the JProgressbars with the data provided from the topic
      *
      * @param topic topic corresponding the JProgressbar
@@ -304,6 +325,15 @@ public class WeekplanUI
         JProgressBar bar = _topicProgressbars.get(_topicList.indexOf(topic));
         bar.setValue(topic.getProgress());
         updateTotal();
+    }
+    
+    /**
+     * Updates the total area consisting of the JLabel and the JProgressbar
+     */
+    private void updateTotal()
+    {
+        updateTotalLabel();
+        colorTotalBar();
     }
     
     /**
@@ -321,9 +351,9 @@ public class WeekplanUI
      *
      * @return _topicButtons
      */
-    public List<JButton> getButtonlist()
+    public List<JButton> getAddButtonlist()
     {
-        return _topicButtons;
+        return _addButtons;
     }
     
     /**
@@ -396,6 +426,11 @@ public class WeekplanUI
         return _mainframe;
     }
     
+    
+    /**
+     * Opens a newly created topic standardized with the title "New"
+     * by opening the first entry of "New" in the _topicList
+     */
     public void openNewTopicMenu()
     {
         int index = _topicList.indexOf("New");

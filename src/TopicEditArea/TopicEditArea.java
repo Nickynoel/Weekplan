@@ -3,6 +3,7 @@ package TopicEditArea;
 import TopicList.Topic.Topic;
 
 import javax.swing.*;
+import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -37,8 +38,9 @@ public class TopicEditArea
      */
     private void createUI(JFrame frame)
     {
-        _ui = new TopicEditAreaUI(frame);
+        _ui = new TopicEditAreaUI();
         _ui.setTitle(_topic.getTitle() + ": " + _topic.getProgress() + " Min.");
+        _ui.setPosition(new Point(frame.getLocation().x+50,frame.getLocation().y+100)); //location relative to the frame in the background
         updateTopicLabel();
         updateLengthLabel();
     }

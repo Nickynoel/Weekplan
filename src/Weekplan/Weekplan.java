@@ -52,11 +52,11 @@ public class Weekplan
         }
         
         //listeners for adding values
-        for (JButton button : _ui.getButtonlist())
+        for (JButton button : _ui.getAddButtonlist())
         {
             button.addActionListener(event ->
             {
-                int topicnumber = _ui.getButtonlist().indexOf(button);
+                int topicnumber = _ui.getAddButtonlist().indexOf(button);
                 Topic topic = _topiclist.get(topicnumber);
                 final AddArea area = new AddArea(topic, _ui.getMainframe());
     

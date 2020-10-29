@@ -26,14 +26,14 @@ public class TopicEditAreaUI
     /**
      * Initializing the UI
      */
-    public TopicEditAreaUI(JFrame frame)
+    public TopicEditAreaUI()
     {
         createLabels();
         createTextfields();
         createButtons();
         createPanels();
     
-        createWindow(frame);
+        createWindow();
         initializeWindow();
     }
     
@@ -128,13 +128,9 @@ public class TopicEditAreaUI
     /**
      * Builds the JDialog
      */
-    private void createWindow(JFrame frame)
+    private void createWindow()
     {
         _dialog = new JDialog();
-        _dialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //disables upper right X
-        
-        _dialog.setLocation(new Point(frame.getLocation().x+50,frame.getLocation().y+100)); //location relative to the frame in the background
-        
         _dialog.setLayout(new BorderLayout());
         
         _dialog.setSize(300, 200);
@@ -161,6 +157,15 @@ public class TopicEditAreaUI
     public void setTitle(String titel)
     {
         _dialog.setTitle(titel);
+    }
+    
+    /**
+     * Sets the UI to a certain point
+     * @param p: Point for positioning the JDialog
+     */
+    public void setPosition(Point p)
+    {
+        _dialog.setLocation(p);
     }
     
     /**
