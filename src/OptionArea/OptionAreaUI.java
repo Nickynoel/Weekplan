@@ -9,6 +9,7 @@ import java.awt.*;
 
 public class OptionAreaUI
 {
+    private JTextField _totalGoalInput;
     private JButton _addButton;
     private JButton _deleteButton;
     private JButton _backButton;
@@ -20,12 +21,22 @@ public class OptionAreaUI
      */
     public OptionAreaUI()
     {
+        createTextFields();
         createButtons();
         createWindow();
         
         initializeWindow();
         
         _mainframe.setVisible(true);
+    }
+    
+    /**
+     * Creates the JTextfields of the OptionGui:
+     * _totalGoalInput: JTextfield for accepting the new total goaltime
+     */
+    private void createTextFields()
+    {
+        _totalGoalInput = new JTextField("",5);
     }
     
     /**
@@ -49,10 +60,10 @@ public class OptionAreaUI
         _mainframe.setTitle("Options");
         _mainframe.setLayout(new FlowLayout(FlowLayout.CENTER));
         
-        _mainframe.setSize(300,130);
+        _mainframe.setSize(300,200);
         
         _mainframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        _mainframe.setResizable(false);
+        //_mainframe.setResizable(false);
     }
     
     /**
@@ -60,6 +71,15 @@ public class OptionAreaUI
      */
     private void initializeWindow()
     {
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel("<html><span style='font-size:12px'>Total Goaltime:</span></html>");
+        panel.add(label);
+        _mainframe.add(panel);
+        
+        JPanel panel0 = new JPanel();
+        panel0.add(_totalGoalInput);
+        _mainframe.add(panel0);
+        
         JPanel panel1 = new JPanel();
         panel1.add(_addButton);
         _mainframe.add(panel1);
@@ -71,6 +91,15 @@ public class OptionAreaUI
         JPanel panel3 = new JPanel();
         panel3.add(_backButton);
         _mainframe.add(panel3);
+    }
+    
+    /**
+     * GetA for the _totalGoalInput JTextField
+     * @return _totalGoalInput
+     */
+    public JTextField getTotalGoalInput()
+    {
+        return _totalGoalInput;
     }
     
     /**

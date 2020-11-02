@@ -312,4 +312,20 @@ public class TopicList
             t.setProgress(0);
         }
     }
+    
+    /**
+     * Changes the total amount of goaltime to a certain value
+     */
+    public void setTotalGoal(int time)
+    {
+        int totaltime = 0;
+        for (Topic t: _topicList)
+        {
+            totaltime += t.getGoalTime();
+        }
+        for (Topic t: _topicList)
+        {
+            t.setGoalTime((t.getGoalTime()*time)/totaltime);
+        }
+    }
 }
