@@ -23,6 +23,7 @@ public class WeekplanUI
     private JLabel _totalLabel;
     private JProgressBar _totalProgress;
     private JButton _saveButton;
+    private JButton _timerButton;
     private JButton _optionButton;
     private JButton _closeButton;
     
@@ -95,6 +96,7 @@ public class WeekplanUI
         }
         _saveButton = new JButton("Save");
         
+        _timerButton = new JButton("Start Timer!");
         _optionButton = new JButton("Options");
         _closeButton = new JButton("Close");
     }
@@ -217,7 +219,6 @@ public class WeekplanUI
     }
     
     
-    
     /**
      * Builds the bottom JPanel of the _mainframe
      * consisting of one row consisting of a JLabel, a JTextfield and a JButton for the total
@@ -228,12 +229,14 @@ public class WeekplanUI
     private JPanel buildBotPanel()
     {
         JPanel mainpanel = new JPanel();
-        mainpanel.setLayout(new GridLayout(2, 1));
+        mainpanel.setLayout(new GridLayout(3, 1));
         //upper half
-        mainpanel.add(buildUpperBotPanel());
+        mainpanel.add(buildTotalPanel());
+        //middle half
+        mainpanel.add(buildTimerPanel());
         //lower half
         mainpanel.add(buildLowerBotPanel());
-    
+        
         updateTotalLabel();
         colorTotalBar();
         
@@ -242,9 +245,10 @@ public class WeekplanUI
     
     /**
      * Builds the upper part of the BotPanel consisting of the total info
+     *
      * @return upper part of bottom JPanel
      */
-    private JPanel buildUpperBotPanel()
+    private JPanel buildTotalPanel()
     {
         JPanel toppanel = new JPanel();
         toppanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -262,7 +266,21 @@ public class WeekplanUI
     }
     
     /**
+     * Builds the mid part of the BotPanel to set up a timer for end of task/start of new task
+     *
+     * @return mid part of the bottom JPanel
+     */
+    private JPanel buildTimerPanel()
+    {
+        JPanel timerPanel = new JPanel();
+        timerPanel.setLayout(new FlowLayout());
+        timerPanel.add(_timerButton);
+        return timerPanel;
+    }
+    
+    /**
      * Builds the lower part of the BotPanel consisting of remaining JButtons
+     *
      * @return lower part of the bottom JPanel
      */
     private JPanel buildLowerBotPanel()
@@ -314,7 +332,7 @@ public class WeekplanUI
         _totalProgress.setValue(_topicList.getTotalPercentProgress());
     }
     
-
+    
     /**
      * Colors the JProgressbars with the data provided from the topic
      *
@@ -357,16 +375,6 @@ public class WeekplanUI
     }
     
     /**
-     * Returns the JButton for saving
-     *
-     * @return _saveButton
-     */
-    public JButton getSaveButton()
-    {
-        return _saveButton;
-    }
-    
-    /**
      * Updates the displayed title of the given topic
      *
      * @param topic: the topic which title might have changed
@@ -386,6 +394,26 @@ public class WeekplanUI
     {
         int topicNumber = _topicList.indexOf(topic);
         _topicProgressbars.get(topicNumber).setMaximum(topic.getGoalTime());
+    }
+    
+    /**
+     * Returns the JButton for saving
+     *
+     * @return _saveButton
+     */
+    public JButton getSaveButton()
+    {
+        return _saveButton;
+    }
+    
+    /**
+     * GetA for the _timerButton
+     *
+     * @return _timerButton
+     */
+    public JButton getTimerButton()
+    {
+        return _timerButton;
     }
     
     /**

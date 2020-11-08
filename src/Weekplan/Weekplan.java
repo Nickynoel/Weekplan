@@ -8,6 +8,12 @@ import TopicList.TopicList;
 
 import javax.swing.*;
 
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Functional class of the main UI
  */
@@ -40,7 +46,7 @@ public class Weekplan
                 int topicnumber = _ui.getTitleButtonList().indexOf(title);
                 Topic topic = _topiclist.get(topicnumber);
                 final TopicEditArea area = new TopicEditArea(topic, _ui.getMainframe());
-            
+                
                 area.addPropertyChangeListener(evt ->
                 {
                     _ui.updateTopicName(topic);
@@ -59,11 +65,55 @@ public class Weekplan
                 int topicnumber = _ui.getAddButtonlist().indexOf(button);
                 Topic topic = _topiclist.get(topicnumber);
                 final AddArea area = new AddArea(topic, _ui.getMainframe());
-    
+                
                 area.addPropertyChangeListener(evt -> _ui.colorBar(topic));
                 area.showUI();
             });
         }
+        
+        //listener for the timer
+        _ui.getTimerButton().addActionListener(event ->
+        {
+            new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    String input = javax.swing.JOptionPane.showInputDialog(new JFrame(), "Gib Arbeitszeit an:");
+                    int timeout = -1;
+                    try
+                    {
+                        timeout = Integer.parseInt(input);
+                    }
+                    catch (NumberFormatException e)
+                    {
+        
+                    }
+                    if (timeout >= 0)
+                    {
+                        try
+                        {
+                            TimeUnit.SECONDS.sleep(timeout);
+                            FileInputStream fis = new FileInputStream("D:/Musik/Archangel.mp3");
+                            Player playMP3 = new Player(fis);
+                            playMP3.play();
+                        }
+                        catch (InterruptedException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        catch (FileNotFoundException e)
+                        {
+                            System.out.println(e);
+                        }
+                        catch (JavaLayerException e)
+                        {
+                            System.out.println(e);
+                        }
+                    }
+                }
+            }).start();
+        });
         
         //listener for saving
         _ui.getSaveButton().addActionListener(event ->
