@@ -8,12 +8,6 @@ import TopicList.TopicList;
 
 import javax.swing.*;
 
-import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.concurrent.TimeUnit;
-
 /**
  * Functional class of the main UI
  * Bla
@@ -72,49 +66,6 @@ public class Weekplan
             });
         }
         
-        //listener for the timer
-        _ui.getTimerButton().addActionListener(event ->
-        {
-            new Thread(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    String input = javax.swing.JOptionPane.showInputDialog(new JFrame(), "Gib Arbeitszeit an:");
-                    int timeout = -1;
-                    try
-                    {
-                        timeout = Integer.parseInt(input);
-                    }
-                    catch (NumberFormatException e)
-                    {
-        
-                    }
-                    if (timeout >= 0)
-                    {
-                        try
-                        {
-                            TimeUnit.SECONDS.sleep(timeout);
-                            FileInputStream fis = new FileInputStream("D:/Musik/Archangel.mp3");
-                            Player playMP3 = new Player(fis);
-                            playMP3.play();
-                        }
-                        catch (InterruptedException e)
-                        {
-                            e.printStackTrace();
-                        }
-                        catch (FileNotFoundException e)
-                        {
-                            System.out.println(e);
-                        }
-                        catch (JavaLayerException e)
-                        {
-                            System.out.println(e);
-                        }
-                    }
-                }
-            }).start();
-        });
         
         //listener for saving
         _ui.getSaveButton().addActionListener(event ->

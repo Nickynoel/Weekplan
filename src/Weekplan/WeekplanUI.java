@@ -229,11 +229,9 @@ public class WeekplanUI
     private JPanel buildBotPanel()
     {
         JPanel mainpanel = new JPanel();
-        mainpanel.setLayout(new GridLayout(3, 1));
+        mainpanel.setLayout(new GridLayout(2, 1));
         //upper half
         mainpanel.add(buildTotalPanel());
-        //middle half
-        mainpanel.add(buildTimerPanel());
         //lower half
         mainpanel.add(buildLowerBotPanel());
         
@@ -404,16 +402,6 @@ public class WeekplanUI
     public JButton getSaveButton()
     {
         return _saveButton;
-    }
-    
-    /**
-     * GetA for the _timerButton
-     *
-     * @return _timerButton
-     */
-    public JButton getTimerButton()
-    {
-        return _timerButton;
     }
     
     /**
