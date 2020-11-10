@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Functional class of the main UI
+ * Bla
  */
 public class Weekplan
 {
