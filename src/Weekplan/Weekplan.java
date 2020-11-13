@@ -1,12 +1,15 @@
 package Weekplan;
 
 import AddArea.AddArea;
+import MP3Player.MP3Player;
+import MusicArea.MusicArea;
 import OptionArea.OptionArea;
 import TopicEditArea.TopicEditArea;
 import TopicList.Topic.Topic;
 import TopicList.TopicList;
 
 import javax.swing.*;
+import java.io.FileNotFoundException;
 
 /**
  * Functional class of the main UI
@@ -16,6 +19,7 @@ public class Weekplan
 {
     private TopicList _topiclist;
     private WeekplanUI _ui;
+    private MP3Player _player;
     
     public Weekplan()
     {
@@ -65,7 +69,26 @@ public class Weekplan
                 area.showUI();
             });
         }
-        
+    
+        //listener for the timer
+        _ui.getTimerButton().addActionListener(event ->
+        {
+            _player = null;
+            try
+            {
+                _player = MP3Player.getInstance("D:/Musik/Archangel.mp3");
+            }
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+            final MusicArea area = new MusicArea(_player, _ui.getMainframe());
+            area.addPropertyChangeListener(evt ->
+            {
+                _ui.close();
+            });
+            area.showUI();
+        });
         
         //listener for saving
         _ui.getSaveButton().addActionListener(event ->
@@ -76,16 +99,24 @@ public class Weekplan
         //listener for options
         _ui.getOptionButton().addActionListener(event ->
         {
-            _topiclist.save();
-            _ui.close();
+            closeUI();
             new OptionArea();
         });
         
         _ui.getCloseButton().addActionListener(event ->
         {
-            _topiclist.save();
-            _ui.close();
+            closeUI();
         });
+    }
+    
+    /**
+     * Close the UI to exit the program or move to different parts
+     */
+    private void closeUI()
+    {
+        _player.quit();
+        _topiclist.save();
+        _ui.close();
     }
     
     /**
