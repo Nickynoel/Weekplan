@@ -10,7 +10,7 @@ import javax.swing.*;
 
 /**
  * Functional class of the main UI
- * Bla
+ * Now with music...hopefully
  */
 public class Weekplan
 {
