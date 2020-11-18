@@ -73,8 +73,9 @@ public class MusicArea
             try
             {
                 int number = Integer.parseInt(tmp);
-                _player.addToQueue(number);
                 _ui.close();
+                _player.addToQueue(number);
+                confirmChange(1);
             }
             catch (NumberFormatException e) //should never happen, cause the textfield-keylistener checks this
             {
@@ -91,7 +92,7 @@ public class MusicArea
      */
     private boolean isValid(String tmp)
     {
-        if (tmp.matches("\\d+"))
+        if (tmp.matches("\\d+")) //|| tmp.matches("\\d{1,2}:\\d{2}")
         {
             return true;
         }

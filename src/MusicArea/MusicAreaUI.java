@@ -58,7 +58,7 @@ public class MusicAreaUI
      */
     private void createLabels()
     {
-        _label = new JLabel("Time in minutes");
+        _label = new JLabel("Time in minutes/for timer to go");
     }
     
     /**
@@ -125,7 +125,7 @@ public class MusicAreaUI
     private void createWindow()
     {
         _dialog = new JDialog();
-        _dialog.setTitle("Add");
+        _dialog.setTitle("Set Timer");
         _dialog.setLayout(new BorderLayout());
         
         _dialog.setSize(200,140);

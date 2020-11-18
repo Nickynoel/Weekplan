@@ -69,14 +69,19 @@ public class Weekplan
                 area.showUI();
             });
         }
-    
+        //listener to stop the song
+        _ui.getStopButton().addActionListener(event ->
+        {
+           _player.quit();
+           _ui.disableStopButton();
+        });
         //listener for the timer
         _ui.getTimerButton().addActionListener(event ->
         {
             _player = null;
             try
             {
-                _player = MP3Player.getInstance("D:/Musik/Archangel.mp3");
+                _player = MP3Player.getInstance(MP3Player.DEFAULTSONG);
             }
             catch (FileNotFoundException e)
             {
@@ -85,7 +90,9 @@ public class Weekplan
             final MusicArea area = new MusicArea(_player, _ui.getMainframe());
             area.addPropertyChangeListener(evt ->
             {
-                _ui.close();
+                //_player.addToQueue(number);
+                _ui.setTimerLabelText(_player.getNextSongTime());
+                _ui.enableStopButton();
             });
             area.showUI();
         });
