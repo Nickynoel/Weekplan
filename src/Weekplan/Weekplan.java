@@ -25,6 +25,16 @@ public class Weekplan
     {
         _topiclist = TopicList.getInstance(TopicList.FILENAME);
         _ui = new WeekplanUI(_topiclist);
+    
+        try
+        {
+            _player = MP3Player.getInstance(MP3Player.DEFAULTSONG);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        
         addListener();
     }
     
@@ -78,15 +88,15 @@ public class Weekplan
         //listener for the timer
         _ui.getTimerButton().addActionListener(event ->
         {
-            _player = null;
-            try
-            {
-                _player = MP3Player.getInstance(MP3Player.DEFAULTSONG);
-            }
-            catch (FileNotFoundException e)
-            {
-                e.printStackTrace();
-            }
+//            _player = null;
+//            try
+//            {
+//                _player = MP3Player.getInstance(MP3Player.DEFAULTSONG);
+//            }
+//            catch (FileNotFoundException e)
+//            {
+//                e.printStackTrace();
+//            }
             final MusicArea area = new MusicArea(_player, _ui.getMainframe());
             area.addPropertyChangeListener(evt ->
             {

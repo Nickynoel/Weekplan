@@ -136,7 +136,7 @@ public class WeekplanUI
     {
         JPanel centerPanel = buildCenterPanel();
         JScrollPane scrollpane = new JScrollPane(centerPanel);
-        scrollpane.getVerticalScrollBar().setUnitIncrement(15); //increases vertical scrollspeed
+        scrollpane.getVerticalScrollBar().setUnitIncrement(30); //increases vertical scrollspeed
         _mainframe.add(scrollpane);
         _mainframe.add(buildBotPanel(), BorderLayout.PAGE_END);
     }

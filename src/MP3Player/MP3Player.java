@@ -51,7 +51,8 @@ public class MP3Player
             {
                 Port outline = (Port) AudioSystem.getLine(source);
                 outline.open();
-                FloatControl volumeControl = (FloatControl) outline.getControl(FloatControl.Type.VOLUME);                System.out.println("  volume: " + volumeControl.getValue());
+                FloatControl volumeControl = (FloatControl) outline.getControl(FloatControl.Type.VOLUME);
+                //System.out.println("  volume: " + volumeControl.getValue());
                 volumeControl.setValue(_volume);
             }
             catch (LineUnavailableException ex)
@@ -70,7 +71,7 @@ public class MP3Player
         
         try
         {
-            TimeUnit.SECONDS.sleep(delay); //TODO change to minutes once finished
+            TimeUnit.MINUTES.sleep(delay); //TODO change to minutes once finished
             run();
         }
         catch (InterruptedException e)
@@ -123,7 +124,10 @@ public class MP3Player
     
     public void quit()
     {
-        _songThread.stop();
+        if (_songThread != null)
+        {
+            _songThread.stop();
+        }
     }
 }
 
