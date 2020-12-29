@@ -515,4 +515,42 @@ public class WeekplanUI
         int index = _topicList.indexOf("New");
         _topicTitles.get(index).doClick();
     }
+    
+    /**
+     * Changes the UI depending on how the MP3-Player's status is
+     *
+     * @param status: MP3Player._status, {0,1,2} at the moment
+     */
+    public void changeMusicStatus(int status)
+    {
+        assert (status == 0 || status == 1 || status == 2);
+        switch (status)
+        {
+            case 0:
+                disableStopButton();
+                enableTimerButton();
+                _timerLabel.setText("No Timer Set");
+                break;
+            case 1:
+            case 2:
+                enableStopButton();
+                disableTimerButton();
+        }
+    }
+    
+    /**
+     * Enables the _timerButton
+     */
+    private void enableTimerButton()
+    {
+        _timerButton.setEnabled(true);
+    }
+    
+    /**
+     * Disables the _timerButton
+     */
+    private void disableTimerButton()
+    {
+        _timerButton.setEnabled(false);
+    }
 }

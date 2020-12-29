@@ -25,7 +25,16 @@ public class Weekplan
     {
         _topiclist = TopicList.getInstance(TopicList.FILENAME);
         _ui = new WeekplanUI(_topiclist);
+        loadPlayer();
+        addMP3PlayerListener();
+        addUIListener();
+    }
     
+    /**
+     * Initializes the MP3Player
+     */
+    private void loadPlayer()
+    {
         try
         {
             _player = MP3Player.getInstance(MP3Player.DEFAULTSONG);
@@ -34,18 +43,29 @@ public class Weekplan
         {
             e.printStackTrace();
         }
-        
-        addListener();
+    }
+    
+    /**
+     * Adds the PropertyChangeListener for the MP3Player
+     */
+    private void addMP3PlayerListener()
+    {
+        _player.addPropertyChangeListener(evt ->
+        {
+            _ui.changeMusicStatus(_player.getStatus());
+        });
     }
     
     /**
      * Adds the listeners of all components in the UI:
+     * TitleButton.actionlistener: Opens TopicEditArea and gives it an observer
      * AddButton.actionlistener: Opens AddArea and gives it an observer
-     * Label.mouselistener: Opens TopicArea and gives it an observer
+     * StopButton.actionlistener: Stops the song
+     * TimerButton.actionlistener: Opens MusicArea and gives it an observer
      * SaveButton.actionlistener: Saves the topic-values onto the file TopicList.FILENAME
      * OptionButton.actionlistener: Closes window and opens OptionArea
      */
-    private void addListener()
+    private void addUIListener()
     {
         //listeners for topic-options
         for (JButton title : _ui.getTitleButtonList())
@@ -79,30 +99,23 @@ public class Weekplan
                 area.showUI();
             });
         }
+        
         //listener to stop the song
         _ui.getStopButton().addActionListener(event ->
         {
            _player.quit();
-           _ui.disableStopButton();
+           _ui.changeMusicStatus(_player.getStatus());
         });
+        
         //listener for the timer
         _ui.getTimerButton().addActionListener(event ->
         {
-//            _player = null;
-//            try
-//            {
-//                _player = MP3Player.getInstance(MP3Player.DEFAULTSONG);
-//            }
-//            catch (FileNotFoundException e)
-//            {
-//                e.printStackTrace();
-//            }
             final MusicArea area = new MusicArea(_player, _ui.getMainframe());
             area.addPropertyChangeListener(evt ->
             {
                 //_player.addToQueue(number);
                 _ui.setTimerLabelText(_player.getNextSongTime());
-                _ui.enableStopButton();
+                _ui.changeMusicStatus(_player.getStatus());
             });
             area.showUI();
         });
