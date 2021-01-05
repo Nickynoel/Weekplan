@@ -293,9 +293,9 @@ public class TopicList
      *
      * @return total percent progress
      */
-    public int getTotalPercentProgress()
+    public double getTotalPercentProgress()
     {
-        int sum = 0;
+        double sum = 0.0;
         for (Topic t : _topicList)
         {
             sum += Math.min(t.getPercentProgress(), 100);

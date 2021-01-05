@@ -344,7 +344,7 @@ public class WeekplanUI
      */
     private void colorTotalBar()
     {
-        _totalProgress.setValue(_topicList.getTotalPercentProgress());
+        _totalProgress.setValue((int)(_topicList.getTotalPercentProgress())); //setvalue requires an integer, not a double
     }
     
     
