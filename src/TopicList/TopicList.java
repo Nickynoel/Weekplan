@@ -78,6 +78,7 @@ public class TopicList
     {
         int weekday = ((Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) + 5) % 7; //Monday == 0... and so on
         boolean sufficientProgress = (getTotalProgress() * 2 > getTotalGoaltime());
+        sufficientProgress = true; //no sufficientprogress for now
         if (weekday == 0 && sufficientProgress)
         {
             fullReset();
@@ -292,9 +293,9 @@ public class TopicList
      *
      * @return total percent progress
      */
-    public int getTotalPercentProgress()
+    public double getTotalPercentProgress()
     {
-        int sum = 0;
+        double sum = 0.0;
         for (Topic t : _topicList)
         {
             sum += Math.min(t.getPercentProgress(), 100);

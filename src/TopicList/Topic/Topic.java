@@ -134,9 +134,9 @@ public class Topic
      *
      * @return _progress*100/_goal
      */
-    public int getPercentProgress()
+    public double getPercentProgress()
     {
-        return _progress * 100 / _goaltime;
+        return (_progress * 100.0) / _goaltime;
     }
     
     /**
