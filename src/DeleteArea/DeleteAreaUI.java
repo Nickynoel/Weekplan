@@ -134,7 +134,7 @@ public class DeleteAreaUI
         _mainframe.setSize(250,300);
     
         _mainframe.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        _mainframe.setResizable(false);
+        //_mainframe.setResizable(false);
     }
     
     /**
@@ -145,6 +145,7 @@ public class DeleteAreaUI
         _mainframe.add(_topPanel,BorderLayout.PAGE_START);
         
         JScrollPane scrollPane = new JScrollPane(_centerPanel);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(15);
         _mainframe.add(scrollPane);
         
         _mainframe.add(_botPanel,BorderLayout.PAGE_END);

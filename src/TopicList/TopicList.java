@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TopicList
 {
-    public static final File FILENAME = new File("Weekplan.txt"); //Globally accessible file
+    public static final File DATAFILE = new File("Weekplan.txt"); //Globally accessible file
     
     private List<Topic> _topicList;
     private File _file;
@@ -303,18 +303,8 @@ public class TopicList
     }
     
     /**
-     * Resets the progress of the topics
-     */
-    public void fullReset()
-    {
-        for (Topic t : _topicList)
-        {
-            t.setProgress(0);
-        }
-    }
-    
-    /**
      * Changes the total amount of goaltime to a certain value
+     * @param time: totaltime intended for the week
      */
     public void setTotalGoal(int time)
     {
@@ -326,6 +316,50 @@ public class TopicList
         for (Topic t: _topicList)
         {
             t.setGoalTime((t.getGoalTime()*time)/totaltime);
+        }
+    }
+    
+    /**
+     * Navigates based on the given resetProgram how the topiclist is supposed to be reset
+     * @param resetProgram: parameter to choose the way of resetting
+     */
+    public void reset(int resetProgram)
+    {
+        switch(resetProgram)
+        {
+            case 0:
+                fullReset();
+                break;
+            case 1:
+                normalReset();
+                break;
+        }
+    }
+    
+    /**
+     * Resets the progress of the topics
+     */
+    private void fullReset()
+    {
+        for (Topic t : _topicList)
+        {
+            t.setProgress(0);
+        }
+    }
+    
+    /**
+     * Standard weekly reset, substracting the weekly goal and if not achieved,
+     * halves the backlog remaining
+     */
+    private void normalReset()
+    {
+        for (Topic t: _topicList)
+        {
+            t.setProgress(t.getProgress()-t.getGoalTime());
+            if(t.getProgress()<0)
+            {
+                t.setProgress(t.getProgress()/2);
+            }
         }
     }
 }

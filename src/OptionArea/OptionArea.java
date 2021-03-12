@@ -39,7 +39,7 @@ public class OptionArea
                 int number = Integer.parseInt(tmp);
                 if (number > 0)
                 {
-                    TopicList list = TopicList.getInstance(TopicList.FILENAME);
+                    TopicList list = TopicList.getInstance(TopicList.DATAFILE);
                     
                     list.setTotalGoal(number * 60);//Turn entry from hours to minutes
                     list.save();
@@ -54,7 +54,7 @@ public class OptionArea
         
         _ui.getAddButton().addActionListener(event ->
         {
-            TopicList list = TopicList.getInstance(TopicList.FILENAME);
+            TopicList list = TopicList.getInstance(TopicList.DATAFILE);
             list.addTopic();
             list.save();
             _ui.close();
