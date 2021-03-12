@@ -40,7 +40,7 @@ public class TopicEditArea
     {
         _ui = new TopicEditAreaUI();
         _ui.setTitle(_topic.getTitle() + ": " + _topic.getProgress() + " Min.");
-        _ui.setPosition(new Point(frame.getLocation().x+50,frame.getLocation().y+100)); //location relative to the frame in the background
+        _ui.setPosition(new Point(frame.getLocation().x + 50, frame.getLocation().y + 100)); //location relative to the frame in the background
         updateTopicLabel();
         updateLengthLabel();
     }
@@ -64,7 +64,7 @@ public class TopicEditArea
                 _ui.getTopicField().setText("");
             }
         });
-    
+        
         _ui.getLengthField().addActionListener(event ->
         {
             String tmp = _ui.getLengthField().getText();
@@ -75,7 +75,7 @@ public class TopicEditArea
                 _ui.getLengthField().setText("");
             }
         });
-    
+        
         _ui.getConfirmButton().addActionListener(event ->
         {
             _topic.setTitle(_topicName);
@@ -83,7 +83,7 @@ public class TopicEditArea
             confirmChange(1);
             _ui.close();
         });
-    
+        
         _ui.getBackButton().addActionListener(event ->
         {
             _ui.close();
@@ -143,7 +143,15 @@ public class TopicEditArea
      */
     private void updateTopicLabel()
     {
-        _ui.setTopicLabel("Name: " + _topicName);
+        if (_topicName.length() > 13)
+        {
+            _ui.setTopicLabel("Name: " + _topicName.substring(0, 13)+".");
+        }
+        else
+        {
+            _ui.setTopicLabel("Name: " + _topicName);
+        }
+        
     }
     
     /**

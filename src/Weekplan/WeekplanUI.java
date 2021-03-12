@@ -23,6 +23,8 @@ public class WeekplanUI
     private JLabel _totalLabel;
     private JProgressBar _totalProgress;
     private JButton _saveButton;
+    private JLabel _timerLabel;
+    private JButton _stopButton;
     private JButton _timerButton;
     private JButton _optionButton;
     private JButton _closeButton;
@@ -95,7 +97,8 @@ public class WeekplanUI
             _addButtons.add(button);
         }
         _saveButton = new JButton("Save");
-        
+        _stopButton = new JButton("Stop");
+        _stopButton.setEnabled(false);
         _timerButton = new JButton("Start Timer!");
         _optionButton = new JButton("Options");
         _closeButton = new JButton("Close");
@@ -107,6 +110,7 @@ public class WeekplanUI
     private void createBottomElements()
     {
         _totalLabel = new JLabel("Error");
+        _timerLabel = new JLabel("No timer set");
         
         _totalProgress = new JProgressBar(0, _topicList.size() * 100);
         _totalProgress.setStringPainted(true);
@@ -120,7 +124,7 @@ public class WeekplanUI
         _mainframe = new JFrame();
         _mainframe.setTitle("Weekplan");
         _mainframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //closes window
-        _mainframe.setSize(400, 350);
+        _mainframe.setSize(400, 400);
         _mainframe.setLayout(new BorderLayout());
         
         _mainframe.setLocationRelativeTo(null);
@@ -132,7 +136,7 @@ public class WeekplanUI
     {
         JPanel centerPanel = buildCenterPanel();
         JScrollPane scrollpane = new JScrollPane(centerPanel);
-        scrollpane.getVerticalScrollBar().setUnitIncrement(15); //increases vertical scrollspeed
+        scrollpane.getVerticalScrollBar().setUnitIncrement(30); //increases vertical scrollspeed
         _mainframe.add(scrollpane);
         _mainframe.add(buildBotPanel(), BorderLayout.PAGE_END);
     }
@@ -229,9 +233,11 @@ public class WeekplanUI
     private JPanel buildBotPanel()
     {
         JPanel mainpanel = new JPanel();
-        mainpanel.setLayout(new GridLayout(2, 1));
+        mainpanel.setLayout(new GridLayout(3, 1));
         //upper half
         mainpanel.add(buildTotalPanel());
+        //middle half
+        mainpanel.add(buildTimerPanel());
         //lower half
         mainpanel.add(buildLowerBotPanel());
         
@@ -271,8 +277,19 @@ public class WeekplanUI
     private JPanel buildTimerPanel()
     {
         JPanel timerPanel = new JPanel();
-        timerPanel.setLayout(new FlowLayout());
-        timerPanel.add(_timerButton);
+        timerPanel.setLayout(new GridLayout(1, 0));
+        
+        JPanel panel1 = new JPanel();
+        panel1.add(_timerLabel);
+        timerPanel.add(panel1);
+        
+        JPanel panel2 = new JPanel();
+        panel2.add(_stopButton);
+        timerPanel.add(panel2);
+        
+        JPanel panel3 = new JPanel();
+        panel3.add(_timerButton);
+        timerPanel.add(panel3);
         return timerPanel;
     }
     
@@ -327,7 +344,7 @@ public class WeekplanUI
      */
     private void colorTotalBar()
     {
-        _totalProgress.setValue(_topicList.getTotalPercentProgress());
+        _totalProgress.setValue((int)(_topicList.getTotalPercentProgress())); //setvalue requires an integer, not a double
     }
     
     
@@ -405,6 +422,52 @@ public class WeekplanUI
     }
     
     /**
+     * Sets the text for the _timerLabel signaling when the timer is gonna start next
+     *
+     * @param text: text to be shown on the _timerLabel
+     */
+    public void setTimerLabelText(String text)
+    {
+        _timerLabel.setText(text);
+    }
+    
+    /**
+     * GetA for the _stopButton
+     *
+     * @return _stopButton
+     */
+    public JButton getStopButton()
+    {
+        return _stopButton;
+    }
+    
+    /**
+     * Enables the _stopButton
+     */
+    public void enableStopButton()
+    {
+        _stopButton.setEnabled(true);
+    }
+    
+    /**
+     * Disables the _stopbutton
+     */
+    public void disableStopButton()
+    {
+        _stopButton.setEnabled(false);
+    }
+    
+    /**
+     * GetA for the _timerButton
+     *
+     * @return _timerButton
+     */
+    public JButton getTimerButton()
+    {
+        return _timerButton;
+    }
+    
+    /**
      * GetA for _optionButton
      *
      * @return _optionButton
@@ -451,5 +514,43 @@ public class WeekplanUI
     {
         int index = _topicList.indexOf("New");
         _topicTitles.get(index).doClick();
+    }
+    
+    /**
+     * Changes the UI depending on how the MP3-Player's status is
+     *
+     * @param status: MP3Player._status, {0,1,2} at the moment
+     */
+    public void changeMusicStatus(int status)
+    {
+        assert (status == 0 || status == 1 || status == 2);
+        switch (status)
+        {
+            case 0:
+                disableStopButton();
+                enableTimerButton();
+                _timerLabel.setText("No Timer Set");
+                break;
+            case 1:
+            case 2:
+                enableStopButton();
+                disableTimerButton();
+        }
+    }
+    
+    /**
+     * Enables the _timerButton
+     */
+    private void enableTimerButton()
+    {
+        _timerButton.setEnabled(true);
+    }
+    
+    /**
+     * Disables the _timerButton
+     */
+    private void disableTimerButton()
+    {
+        _timerButton.setEnabled(false);
     }
 }

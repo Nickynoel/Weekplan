@@ -10,7 +10,6 @@ import javax.swing.*;
 
 /**
  * Functional class of the main UI
- * Bla
  */
 public class Weekplan
 {
@@ -19,7 +18,7 @@ public class Weekplan
     
     public Weekplan()
     {
-        _topiclist = TopicList.getInstance(TopicList.FILENAME);
+        _topiclist = TopicList.getInstance(TopicList.DATAFILE);
         _ui = new WeekplanUI(_topiclist);
         addListener();
     }

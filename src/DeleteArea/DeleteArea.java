@@ -19,7 +19,7 @@ public class DeleteArea
     
     public DeleteArea()
     {
-        _topicList = TopicList.getInstance(TopicList.FILENAME);
+        _topicList = TopicList.getInstance(TopicList.DATAFILE);
         _ui = new DeleteAreaUI();
         _ui.setList(_topicList.getTitleArray());
         addListener();
