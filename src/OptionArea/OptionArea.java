@@ -1,5 +1,6 @@
 package OptionArea;
 
+import Settings.Settings;
 import TopicList.TopicList;
 import DeleteArea.DeleteArea;
 import Weekplan.Weekplan;
@@ -15,11 +16,22 @@ import javax.swing.*;
 public class OptionArea
 {
     private OptionAreaUI _ui;
+    private Settings _settingList;
     
     public OptionArea()
     {
         _ui = new OptionAreaUI();
+        _settingList = Settings.getInstance(Settings.SETTINGSFILE);
+        setSettings();
         addListener();
+    }
+    
+    /**
+     * Transfers the settings onto the UI
+     */
+    private void setSettings()
+    {
+        _ui.setResetProgram(_settingList.getResetProgram());
     }
     
     /**
@@ -50,6 +62,12 @@ public class OptionArea
             {
                 JOptionPane.showMessageDialog(new JFrame(), "Entry is not a positive integer");
             }
+        });
+        
+        _ui.getResetComboBox().addActionListener(event ->
+        {
+            _settingList.setResetProgram(_ui.getResetComboBox().getSelectedIndex());
+            _settingList.save();
         });
         
         _ui.getAddButton().addActionListener(event ->

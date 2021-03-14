@@ -16,10 +16,10 @@ public class Settings
 {
     public static final File SETTINGSFILE = new File("Settings.txt");
     
-    private List<String> _settingsList;
-    private File _file;
-    private int _resetProgram;
-    private boolean _weeklyReset;
+    private List<String> _settingsList; //Settings given by the file
+    private File _file; //file that saves the settings
+    private int _resetProgram; //number that says
+    private boolean _weeklyReset; //Checks if we are moving from sunday to monday
     /**
      * Factory method that returns the _settings given a file
      * @param file: file with the settings
@@ -103,6 +103,15 @@ public class Settings
     }
     
     /**
+     * Sets the resetProgram to the given index
+     * @param selectedIndex
+     */
+    public void setResetProgram(int selectedIndex)
+    {
+        _resetProgram = selectedIndex;
+    }
+    
+    /**
      * Saves the _settingList on _file
      */
     public void save()
@@ -114,7 +123,9 @@ public class Settings
         writer.saveFile();
     }
     
-//    /**
+
+    
+    //    /**
 //     * Resets the progress of the topics
 //     */
 //    public void fullReset()

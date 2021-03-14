@@ -10,6 +10,7 @@ import java.awt.*;
 public class OptionAreaUI
 {
     private JTextField _totalGoalInput;
+    private JComboBox _resetComboBox;
     private JButton _addButton;
     private JButton _deleteButton;
     private JButton _backButton;
@@ -22,6 +23,7 @@ public class OptionAreaUI
     public OptionAreaUI()
     {
         createTextFields();
+        createComboBoxes();
         createButtons();
         createWindow();
         
@@ -30,6 +32,7 @@ public class OptionAreaUI
         _mainframe.setVisible(true);
     }
     
+    
     /**
      * Creates the JTextfields of the OptionGui:
      * _totalGoalInput: JTextfield for accepting the new total goaltime
@@ -37,6 +40,16 @@ public class OptionAreaUI
     private void createTextFields()
     {
         _totalGoalInput = new JTextField("",5);
+    }
+    
+    /**
+     * Creates the ComboBoxes of the OptionGui:
+     * _resetComboBox: Types of Programs to perform weekly reset on
+     */
+    private void createComboBoxes()
+    {
+        String[] programs = {"Total", "On Goal"};
+        _resetComboBox = new JComboBox(programs);
     }
     
     /**
@@ -79,6 +92,15 @@ public class OptionAreaUI
         JPanel panel0 = new JPanel();
         panel0.add(_totalGoalInput);
         _mainframe.add(panel0);
+        
+        JPanel panel01 = new JPanel();
+        JLabel resetLabel = new JLabel("<html><span style='font-size:12px'>Resettype:</span></html>");
+        panel01.add(resetLabel);
+        _mainframe.add(panel01);
+        
+        JPanel panel02 = new JPanel();
+        panel02.add(_resetComboBox);
+        _mainframe.add(panel02);
         
         JPanel panel1 = new JPanel();
         panel1.add(_addButton);
@@ -137,4 +159,21 @@ public class OptionAreaUI
         _mainframe.dispose();
     }
     
+    /**
+     * Defaults the combobox-index to the current index
+     * @param resetProgram: the reset-program given from the settings
+     */
+    public void setResetProgram(int resetProgram)
+    {
+        _resetComboBox.setSelectedIndex(resetProgram);
+    }
+    
+    /**
+     * GetA for the _resetJComboBox
+     * @return _resetComboBox
+     */
+    public JComboBox getResetComboBox()
+    {
+        return _resetComboBox;
+    }
 }
