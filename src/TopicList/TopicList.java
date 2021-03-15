@@ -346,21 +346,20 @@ public class TopicList
         {
             t.setProgress(0);
         }
+        save();
     }
     
     /**
-     * Standard weekly reset, substracting the weekly goal and if not achieved,
-     * halves the backlog remaining
+     * Standard weekly reset, substracting the weekly goal and
+     * halves the backlog or prework
      */
     private void normalReset()
     {
         for (Topic t: _topicList)
         {
             t.setProgress(t.getProgress()-t.getGoalTime());
-            if(t.getProgress()<0)
-            {
-                t.setProgress(t.getProgress()/2);
-            }
+            t.setProgress(t.getProgress()/2);
         }
+        save();
     }
 }
