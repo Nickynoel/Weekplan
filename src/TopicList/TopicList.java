@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TopicList
 {
-    public static final File DATAFILE = new File("Weekplan.txt"); //Globally accessible file
+    public static final File DATAFILE = new File("Weekplan.csv"); //Globally accessible file
     
     private List<Topic> _topicList;
     private File _file;
@@ -115,7 +115,7 @@ public class TopicList
      */
     public void addTopic()
     {
-        _topicList.add(Topic.getInstance("New 0 60"));
+        _topicList.add(Topic.getInstance("New,0,60"));
     }
     
     /**

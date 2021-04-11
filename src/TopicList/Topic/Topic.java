@@ -33,11 +33,11 @@ public class Topic
     {
         String tmp = input.trim(); //making sure emptyspaces are only inbetween
         List<String> tmplist = new ArrayList<>();
-        Collections.addAll(tmplist, tmp.split(" ")); //splitting the input into the different parts
+        Collections.addAll(tmplist, tmp.split(",")); //splitting the input into the different parts
         
         if (isValidInput(tmplist)) //checks that below commands can be done without exception
         {
-            setTitle(tmplist.get(0).replace('#', ' ')); //'#' as blank symbol
+            setTitle(tmplist.get(0)); //'#' as blank symbol   .replace('#', ' ')
             _progress = Integer.parseInt(tmplist.get(1));
             setGoalTime(Integer.parseInt(tmplist.get(2)));
         }
@@ -89,11 +89,11 @@ public class Topic
     /**
      * Changes the titel of the topic to a given String
      *
-     * @param s (cant include '#')
+     * @param s (cant include ',')
      */
     public void setTitle(String s)
     {
-        if (!s.contains("#"))
+        if (!s.contains(","))
         {
             _title = s;
         }
@@ -177,6 +177,6 @@ public class Topic
      */
     public String toSavableString()
     {
-        return _title.replace(' ', '#') + " " + _progress + " " + _goaltime;
+        return _title + "," + _progress + "," + _goaltime;
     }
 }
