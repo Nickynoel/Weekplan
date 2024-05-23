@@ -3,10 +3,10 @@ package TopicList.Topic;
 import java.util.Comparator;
 
 /**
- * A comparator that sorts topics given their percentual progress
+ * A comparator that sorts tasks by their percentual progress
  */
 
-public class TopicPercentComperator implements Comparator
+public class TaskComparatorByProgressInPercent implements Comparator
 {
     /**
      * The actual comparation method
@@ -21,11 +21,11 @@ public class TopicPercentComperator implements Comparator
         {
             Task t1 = (Task) o1;
             Task t2 = (Task) o2;
-            if (t1.getPercentProgress()>t2.getPercentProgress())
+            if (t1.getProgressInPercent()>t2.getProgressInPercent())
             {
                 return 1;
             }
-            else if (t1.getPercentProgress()<t2.getPercentProgress())
+            else if (t1.getProgressInPercent()<t2.getProgressInPercent())
             {
                 return -1;
             }
