@@ -18,7 +18,7 @@ public class TopicList
 {
     public static final File DATAFILE = new File("Weekplan.csv"); //Globally accessible file
     
-    private List<Topic> _topicList;
+    private List<Task> _topicList;
     private File _file;
     
     /**
@@ -55,7 +55,7 @@ public class TopicList
         List<String> weekplan = reader.getList();
         for (String s : weekplan)
         {
-            _topicList.add(Topic.getInstance(s));
+            _topicList.add(Task.getInstance(s));
         }
     }
     
@@ -92,7 +92,7 @@ public class TopicList
     public void save()
     {
         List<String> list = new ArrayList<>();
-        for (Topic t : _topicList)
+        for (Task t : _topicList)
         {
             list.add(t.toSavableString());
         }
@@ -105,7 +105,7 @@ public class TopicList
      *
      * @param t: new topic
      */
-    public void add(Topic t)
+    public void add(Task t)
     {
         _topicList.add(t);
     }
@@ -115,7 +115,7 @@ public class TopicList
      */
     public void addTopic()
     {
-        _topicList.add(Topic.getInstance("New,0,60"));
+        _topicList.add(Task.getInstance("New,0,60"));
     }
     
     /**
@@ -135,7 +135,7 @@ public class TopicList
      *
      * @return _topicList
      */
-    public List<Topic> getList()
+    public List<Task> getList()
     {
         return _topicList;
     }
@@ -185,7 +185,7 @@ public class TopicList
      * @param topic: the checked topic
      * @return the topic's position
      */
-    public int indexOf(Topic topic)
+    public int indexOf(Task topic)
     {
         return _topicList.indexOf(topic);
     }
@@ -228,7 +228,7 @@ public class TopicList
      * @param i: position in the list
      * @return the topic in the position i
      */
-    public Topic get(int i)
+    public Task get(int i)
     {
         return _topicList.get(i);
     }
@@ -265,9 +265,9 @@ public class TopicList
     public int getTotalGoaltime()
     {
         int sum = 0;
-        for (Topic t : _topicList)
+        for (Task t : _topicList)
         {
-            sum += t.getGoalTime();
+            sum += t.getTargetTime();
         }
         return sum;
     }
@@ -280,7 +280,7 @@ public class TopicList
     public int getTotalProgress()
     {
         int sum = 0;
-        for (Topic t : _topicList)
+        for (Task t : _topicList)
         {
             sum += t.getProgress();
         }
@@ -296,7 +296,7 @@ public class TopicList
     public double getTotalPercentProgress()
     {
         double sum = 0.0;
-        for (Topic t : _topicList)
+        for (Task t : _topicList)
         {
             sum += Math.min(t.getPercentProgress(), 100);
         }
@@ -310,13 +310,13 @@ public class TopicList
     public void setTotalGoal(int time)
     {
         int totaltime = 0;
-        for (Topic t: _topicList)
+        for (Task t: _topicList)
         {
-            totaltime += t.getGoalTime();
+            totaltime += t.getTargetTime();
         }
-        for (Topic t: _topicList)
+        for (Task t: _topicList)
         {
-            t.setGoalTime((t.getGoalTime()*time)/totaltime);
+            t.setTargetTime((t.getTargetTime()*time)/totaltime);
         }
     }
     
@@ -342,7 +342,7 @@ public class TopicList
      */
     private void fullReset()
     {
-        for (Topic t : _topicList)
+        for (Task t : _topicList)
         {
             t.setProgress(0);
         }
@@ -355,9 +355,9 @@ public class TopicList
      */
     private void normalReset()
     {
-        for (Topic t: _topicList)
+        for (Task t: _topicList)
         {
-            t.setProgress(t.getProgress()-t.getGoalTime());
+            t.setProgress(t.getProgress()-t.getTargetTime());
             t.setProgress(t.getProgress()/2);
         }
         save();

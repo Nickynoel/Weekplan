@@ -1,6 +1,6 @@
 package Weekplan;
 
-import TopicList.Topic.Topic;
+import TopicList.Topic.Task;
 import TopicList.TopicList;
 
 import javax.swing.*;
@@ -53,7 +53,7 @@ public class WeekplanUI
     {
         _topicTitles = new ArrayList<>();
         
-        for (Topic t : _topicList.getList())
+        for (Task t : _topicList.getList())
         {
             JButton tmp = new JButton(t.getTitle());
             tmp.setBorderPainted(false);
@@ -69,9 +69,9 @@ public class WeekplanUI
     {
         _topicProgressbars = new ArrayList<>();
         
-        for (Topic t : _topicList.getList())
+        for (Task t : _topicList.getList())
         {
-            JProgressBar bar = new JProgressBar(0, t.getGoalTime());
+            JProgressBar bar = new JProgressBar(0, t.getTargetTime());
             bar.setValue(t.getProgress());
             bar.setStringPainted(true);
             _topicProgressbars.add(bar);
@@ -88,7 +88,7 @@ public class WeekplanUI
     {
         _addButtons = new ArrayList<>();
         
-        for (Topic t : _topicList.getList())
+        for (Task t : _topicList.getList())
         {
             JButton button = new JButton("add");
             _addButtons.add(button);
@@ -320,7 +320,7 @@ public class WeekplanUI
      *
      * @param topic topic corresponding the JProgressbar
      */
-    public void colorBar(Topic topic)
+    public void colorBar(Task topic)
     {
         JProgressBar bar = _topicProgressbars.get(_topicList.indexOf(topic));
         bar.setValue(topic.getProgress());
@@ -361,7 +361,7 @@ public class WeekplanUI
      *
      * @param topic: the topic which title might have changed
      */
-    public void updateTopicName(Topic topic)
+    public void updateTopicName(Task topic)
     {
         int topicNumber = _topicList.indexOf(topic);
         _topicTitles.get(topicNumber).setText(topic.getTitle());
@@ -372,10 +372,10 @@ public class WeekplanUI
      *
      * @param topic: the topic which goal might have changed
      */
-    public void updateGoal(Topic topic)
+    public void updateGoal(Task topic)
     {
         int topicNumber = _topicList.indexOf(topic);
-        _topicProgressbars.get(topicNumber).setMaximum(topic.getGoalTime());
+        _topicProgressbars.get(topicNumber).setMaximum(topic.getTargetTime());
     }
     
     /**

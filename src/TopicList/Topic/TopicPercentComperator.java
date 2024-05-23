@@ -19,8 +19,8 @@ public class TopicPercentComperator implements Comparator
     {
         try
         {
-            Topic t1 = (Topic) o1;
-            Topic t2 = (Topic) o2;
+            Task t1 = (Task) o1;
+            Task t2 = (Task) o2;
             if (t1.getPercentProgress()>t2.getPercentProgress())
             {
                 return 1;

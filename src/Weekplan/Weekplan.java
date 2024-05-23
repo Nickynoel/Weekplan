@@ -3,7 +3,7 @@ package Weekplan;
 import AddArea.AddArea;
 import OptionArea.OptionArea;
 import TopicEditArea.TopicEditArea;
-import TopicList.Topic.Topic;
+import TopicList.Topic.Task;
 import TopicList.TopicList;
 
 import javax.swing.*;
@@ -38,7 +38,7 @@ public class Weekplan
             title.addActionListener(event ->
             {
                 int topicnumber = _ui.getTitleButtonList().indexOf(title);
-                Topic topic = _topiclist.get(topicnumber);
+                Task topic = _topiclist.get(topicnumber);
                 final TopicEditArea area = new TopicEditArea(topic, _ui.getMainframe());
                 
                 area.addPropertyChangeListener(evt ->
@@ -57,7 +57,7 @@ public class Weekplan
             button.addActionListener(event ->
             {
                 int topicnumber = _ui.getAddButtonlist().indexOf(button);
-                Topic topic = _topiclist.get(topicnumber);
+                Task topic = _topiclist.get(topicnumber);
                 final AddArea area = new AddArea(topic, _ui.getMainframe());
                 
                 area.addPropertyChangeListener(evt -> _ui.colorBar(topic));

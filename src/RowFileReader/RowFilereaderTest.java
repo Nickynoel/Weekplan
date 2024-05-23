@@ -28,17 +28,17 @@ public class RowFilereaderTest
         {
             e.printStackTrace();
         }
-        
+
         //actual testclass reading the testfile
         File file = new File("Test123.txt");
         RowFilereader reader = RowFilereader.getInstance(file);
-        
+
         RowFilereader readerString = RowFilereader.getInstance("Test123.txt");
         assertNotNull(reader);
         assertTrue(reader.getList().get(0).equals("ad dwd TeST"));
         assertTrue(readerString.getArray()[0].equals("ad dwd TeST"));
         assertTrue(reader.getArray()[1].equals("asf"));
-        
+
         //delete testfile
         file.delete();
     }

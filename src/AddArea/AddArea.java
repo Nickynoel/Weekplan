@@ -1,6 +1,6 @@
 package AddArea;
 
-import TopicList.Topic.Topic;
+import TopicList.Topic.Task;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,11 +16,11 @@ import java.beans.PropertyChangeSupport;
 public class AddArea
 {
     private AddAreaUI _ui;
-    private Topic _topic;
+    private Task _topic;
     
     private PropertyChangeSupport _support; //basically observable just newer
     
-    public AddArea(Topic topic, JFrame frame)
+    public AddArea(Task topic, JFrame frame)
     {
         _support = new PropertyChangeSupport(this);
         _topic = topic;

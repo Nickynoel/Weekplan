@@ -1,6 +1,6 @@
 package TopicEditArea;
 
-import TopicList.Topic.Topic;
+import TopicList.Topic.Task;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,7 @@ import java.beans.PropertyChangeSupport;
  */
 public class TopicEditArea
 {
-    private Topic _topic;
+    private Task _topic;
     private TopicEditAreaUI _ui;
     
     private String _topicName; //temporary name of the topic
@@ -21,12 +21,12 @@ public class TopicEditArea
     
     private PropertyChangeSupport _support;
     
-    public TopicEditArea(Topic topic, JFrame frame)
+    public TopicEditArea(Task topic, JFrame frame)
     {
         _support = new PropertyChangeSupport(this);
         _topic = topic;
         _topicName = topic.getTitle();
-        _topicLength = topic.getGoalTime();
+        _topicLength = topic.getTargetTime();
         
         createUI(frame);
         addListener();
@@ -79,7 +79,7 @@ public class TopicEditArea
         _ui.getConfirmButton().addActionListener(event ->
         {
             _topic.setTitle(_topicName);
-            _topic.setGoalTime(_topicLength);
+            _topic.setTargetTime(_topicLength);
             confirmChange(1);
             _ui.close();
         });

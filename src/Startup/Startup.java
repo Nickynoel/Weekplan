@@ -6,17 +6,18 @@ import Weekplan.Weekplan;
 
 public class Startup
 {
-    private static TopicList _topicList;
-    private static Settings _settingList;
+    private static TopicList _listOfTasks;
+    private static Settings _listOfSettings;
     
     public static void main(String[] args)
     {
-        _topicList = TopicList.getInstance(TopicList.DATAFILE);
-        _settingList = Settings.getInstance(Settings.SETTINGSFILE);
-        _topicList.addIfEmpty();
-        if(_settingList.checkReset())
+        _listOfTasks = TopicList.getInstance(TopicList.DATAFILE);
+        _listOfSettings = Settings.getInstance(Settings.SETTINGSFILE);
+
+        _listOfTasks.addIfEmpty();
+        if(_listOfSettings.checkReset())
         {
-            _topicList.reset(_settingList.getResetProgram());
+            _listOfTasks.reset(_listOfSettings.getResetProgram());
         }
         new Weekplan();
     }

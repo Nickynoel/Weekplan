@@ -22,12 +22,12 @@ public class RowFileWriterTest
         List<String> list = new ArrayList<>();
         list.add("test");
         File file = new File("Test123.txt");
-        
+
         //write testfile
         RowFileWriter wr = RowFileWriter.getInstance(list, file);
         wr.saveFile();
         wr.addRow("t m p");
-        
+
         //actual testclass
         try (Scanner res = new Scanner(file))
         {
@@ -38,7 +38,7 @@ public class RowFileWriterTest
         {
             e.printStackTrace();
         }
-        
+
         //delete testfile
         file.delete();
     }
