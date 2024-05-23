@@ -115,7 +115,7 @@ public class TopicList
      */
     public void addTopic()
     {
-        _topicList.add(Task.getInstance("New,0,60"));
+        _topicList.add(Task.getInstance());
     }
     
     /**
@@ -298,7 +298,7 @@ public class TopicList
         double sum = 0.0;
         for (Task t : _topicList)
         {
-            sum += Math.min(t.getPercentProgress(), 100);
+            sum += Math.min(t.getProgressInPercent(), 100);
         }
         return sum;
     }
