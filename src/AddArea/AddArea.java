@@ -1,6 +1,6 @@
 package AddArea;
 
-import TopicList.Topic.Task;
+import TaskList.Task.Task;
 
 import javax.swing.*;
 import java.awt.*;

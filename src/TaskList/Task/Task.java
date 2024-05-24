@@ -1,8 +1,4 @@
-package TopicList.Topic;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+package TaskList.Task;
 
 /**
  * Class of the main component of the program, a task consisting of
@@ -11,6 +7,7 @@ import java.util.List;
  */
 
 //TODO: ToString and ToSavableString Rework?
+// TODO: Overwrite equals?
 
 public class Task
 {

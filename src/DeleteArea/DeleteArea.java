@@ -1,6 +1,6 @@
 package DeleteArea;
 
-import TopicList.TopicList;
+import TaskList.TaskList;
 import Weekplan.Weekplan;
 
 import javax.swing.event.ListSelectionEvent;
@@ -15,13 +15,13 @@ import javax.swing.event.ListSelectionListener;
 public class DeleteArea
 {
     private DeleteAreaUI _ui;
-    private TopicList _topicList;
+    private TaskList _topicList;
     
     public DeleteArea()
     {
-        _topicList = TopicList.getInstance(TopicList.DATAFILE);
+        _topicList = TaskList.getInstance();
         _ui = new DeleteAreaUI();
-        _ui.setList(_topicList.getTitleArray());
+        _ui.setList(_topicList.getArrayOfTaskTitles());
         addListener();
     }
     
@@ -55,8 +55,8 @@ public class DeleteArea
         _ui.getDeleteButton().addActionListener(event ->
         {
             int[] list = _ui.getJList().getSelectedIndices(); //returns a list of indeces in increasing order
-            _topicList.remove(list);
-            _topicList.save();
+            _topicList.removeTasks(list);
+            _topicList.saveTasksOnFile();
             _ui.getBackButton().doClick();
         });
         

@@ -3,8 +3,8 @@ package Weekplan;
 import AddArea.AddArea;
 import OptionArea.OptionArea;
 import TopicEditArea.TopicEditArea;
-import TopicList.Topic.Task;
-import TopicList.TopicList;
+import TaskList.Task.Task;
+import TaskList.TaskList;
 
 import javax.swing.*;
 
@@ -13,12 +13,12 @@ import javax.swing.*;
  */
 public class Weekplan
 {
-    private TopicList _topiclist;
+    private TaskList _topiclist;
     private WeekplanUI _ui;
     
     public Weekplan()
     {
-        _topiclist = TopicList.getInstance(TopicList.DATAFILE);
+        _topiclist = TaskList.getInstance();
         _ui = new WeekplanUI(_topiclist);
         addListener();
     }
@@ -69,20 +69,20 @@ public class Weekplan
         //listener for saving
         _ui.getSaveButton().addActionListener(event ->
         {
-            _topiclist.save();
+            _topiclist.saveTasksOnFile();
         });
         
         //listener for options
         _ui.getOptionButton().addActionListener(event ->
         {
-            _topiclist.save();
+            _topiclist.saveTasksOnFile();
             _ui.close();
             new OptionArea();
         });
         
         _ui.getCloseButton().addActionListener(event ->
         {
-            _topiclist.save();
+            _topiclist.saveTasksOnFile();
             _ui.close();
         });
     }

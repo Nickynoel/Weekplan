@@ -1,23 +1,22 @@
 package Startup;
 
 import Settings.Settings;
-import TopicList.TopicList;
+import TaskList.TaskList;
 import Weekplan.Weekplan;
 
 public class Startup
 {
-    private static TopicList _listOfTasks;
+    private static TaskList _listOfTasks;
     private static Settings _listOfSettings;
     
     public static void main(String[] args)
     {
-        _listOfTasks = TopicList.getInstance(TopicList.DATAFILE);
+        _listOfTasks = TaskList.getInstance();
         _listOfSettings = Settings.getInstance(Settings.SETTINGSFILE);
 
-        _listOfTasks.addIfEmpty();
         if(_listOfSettings.checkReset())
         {
-            _listOfTasks.reset(_listOfSettings.getResetProgram());
+            _listOfTasks.resetProgress(_listOfSettings.getResetProgram());
         }
         new Weekplan();
     }

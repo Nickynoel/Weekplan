@@ -1,7 +1,7 @@
 package OptionArea;
 
 import Settings.Settings;
-import TopicList.TopicList;
+import TaskList.TaskList;
 import DeleteArea.DeleteArea;
 import Weekplan.Weekplan;
 
@@ -51,10 +51,10 @@ public class OptionArea
                 int number = Integer.parseInt(tmp);
                 if (number > 0)
                 {
-                    TopicList list = TopicList.getInstance(TopicList.DATAFILE);
+                    TaskList list = TaskList.getInstance();
                     
-                    list.setTotalGoal(number * 60);//Turn entry from hours to minutes
-                    list.save();
+                    list.setTotalTargetTime(number * 60);//Turn entry from hours to minutes
+                    list.saveTasksOnFile();
                     _ui.getTotalGoalInput().setText("");
                 }
             }
@@ -72,9 +72,9 @@ public class OptionArea
         
         _ui.getAddButton().addActionListener(event ->
         {
-            TopicList list = TopicList.getInstance(TopicList.DATAFILE);
-            list.addTopic();
-            list.save();
+            TaskList list = TaskList.getInstance();
+            list.addNewEmptyTask();
+            list.saveTasksOnFile();
             _ui.close();
             Weekplan plan = new Weekplan();
             plan.activateNewTopic();

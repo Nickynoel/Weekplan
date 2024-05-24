@@ -1,12 +1,6 @@
-package TopicList.Topic;
+package TaskList.Task;
 
 import org.junit.Test;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 import static org.junit.Assert.*;
 

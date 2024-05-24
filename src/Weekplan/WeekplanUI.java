@@ -1,7 +1,7 @@
 package Weekplan;
 
-import TopicList.Topic.Task;
-import TopicList.TopicList;
+import TaskList.Task.Task;
+import TaskList.TaskList;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class WeekplanUI
 {
-    private TopicList _topicList;
+    private TaskList _topicList;
     
     private List<JButton> _topicTitles;
     private List<JProgressBar> _topicProgressbars;
@@ -33,7 +33,7 @@ public class WeekplanUI
      *
      * @param list the list of topics
      */
-    public WeekplanUI(TopicList list)
+    public WeekplanUI(TaskList list)
     {
         _topicList = list;
         createTitles();
@@ -105,7 +105,7 @@ public class WeekplanUI
     {
         _totalLabel = new JLabel("Error");
         
-        _totalProgress = new JProgressBar(0, _topicList.size() * 100);
+        _totalProgress = new JProgressBar(0, _topicList.getSize() * 100);
         _totalProgress.setStringPainted(true);
     }
     
@@ -162,7 +162,7 @@ public class WeekplanUI
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1));
         
-        for (int i = 0; i < _topicList.size(); i++)
+        for (int i = 0; i < _topicList.getSize(); i++)
         {
             JPanel tmp = new JPanel();
             tmp.setLayout(new GridBagLayout()); //makes sure that the labels are in the center
@@ -183,7 +183,7 @@ public class WeekplanUI
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1));
         
-        for (int i = 0; i < _topicList.size(); i++)
+        for (int i = 0; i < _topicList.getSize(); i++)
         {
             JPanel tmp = new JPanel();
             tmp.setLayout(new GridBagLayout()); //makes sure that the progressbars are in the center
@@ -204,7 +204,7 @@ public class WeekplanUI
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1));
         
-        for (int i = 0; i < _topicList.size(); i++)
+        for (int i = 0; i < _topicList.getSize(); i++)
         {
             JPanel tmp = new JPanel();
             tmp.setLayout(new GridBagLayout()); //makes sure that the buttons are in the center
@@ -284,8 +284,8 @@ public class WeekplanUI
     private void updateTotalLabel()
     {
         String sign = "";
-        int progressHours = _topicList.getTotalProgress() / 60;
-        int progressMinutes = (_topicList.getTotalProgress() / 6) % 10;
+        int progressHours = _topicList.getTotalProgressTime() / 60;
+        int progressMinutes = (_topicList.getTotalProgressTime() / 6) % 10;
         
         if (progressHours < 0 || progressMinutes < 0) //If the progress is negative, create an extra sign to display properly
         {
@@ -294,8 +294,8 @@ public class WeekplanUI
             sign = "-";
         }
         
-        int goalHours = _topicList.getTotalGoaltime() / 60;
-        int goalMinutes = (_topicList.getTotalGoaltime() / 6) % 10;
+        int goalHours = _topicList.getTotalTargetTime() / 60;
+        int goalMinutes = (_topicList.getTotalTargetTime() / 6) % 10;
         if (progressMinutes == 0) //if progress is ",0" then ignore that
         {
             _totalLabel.setText(sign + progressHours + " of " + goalHours + "," + goalMinutes + " hours");
@@ -311,7 +311,7 @@ public class WeekplanUI
      */
     private void colorTotalBar()
     {
-        _totalProgress.setValue((int)(_topicList.getTotalPercentProgress())); //setvalue requires an integer, not a double
+        _totalProgress.setValue((int)(_topicList.getTotalProgressInPercent())); //setvalue requires an integer, not a double
     }
     
     
