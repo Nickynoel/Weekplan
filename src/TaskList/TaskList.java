@@ -234,7 +234,7 @@ public class TaskList
     /**
      * Returns the percentage progress for the whole list
      * capping the percentage of a single topic to 100
-     *
+     * TODO: This all sounds unintuitive
      * @return total percent progress
      */
     public double getTotalProgressInPercent()
