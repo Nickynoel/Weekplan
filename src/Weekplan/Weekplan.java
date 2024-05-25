@@ -2,7 +2,7 @@ package Weekplan;
 
 import AddArea.AddArea;
 import OptionArea.OptionArea;
-import TopicEditArea.TopicEditArea;
+import TaskEditArea.TaskEditArea;
 import TaskList.Task.Task;
 import TaskList.TaskList;
 
@@ -13,84 +13,78 @@ import javax.swing.*;
  */
 public class Weekplan
 {
-    private TaskList _topiclist;
+    private TaskList _listOfTasks;
     private WeekplanUI _ui;
     
     public Weekplan()
     {
-        _topiclist = TaskList.getInstance();
-        _ui = new WeekplanUI(_topiclist);
+        _listOfTasks = TaskList.getInstance();
+        _ui = new WeekplanUI(_listOfTasks);
         addListener();
     }
     
     /**
      * Adds the listeners of all components in the UI:
-     * AddButton.actionlistener: Opens AddArea and gives it an observer
-     * Label.mouselistener: Opens TopicArea and gives it an observer
-     * SaveButton.actionlistener: Saves the topic-values onto the file TopicList.FILENAME
-     * OptionButton.actionlistener: Closes window and opens OptionArea
+     * AddButton.actionListener: Opens AddArea and gives it an observer
+     * Label.mouseListener: Opens TopicArea and gives it an observer
+     * SaveButton.actionListener: Saves the topic-values onto the file TopicList.FILENAME
+     * OptionButton.actionListener: Closes window and opens OptionArea
      */
     private void addListener()
     {
-        //listeners for topic-options
+        //listeners for task-options on the left side
         for (JButton title : _ui.getTitleButtonList())
         {
             title.addActionListener(event ->
             {
-                int topicnumber = _ui.getTitleButtonList().indexOf(title);
-                Task topic = _topiclist.get(topicnumber);
-                final TopicEditArea area = new TopicEditArea(topic, _ui.getMainframe());
+                int taskNumber = _ui.getTitleButtonList().indexOf(title);
+                Task task = _listOfTasks.get(taskNumber);
+                final TaskEditArea area = new TaskEditArea(task, _ui.getMainframe());
                 
-                area.addPropertyChangeListener(evt ->
-                {
-                    _ui.updateTopicName(topic);
-                    _ui.updateGoal(topic);
-                    _ui.colorBar(topic);
-                });
+                area.addPropertyChangeListener(evt -> _ui.updateTask(task));
                 area.showUI();
             });
         }
         
-        //listeners for adding values
+        //listeners for adding values on the right side
         for (JButton button : _ui.getAddButtonlist())
         {
             button.addActionListener(event ->
             {
-                int topicnumber = _ui.getAddButtonlist().indexOf(button);
-                Task topic = _topiclist.get(topicnumber);
-                final AddArea area = new AddArea(topic, _ui.getMainframe());
+                int topicNumber = _ui.getAddButtonlist().indexOf(button);
+                Task task = _listOfTasks.get(topicNumber);
+                final AddArea area = new AddArea(task, _ui.getMainframe());
                 
-                area.addPropertyChangeListener(evt -> _ui.colorBar(topic));
+                area.addPropertyChangeListener(evt -> _ui.updateProgress(task));
                 area.showUI();
             });
         }
         
         
         //listener for saving
-        _ui.getSaveButton().addActionListener(event ->
-        {
-            _topiclist.saveTasksOnFile();
-        });
+        _ui.getSaveButton().addActionListener(event -> _listOfTasks.saveTasksOnFile());
         
-        //listener for options
+        //listener for options - TODO: Options into a JMenuBar
         _ui.getOptionButton().addActionListener(event ->
         {
-            _topiclist.saveTasksOnFile();
+            _listOfTasks.saveTasksOnFile();
             _ui.close();
             new OptionArea();
         });
         
         _ui.getCloseButton().addActionListener(event ->
         {
-            _topiclist.saveTasksOnFile();
+            _listOfTasks.saveTasksOnFile();
             _ui.close();
         });
     }
     
     /**
-     * Opens the TopicArea of the newest created Topic, aka the upmost Topic with the title "New"
+     * Opens the editing field of a (newly created) task
+     * - the "TopicArea" (TODO: Rename) -
+     * with the title "New Task"
      */
-    public void activateNewTopic()
+    public void openTaskEdit()
     {
         _ui.openNewTopicMenu();
     }

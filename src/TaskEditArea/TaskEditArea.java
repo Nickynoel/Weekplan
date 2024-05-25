@@ -1,4 +1,4 @@
-package TopicEditArea;
+package TaskEditArea;
 
 import TaskList.Task.Task;
 
@@ -11,17 +11,17 @@ import java.beans.PropertyChangeSupport;
  * Functional class TopicArea for the window that allows editing basic values of the given Topic:
  * Name, goallength
  */
-public class TopicEditArea
+public class TaskEditArea
 {
     private Task _topic;
-    private TopicEditAreaUI _ui;
+    private TaskEditAreaUI _ui;
     
     private String _topicName; //temporary name of the topic
     private int _topicLength; //temporary length of the topic
     
     private PropertyChangeSupport _support;
     
-    public TopicEditArea(Task topic, JFrame frame)
+    public TaskEditArea(Task topic, JFrame frame)
     {
         _support = new PropertyChangeSupport(this);
         _topic = topic;
@@ -38,7 +38,7 @@ public class TopicEditArea
      */
     private void createUI(JFrame frame)
     {
-        _ui = new TopicEditAreaUI();
+        _ui = new TaskEditAreaUI();
         _ui.setTitle(_topic.getTitle() + ": " + _topic.getProgress() + " Min.");
         _ui.setPosition(new Point(frame.getLocation().x + 50, frame.getLocation().y + 100)); //location relative to the frame in the background
         updateTopicLabel();

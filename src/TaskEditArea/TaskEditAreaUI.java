@@ -1,4 +1,4 @@
-package TopicEditArea;
+package TaskEditArea;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +7,7 @@ import java.awt.*;
  * UI of TopicArea
  */
 
-public class TopicEditAreaUI
+public class TaskEditAreaUI
 {
     private JLabel _topicLabel;
     private JTextField _topicField;
@@ -26,7 +26,7 @@ public class TopicEditAreaUI
     /**
      * Initializing the UI
      */
-    public TopicEditAreaUI()
+    public TaskEditAreaUI()
     {
         createLabels();
         createTextfields();

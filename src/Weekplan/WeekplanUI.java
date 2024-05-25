@@ -429,11 +429,30 @@ public class WeekplanUI
     
     /**
      * Opens a newly created topic standardized with the title "New"
-     * by opening the first entry of "New" in the _topicList
+     * by opening the first entry of "New Task" in the _topicList
+     * TODO: Variable for "New Task" - oder direkter Bezug?
      */
     public void openNewTopicMenu()
     {
-        int index = _topicList.indexOf("New");
+        int index = _topicList.indexOf("New Task");
         _topicTitles.get(index).doClick();
+    }
+
+    /**
+     * Updates the UI when a certain task is changed
+     * @param task: task which was edited
+     */
+    public void updateTask(Task task){
+        updateTopicName(task);
+        updateGoal(task);
+        colorBar(task);
+    }
+
+    /**
+     * A change of progress is signaled to the UI and shown appropriately
+     * @param task: task in which the progress changed
+     */
+    public void updateProgress(Task task){
+        colorBar(task);
     }
 }

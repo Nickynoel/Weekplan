@@ -77,7 +77,7 @@ public class OptionArea
             list.saveTasksOnFile();
             _ui.close();
             Weekplan plan = new Weekplan();
-            plan.activateNewTopic();
+            plan.openTaskEdit();
         });
         
         _ui.getDeleteButton().addActionListener(event ->
