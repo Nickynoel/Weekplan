@@ -7,7 +7,7 @@ package TaskList.Task;
  */
 
 //TODO: ToString and ToSavableString Rework?
-// TODO: Overwrite equals?
+//TODO: Overwrite equals?
 
 public class Task
 {
@@ -26,10 +26,10 @@ public class Task
         return new Task();
     }
 
-    public static Task getInstance(String input){
-        if (isValidInput(input))
+    public static Task getInstance(String csvInput){
+        if (isValidCSVInput(csvInput))
         {
-            String[] splitInput = input.split(",");
+            String[] splitInput = csvInput.split(",");
             return new Task(splitInput[0], Integer.parseInt(splitInput[1]), Integer.parseInt(splitInput[2]));
         }
         else {
@@ -37,7 +37,7 @@ public class Task
         }
     }
 
-    private static boolean isValidInput(String input){
+    private static boolean isValidCSVInput(String input){
         String[] tmpList = input.split(",");
         try{
             String title = tmpList[0];
@@ -85,7 +85,7 @@ public class Task
     }
 
     public double getProgressInPercent() {
-        return (_currentProgress * 100.0) / _targetTime;
+        return (_currentProgress * 100.0) / _targetTime; //No max for comparison TODO: Yet
     }
 
     public int getTargetTime() {
