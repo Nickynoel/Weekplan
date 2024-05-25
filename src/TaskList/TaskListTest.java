@@ -10,15 +10,15 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * The Testclass for TaskList
+ * The Test class for TaskList
  */
 
 public class TaskListTest
 {
     File testFile = new File("Test.csv");
-    Task task1 = Task.getInstance("First" , 5, 50);
-    Task task2 = Task.getInstance("Second" , 25, 50);
-    Task task3 = Task.getInstance("Third" , 100, 50);
+    Task task1 = Task.getInstance("First", 5, 50);
+    Task task2 = Task.getInstance("Second", 25, 50);
+    Task task3 = Task.getInstance("Third", 100, 50);
 
     @Test
     public void testDefaultConstructor()
@@ -30,11 +30,10 @@ public class TaskListTest
     @Test
     public void testFileConstructor()
     {
-
         TaskList taskList = TaskList.getInstance(testFile);
         assertEquals(taskList.getFile(), new File("Test.csv"));
         assertEquals(taskList.getList().size(), 1);
-        testFile.delete();
+        assertTrue(testFile.delete());
     }
 
     @Test
@@ -42,7 +41,7 @@ public class TaskListTest
     {
         TaskList taskList = TaskList.getInstance(testFile);
         assertEquals(taskList.getSize(), 1);
-        testFile.delete();
+        assertTrue(testFile.delete());
     }
 
     @Test
@@ -50,11 +49,11 @@ public class TaskListTest
     {
         TaskList taskList = TaskList.getInstance(testFile);
         taskList.addNewEmptyTask();
-        assertTrue(taskList.getSize() == 2);
+        assertEquals(taskList.getSize(), 2);
         taskList.addNewEmptyTask();
-        assertFalse(taskList.getSize() == 2);
-        assertTrue(taskList.getSize() == 3);
-        testFile.delete();
+        assertEquals(taskList.getSize(), 2);
+        assertEquals(taskList.getSize(), 3);
+        assertTrue(testFile.delete());
     }
 
     @Test
@@ -63,8 +62,8 @@ public class TaskListTest
         TaskList taskList = TaskList.getInstance(testFile);
         taskList.addTask(task1);
         taskList.addTask(task1);
-        assertTrue(taskList.getSize() == 3);
-        testFile.delete();
+        assertEquals(taskList.getSize(), 3);
+        assertTrue(testFile.delete());
     }
 
     @Test
@@ -73,9 +72,9 @@ public class TaskListTest
         TaskList taskList = TaskList.getInstance(testFile);
         taskList.addTask(task1);
         taskList.addTask(task3);
-        assertTrue(taskList.indexOf(task3) == 2);
-        assertTrue(taskList.indexOf("First") == 1);
-        testFile.delete();
+        assertEquals(taskList.indexOf(task3), 2);
+        assertEquals(taskList.indexOf("First"), 1);
+        assertTrue(testFile.delete());
     }
 
     @Test
@@ -84,20 +83,20 @@ public class TaskListTest
         TaskList taskList = TaskList.getInstance(testFile);
         int[] tmp = {0};
         taskList.removeTasks(tmp);
-        assertTrue(taskList.getSize() == 0);
+        assertEquals(taskList.getSize(), 0);
         taskList.addTask(task1);
         taskList.addTask(task3);
         taskList.addTask(task2);
         taskList.addTask(task2);
         taskList.addTask(task2);
 
-        int[] tmp2 = {1,3};
+        int[] tmp2 = {1, 3};
         taskList.removeTasks(tmp2);
-        assertTrue(taskList.getSize() == 3);
+        assertEquals(taskList.getSize(), 3);
         assertEquals(taskList.get(0), task1);
         assertEquals(taskList.get(1), task2);
         assertEquals(taskList.get(2), task2);
-        testFile.delete();
+        assertTrue(testFile.delete());
     }
 
     @Test
@@ -107,7 +106,7 @@ public class TaskListTest
         assertThrows(IndexOutOfBoundsException.class, () -> taskList.get(1));
         taskList.addTask(task1);
         assertEquals(taskList.get(1), task1);
-        testFile.delete();
+        assertTrue(testFile.delete());
     }
 
     @Test
@@ -121,7 +120,7 @@ public class TaskListTest
         assertEquals(taskList2.get(1).getTitle(), task3.getTitle());
         assertEquals(taskList2.get(1).getProgress(), task3.getProgress());
         assertEquals(taskList2.get(1).getTargetTime(), task3.getTargetTime());
-        testFile.delete();
+        assertTrue(testFile.delete());
     }
 
     @Test
@@ -132,9 +131,9 @@ public class TaskListTest
         taskList.addTask(task1);
         String[] titleArray = {"New Task", "Second", "First"};
         List<String> titleList = Arrays.asList("New Task", "Second", "First");
-        assertEquals(taskList.getArrayOfTaskTitles(), titleArray);
+        assertArrayEquals(taskList.getArrayOfTaskTitles(), titleArray);
         assertEquals(taskList.getListOfTaskTitles(), titleList);
-        testFile.delete();
+        assertTrue(testFile.delete());
     }
 
     @Test
@@ -143,7 +142,7 @@ public class TaskListTest
         TaskList taskList = TaskList.getInstance(testFile);
         taskList.addTask(task2);
         assertEquals(taskList.getTotalTargetTime(), 110);
-        testFile.delete();
+        assertTrue(testFile.delete());
     }
 
     @Test
@@ -152,7 +151,7 @@ public class TaskListTest
         TaskList taskList = TaskList.getInstance(testFile);
         taskList.addTask(task2);
         assertEquals(taskList.getTotalProgressTime(), 25);
-        testFile.delete();
+        assertTrue(testFile.delete());
     }
 
     @Test
@@ -160,8 +159,8 @@ public class TaskListTest
     {
         TaskList taskList = TaskList.getInstance(testFile);
         taskList.addTask(task2);
-        assertTrue(taskList.getTotalProgressInPercent() == 50.0);
-        testFile.delete();
+        assertEquals(taskList.getTotalProgressInPercent(), 50.0, 0.001);
+        assertTrue(testFile.delete());
     }
 
     @Test
@@ -174,7 +173,7 @@ public class TaskListTest
         assertEquals(taskList.getTotalTargetTime(), 210);
         taskList.setTotalTargetTime(420);
         assertEquals(task3.getTargetTime(), 100);
-        testFile.delete();
+        assertTrue(testFile.delete());
     }
 
     @Test
@@ -183,17 +182,16 @@ public class TaskListTest
         TaskList taskList = TaskList.getInstance(testFile);
         taskList.get(0).addProgress(120);
         taskList.resetProgress(1);
-        //(120 - 60) / 2
-        assertTrue(taskList.getTotalProgressTime() == 30);
+        // (progress - target) / 2 -> (120 - 60) / 2
+        assertEquals(taskList.getTotalProgressTime(), 30);
         taskList.resetProgress(0);
-        assertTrue(taskList.getTotalProgressTime() == 0);
-        testFile.delete();
+        assertEquals(taskList.getTotalProgressTime(), 0);
+        assertTrue(testFile.delete());
     }
-
 
 }
 
-/**
+/*
  * Functions to Test:
  * checkReset()??? maybe
  *
@@ -202,6 +200,6 @@ public class TaskListTest
  *     public void test()
  *     {
  *         TaskList taskList = TaskList.getInstance(testFile);
- *         testFile.delete();
+ *         assertTrue(testFile.delete());
  *     }
  */
