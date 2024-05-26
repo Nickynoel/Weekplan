@@ -14,7 +14,7 @@ public class TaskTest
     public void testDefaultConstructor()
     {
         Task task = Task.getInstance();
-        assertEquals(task.getTitle(),"New Task");
+        assertEquals(task.getTitle(),Task.DEFAULTNAME);
         assertTrue(task.getProgress() == 0);
         assertTrue(task.getTargetTime() == 60);
 

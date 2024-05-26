@@ -11,6 +11,8 @@ package TaskList.Task;
 
 public class Task
 {
+    public static final String DEFAULTNAME = "New Task";
+
     private String _name;
     private int _currentProgress;
     private int _targetTime;
@@ -59,7 +61,7 @@ public class Task
     }
 
     private Task(){
-        _name = "New Task";
+        _name = DEFAULTNAME;
         _currentProgress = 0;
         _targetTime = 60;
     }

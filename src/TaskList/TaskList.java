@@ -234,7 +234,10 @@ public class TaskList
     /**
      * Returns the percentage progress for the whole list
      * capping the percentage of a single topic to 100
-     * TODO: This all sounds unintuitive
+     *
+     * The Progressbar needs an int for progress, hence the total boundaries are
+     * (0,n*100), not (0,100) -> Thanks Java
+     *
      * @return total percent progress
      */
     public double getTotalProgressInPercent()
