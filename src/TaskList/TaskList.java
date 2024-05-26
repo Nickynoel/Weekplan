@@ -189,7 +189,7 @@ public class TaskList
 
     /**
      * Removes the topics in the positions, given by an array, of the _topicList
-     *
+     * TODO: as list maybe -> requires no duplicates
      * @param array: indices of topics in the list to be removed
      */
     public void removeTasks(int[] array)

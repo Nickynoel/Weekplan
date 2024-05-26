@@ -5,6 +5,7 @@ import Weekplan.Weekplan;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.util.List;
 
 /**
  * Functional class DeleteArea, in which the user is able to delete topics out of the TopicList
@@ -15,13 +16,13 @@ import javax.swing.event.ListSelectionListener;
 public class DeleteArea
 {
     private DeleteAreaUI _ui;
-    private TaskList _topicList;
+    private TaskList _taskList;
     
     public DeleteArea()
     {
-        _topicList = TaskList.getInstance();
+        _taskList = TaskList.getInstance();
         _ui = new DeleteAreaUI();
-        _ui.setList(_topicList.getArrayOfTaskTitles());
+        _ui.setList(_taskList.getArrayOfTaskTitles());
         addListener();
     }
     
@@ -55,16 +56,21 @@ public class DeleteArea
         _ui.getDeleteButton().addActionListener(event ->
         {
             int[] list = _ui.getJList().getSelectedIndices(); //returns a list of indeces in increasing order
-            _topicList.removeTasks(list);
-            _topicList.saveTasksOnFile();
-            _ui.getBackButton().doClick();
+            _taskList.removeTasks(list);
+            _taskList.saveTasksOnFile();
+            exitDeleteArea();
         });
         
         //Back to mainscreen
         _ui.getBackButton().addActionListener(event ->
         {
-            _ui.close();
-            new Weekplan();
+            exitDeleteArea();
         });
+    }
+
+    private void exitDeleteArea()
+    {
+        _ui.close();
+        new Weekplan();
     }
 }

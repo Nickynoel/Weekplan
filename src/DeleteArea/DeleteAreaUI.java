@@ -9,8 +9,8 @@ import java.awt.*;
 
 public class DeleteAreaUI
 {
-    private JLabel _label;
-    private JList _list;
+    private JLabel _titleLabel;
+    private JList _jListOfTasks;
     private JButton _deleteButton;
     private JButton _backButton;
     
@@ -41,15 +41,15 @@ public class DeleteAreaUI
      */
     private void createLabels()
     {
-        _label = new JLabel("List of current topics");
+        _titleLabel = new JLabel("List of current tasks");
     }
     
     /**
-     * Creates the JList consisting of the topics in the TopicList
+     * Creates the JList consisting of the tasks in the TaskList
      */
     private void createList()
     {
-        _list = new JList();
+        _jListOfTasks = new JList();
     }
     
     /**
@@ -69,35 +69,35 @@ public class DeleteAreaUI
     private void createPanels()
     {
         _topPanel = new JPanel();
-        _topPanel = generateToppanel();
+        _topPanel = generateTopPanel();
         
         _centerPanel = new JPanel();
-        _centerPanel = generateCenterpanel();
+        _centerPanel = generateCenterPanel();
         
         _botPanel = new JPanel();
-        _botPanel = generateBotpanel();
+        _botPanel = generateBotPanel();
     }
     
     /**
      * Initialization of the _topPanel, containing the Label describing the action
-     * @return the _toppanel
+     * @return the _topPanel
      */
-    private JPanel generateToppanel()
+    private JPanel generateTopPanel()
     {
         JPanel panel = new JPanel();
-        panel.add(_label);
+        panel.add(_titleLabel);
         
         return panel;
     }
     
     /**
-     * Initialization of the _centerPanel, containing the textfield for the input
+     * Initialization of the _centerPanel, containing the JList for the input
      * @return the _centerPanel
      */
-    private JPanel generateCenterpanel()
+    private JPanel generateCenterPanel()
     {
         JPanel panel = new JPanel();
-        panel.add(_list);
+        panel.add(_jListOfTasks);
         return panel;
     }
     
@@ -105,7 +105,7 @@ public class DeleteAreaUI
      * Initialization of the _botPanel, containing the two buttons for confirming and declining
      * @return the _botPanel
      */
-    private JPanel generateBotpanel()
+    private JPanel generateBotPanel()
     {
         JPanel panel1 = new JPanel();
         panel1.add(_deleteButton);
@@ -133,7 +133,7 @@ public class DeleteAreaUI
         
         _mainframe.setSize(250,300);
     
-        _mainframe.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+//        _mainframe.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         //_mainframe.setResizable(false);
     }
     
@@ -152,12 +152,12 @@ public class DeleteAreaUI
     }
     
     /**
-     * Returns the list
-     * @return _list
+     * Returns the JList
+     * @return _jListOfTasks
      */
     public JList<String> getJList()
     {
-        return _list;
+        return _jListOfTasks;
     }
     
     /**
@@ -166,7 +166,7 @@ public class DeleteAreaUI
      */
     public void setList(String[] list)
     {
-        _list.setListData(list);
+        _jListOfTasks.setListData(list);
     }
     
     /**
