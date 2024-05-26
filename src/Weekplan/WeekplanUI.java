@@ -120,7 +120,7 @@ public class WeekplanUI
     private void createTotalProgressBar()
     {
         _totalProgress.setMinimum(0);
-        _totalProgress.setMaximum(_taskList.getSize() * 100);
+        _totalProgress.setMaximum(_taskList.getMaxTotalProgressValue());
         _totalProgress.setStringPainted(true);
     }
     
@@ -150,8 +150,8 @@ public class WeekplanUI
     
     /**
      * Builds the central JPanel of the _mainframe
-     * consisting of rows consisting of a JLabel, a JTextfield and a JButton representing a Topic
-     * TODO: Currently 3 Columns of x things -> instead x row of 3 elements
+     * consisting of rows consisting of a JLabel, a JTextField and a JButton representing a Topic
+     * ToDo: 3 Columns of x things -> instead x row of 3 elements?
      *
      * @return central JPanel
      */
@@ -262,13 +262,23 @@ public class WeekplanUI
     {
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+//        topPanel.setLayout(new GridLayout(1,3));
+
         JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridBagLayout());
         panel1.setPreferredSize(new Dimension(120, TASKHEIGHT));
         panel1.add(_totalLabel);
+
         JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridBagLayout());
+        panel2.setPreferredSize(new Dimension(150, TASKHEIGHT));
         panel2.add(_totalProgress);
+
         JPanel panel3 = new JPanel();
+        panel3.setLayout(new GridBagLayout());
+        panel3.setPreferredSize(new Dimension(70, TASKHEIGHT));
         panel3.add(_saveButton);
+
         topPanel.add(panel1);
         topPanel.add(panel2);
         topPanel.add(panel3);
@@ -295,31 +305,10 @@ public class WeekplanUI
     
     /**
      * Updates the text on the _totalLabel
-     * TODO: This does not belong here
      */
     private void updateTotalLabel()
     {
-        String sign = "";
-        int progressHours = _taskList.getTotalProgressTime() / 60;
-        int progressMinutes = (_taskList.getTotalProgressTime() / 6) % 10;
-        
-        if (progressHours < 0 || progressMinutes < 0) //If the progress is negative, create an extra sign to display properly
-        {
-            progressMinutes = Math.abs(progressMinutes);
-            progressHours = Math.abs(progressHours);
-            sign = "-";
-        }
-        
-        int goalHours = _taskList.getTotalTargetTime() / 60;
-        int goalMinutes = (_taskList.getTotalTargetTime() / 6) % 10;
-        if (progressMinutes == 0) //if progress is ",0" then ignore that
-        {
-            _totalLabel.setText(sign + progressHours + " of " + goalHours + "," + goalMinutes + " hours");
-        }
-        else
-        {
-            _totalLabel.setText(sign + progressHours + "," + progressMinutes + " of " + goalHours + "," + goalMinutes + " hours");
-        }
+        _totalLabel.setText(_taskList.getTotalProgressInText());
     }
     
     /**
@@ -333,15 +322,14 @@ public class WeekplanUI
     
     
     /**
-     * Colors the JProgressBars with the data provided from the topic
+     * Colors the JProgressBars with the data provided from the task
      *
-     * @param topic topic corresponding the JProgressBar
+     * @param task task corresponding the JProgressBar
      */
-    public void colorBar(Task topic)
+    public void colorProgressBar(Task task)
     {
-        JProgressBar bar = _taskProgressBars.get(_taskList.indexOf(topic));
-        bar.setValue(topic.getProgress());
-        updateTotal();
+        JProgressBar bar = _taskProgressBars.get(_taskList.indexOf(task));
+        bar.setValue(task.getProgress());
     }
     
     /**
@@ -376,23 +364,23 @@ public class WeekplanUI
     /**
      * Updates the displayed title of the given topic
      *
-     * @param topic: the topic which title might have changed
+     * @param task: the topic which title might have changed
      */
-    public void updateTopicName(Task topic)
+    public void updateTaskName(Task task)
     {
-        int topicNumber = _taskList.indexOf(topic);
-        _taskTitleButtons.get(topicNumber).setText(topic.getTitle());
+        int taskNumber = _taskList.indexOf(task);
+        _taskTitleButtons.get(taskNumber).setText(task.getTitle());
     }
     
     /**
-     * Updates the goal of the given topic
+     * Updates the target time of the given task
      *
-     * @param topic: the topic which goal might have changed
+     * @param task: the task which goal might have changed
      */
-    public void updateGoal(Task topic)
+    public void updateTargetTime(Task task)
     {
-        int topicNumber = _taskList.indexOf(topic);
-        _taskProgressBars.get(topicNumber).setMaximum(topic.getTargetTime());
+        int taskNumber = _taskList.indexOf(task);
+        _taskProgressBars.get(taskNumber).setMaximum(task.getTargetTime());
     }
     
     /**
@@ -447,7 +435,7 @@ public class WeekplanUI
     /**
      * Opens a newly created topic standardized with the title "New"
      * by opening the first entry of Task.DEFAULTNAME in the _taskList
-     * TODO: Direkter Bezug auf Task?
+     * TODO: Direkter Bezug auf Task? -> Redone wenn Options im Mainframe
      */
     public void openNewTopicMenu()
     {
@@ -460,9 +448,10 @@ public class WeekplanUI
      * @param task: task which was edited
      */
     public void updateTask(Task task){
-        updateTopicName(task);
-        updateGoal(task);
-        colorBar(task);
+        updateTaskName(task);
+        updateTargetTime(task);
+        colorProgressBar(task);
+        updateTotal();
     }
 
     /**
@@ -470,6 +459,7 @@ public class WeekplanUI
      * @param task: task in which the progress changed
      */
     public void updateProgress(Task task){
-        colorBar(task);
+        colorProgressBar(task);
+        updateTotal();
     }
 }

@@ -251,6 +251,15 @@ public class TaskList
     }
 
     /**
+     * Returns the max value for the total progress: No of Task * 100
+     * Todo: Maybe to 100
+     * @return Maximal Value for all Tasks combined
+     */
+    public int getMaxTotalProgressValue(){
+        return _taskList.size()*100;
+    }
+
+    /**
      * Changes the total amount of target time to a certain value and adjusts
      * the times of the individual tasks
      *
@@ -333,4 +342,27 @@ public class TaskList
         saveTasksOnFile();
     }
 
+    /**
+     * Creates a string that reflects the progress in form "xx,x of xx,x hours"
+     * @return
+     */
+    public String getTotalProgressInText()
+    {
+        String sign = "";
+        int progressHours = getTotalProgressTime() / 60;
+        int progressMinutes = (getTotalProgressTime() / 6) % 10;
+
+        //If the progress is negative, create an extra sign to display properly
+        if (progressHours < 0 || progressMinutes < 0)
+        {
+            progressMinutes = Math.abs(progressMinutes);
+            progressHours = Math.abs(progressHours);
+            sign = "-";
+        }
+
+        int goalHours = getTotalTargetTime() / 60;
+        int goalMinutes = (getTotalTargetTime() / 6) % 10;
+
+        return progressMinutes == 0 ?                                                                (sign + progressHours + " of " + goalHours + "," + goalMinutes + " hours") :                (sign + progressHours + "," + progressMinutes + " of " + goalHours + "," + goalMinutes + " hours");
+    }
 }
