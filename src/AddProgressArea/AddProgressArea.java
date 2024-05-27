@@ -15,10 +15,10 @@ import java.beans.PropertyChangeSupport;
  */
 public class AddProgressArea
 {
-    private AddProgressAreaUI _ui;
-    private Task _task;
+    private final AddProgressAreaUI _ui;
+    private final Task _task;
 
-    private PropertyChangeSupport _support; //basically observable just newer
+    private final PropertyChangeSupport _support; //basically observable just newer
 
     public AddProgressArea(Task task, JFrame frame)
     {
@@ -33,17 +33,14 @@ public class AddProgressArea
 
     /**
      * Adds the listeners of the components of AddAreaUI:
-     * BackButton.actionlistener: just closes
-     * TextField.keylistener: checks the validity of the entry
-     * Textfield.actionlistener: Shortcut to confirmButton
-     * ConfirmButton.actionlistener: Processing of the entry
+     * BackButton.actionListener: just closes,
+     * TextField.keyListener: checks the validity of the entry,
+     * TextField.actionListener: Shortcut to confirmButton,
+     * ConfirmButton.actionListener: Processing of the entry
      */
     private void addListener()
     {
-        _ui.getBackButton().addActionListener(event ->
-        {
-            _ui.close();
-        });
+        _ui.getBackButton().addActionListener(event -> _ui.close());
 
         //If the text gets changed it checks it anew and controls the availability of the button
         _ui.getTextfield().addKeyListener(new KeyAdapter()
@@ -83,7 +80,7 @@ public class AddProgressArea
             //should never happen, cause the textField-keyListener checks this
             catch (NumberFormatException e)
             {
-                JOptionPane.showMessageDialog(new JFrame(), "Entry is NaN and the textfield-check was wrong");
+                JOptionPane.showMessageDialog(new JFrame(), "Entry is NaN and the TextField-check was wrong");
             }
         });
     }
@@ -121,7 +118,7 @@ public class AddProgressArea
 
     /**
      * Shows the AddAreaUI
-     * Neccessary for observer Weekplan
+     * Necessary for observer Weekplan
      */
     public void showUI()
     {
