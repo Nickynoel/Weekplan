@@ -15,8 +15,8 @@ import java.util.List;
 public class WeekplanUI
 {
     private final int VERTICALSCROLLSPEED = 30;
-    private final int WINDOWHEIGHT = 370;
     private final int WINDOWWIDTH = 400;
+    private final int WINDOWHEIGHT = 370;
     private final String WINDOWTITLE = "Weekplan";
     private final int TASKHEIGHT = 40;
 
@@ -41,6 +41,17 @@ public class WeekplanUI
      */
     public WeekplanUI(TaskList list)
     {
+        initializeVariables(list);
+        createElements();
+        createWindow();
+        initializeWindow();
+    }
+
+    /**
+     * Initializes variables
+     */
+    private void initializeVariables(TaskList list)
+    {
         _taskList = list;
         _taskTitleButtons = new ArrayList<>();
         _taskProgressBars = new ArrayList<>();
@@ -53,10 +64,6 @@ public class WeekplanUI
         _totalLabel = new JLabel("Error");
         _mainframe = new JFrame();
         _totalProgress = new JProgressBar();
-
-        createElements();
-        createWindow();
-        initializeWindow();
     }
 
     /**
