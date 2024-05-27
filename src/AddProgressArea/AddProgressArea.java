@@ -1,4 +1,4 @@
-package AddArea;
+package AddProgressArea;
 
 import TaskList.Task.Task;
 
@@ -13,23 +13,24 @@ import java.beans.PropertyChangeSupport;
  * Functional class AddArea for the window that accepts the input of the length of an action
  * and adds its value to the progress of a given topic
  */
-public class AddArea
+public class AddProgressArea
 {
-    private AddAreaUI _ui;
-    private Task _topic;
-    
+    private AddProgressAreaUI _ui;
+    private Task _task;
+
     private PropertyChangeSupport _support; //basically observable just newer
-    
-    public AddArea(Task topic, JFrame frame)
+
+    public AddProgressArea(Task task, JFrame frame)
     {
         _support = new PropertyChangeSupport(this);
-        _topic = topic;
-        _ui = new AddAreaUI();
-        _ui.setTitle(topic.getTitle());
-        _ui.setPosition(new Point(frame.getLocation().x + 100, frame.getLocation().y + 100)); //Sets position based on the mainframe
+        _task = task;
+        _ui = new AddProgressAreaUI();
+        _ui.setTitle(task.getTitle());
+        //Sets position based on the mainframe
+        _ui.setPosition(new Point(frame.getLocation().x + 100, frame.getLocation().y + 100));
         addListener();
     }
-    
+
     /**
      * Adds the listeners of the components of AddAreaUI:
      * BackButton.actionlistener: just closes
@@ -39,12 +40,11 @@ public class AddArea
      */
     private void addListener()
     {
-        //Leaves if just going back
         _ui.getBackButton().addActionListener(event ->
         {
             _ui.close();
         });
-        
+
         //If the text gets changed it checks it anew and controls the availability of the button
         _ui.getTextfield().addKeyListener(new KeyAdapter()
         {
@@ -53,67 +53,62 @@ public class AddArea
             {
                 super.keyReleased(e);
                 String tmp = _ui.getTextfield().getText();
-                if (isValid(tmp))
+                if (isValidEntry(tmp))
                 {
                     _ui.enableConfirmButton();
-                }
-                else
+                } else
                 {
                     _ui.disableConfirmButton();
                 }
-                
             }
         });
-        
-        //Shortcut for enter-key if the _confirmButton is enabled
+
+        //Shortcut for enter-key
         _ui.getTextfield().addActionListener(event ->
         {
-            _ui.getConfirmButton().doClick(); //doClick() automatically checks "isEnabled()"
+            //doClick() automatically checks "isEnabled()"
+            _ui.getConfirmButton().doClick();
         });
-        
-        //Actual action if the _confirmButton gets used and processes the entry
+
         _ui.getConfirmButton().addActionListener(event ->
         {
             String tmp = _ui.getTextfield().getText();
             try
             {
                 int number = Integer.parseInt(tmp);
-                _topic.addProgress(number);
+                _task.addProgress(number);
                 confirmChange(number);
                 _ui.close();
             }
-            catch (NumberFormatException e) //should never happen, cause the textfield-keylistener checks this
+            //should never happen, cause the textField-keyListener checks this
+            catch (NumberFormatException e)
             {
-                JOptionPane.showMessageDialog(new JFrame(), "Entry is NaN and check textfield-check was wrong");
+                JOptionPane.showMessageDialog(new JFrame(), "Entry is NaN and the textfield-check was wrong");
             }
         });
     }
-    
+
     /**
      * Checks if the input/given string is a number or a negative number
      *
      * @param tmp: checked entry
      * @return boolean: validity of the string
      */
-    private boolean isValid(String tmp)
+    private boolean isValidEntry(String tmp)
     {
-        if (tmp.matches("-?\\d+"))
-        {
-            return true;
-        }
-        return false;
+        return tmp.matches("-?\\d+");
     }
-    
+
     /**
      * Tells the PropertyChangeListeners that a change happens if number!=0
      *
-     * @param number: the number typed into the textfield
+     * @param number: the number typed into the JTextField
      */
     private void confirmChange(int number)
     {
         _support.firePropertyChange("Test", 0, number);
     }
-    
+
     /**
      * Allows listeners to be added
      *
@@ -123,7 +118,7 @@ public class AddArea
     {
         _support.addPropertyChangeListener(pcl);
     }
-    
+
     /**
      * Shows the AddAreaUI
      * Neccessary for observer Weekplan

@@ -1,6 +1,6 @@
 package Weekplan;
 
-import AddArea.AddArea;
+import AddProgressArea.AddProgressArea;
 import OptionArea.OptionArea;
 import TaskEditArea.TaskEditArea;
 import TaskList.Task.Task;
@@ -53,7 +53,7 @@ public class Weekplan
             {
                 int topicNumber = _ui.getAddButtonlist().indexOf(button);
                 Task task = _listOfTasks.get(topicNumber);
-                final AddArea area = new AddArea(task, _ui.getMainframe());
+                final AddProgressArea area = new AddProgressArea(task, _ui.getMainframe());
                 
                 area.addPropertyChangeListener(evt -> _ui.updateProgress(task));
                 area.showUI();

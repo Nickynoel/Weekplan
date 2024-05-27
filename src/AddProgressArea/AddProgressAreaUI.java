@@ -1,4 +1,4 @@
-package AddArea;
+package AddProgressArea;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +7,7 @@ import java.awt.*;
  * UI of AddArea
  */
 
-public class AddAreaUI
+public class AddProgressAreaUI
 {
     private JLabel _label;
     private JTextField _textField;
@@ -23,7 +23,7 @@ public class AddAreaUI
     /**
      * Initializing the UI
      */
-    public AddAreaUI()
+    public AddProgressAreaUI()
     {
         createLabels();
         createTextField();
