@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * UI of AddArea
+ * UI of AddProgressArea
  */
 
 public class AddProgressAreaUI
@@ -66,8 +66,8 @@ public class AddProgressAreaUI
     }
 
     /**
-     * Initialization of the _topPanel, containing the Label describing the action
-     * @return the _topPanel
+     * Initialization of the upper Panel, containing the Label describing the action
+     * @return the upper Panel
      */
     private JPanel generateTopPanel()
     {
@@ -78,8 +78,8 @@ public class AddProgressAreaUI
     }
 
     /**
-     * Initialization of the _centerPanel, containing the textField for the input
-     * @return the _centerPanel
+     * Initialization of the central Panel, containing the textField for the input
+     * @return the central Panel
      */
     private JPanel generateCenterPanel()
     {
@@ -90,8 +90,8 @@ public class AddProgressAreaUI
     }
 
     /**
-     * Initialization of the _botPanel, containing the two buttons for confirming and declining
-     * @return the _botPanel
+     * Initialization of the bottom Panel, containing the two buttons for confirming and declining
+     * @return the bottom Panel
      */
     private JPanel generateBotPanel()
     {
