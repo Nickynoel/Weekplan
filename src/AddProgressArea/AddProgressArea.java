@@ -43,13 +43,13 @@ public class AddProgressArea
         _ui.getBackButton().addActionListener(event -> _ui.close());
 
         //If the text gets changed it checks it anew and controls the availability of the button
-        _ui.getTextfield().addKeyListener(new KeyAdapter()
+        _ui.getTextField().addKeyListener(new KeyAdapter()
         {
             @Override
             public void keyReleased(KeyEvent e)
             {
                 super.keyReleased(e);
-                String tmp = _ui.getTextfield().getText();
+                String tmp = _ui.getTextField().getText();
                 if (isValidEntry(tmp))
                 {
                     _ui.enableConfirmButton();
@@ -61,7 +61,7 @@ public class AddProgressArea
         });
 
         //Shortcut for enter-key
-        _ui.getTextfield().addActionListener(event ->
+        _ui.getTextField().addActionListener(event ->
         {
             //doClick() automatically checks "isEnabled()"
             _ui.getConfirmButton().doClick();
@@ -69,7 +69,7 @@ public class AddProgressArea
 
         _ui.getConfirmButton().addActionListener(event ->
         {
-            String tmp = _ui.getTextfield().getText();
+            String tmp = _ui.getTextField().getText();
             try
             {
                 int number = Integer.parseInt(tmp);

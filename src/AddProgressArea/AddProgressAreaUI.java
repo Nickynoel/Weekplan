@@ -9,15 +9,15 @@ import java.awt.*;
 
 public class AddProgressAreaUI
 {
+    private final int WINDOWWIDTH = 200;
+    private final int WINDOWHEIGHT = 140;
+    private final String WINDOWTITLE = "Add";
+
     private JLabel _label;
     private JTextField _textField;
     private JButton _confirmButton;
     private JButton _backButton;
-    
-    private JPanel _topPanel;
-    private JPanel _centerPanel;
-    private JPanel _botPanel;
-    
+
     private JDialog _dialog;
     
     /**
@@ -25,126 +25,89 @@ public class AddProgressAreaUI
      */
     public AddProgressAreaUI()
     {
-        createLabels();
-        createTextField();
-        createButtons();
-        createPanels();
-
+        initializeVariables();
         createWindow();
         initializeWindow();
     }
-    
-    /**
-     * Creates the buttons
-     */
-    private void createButtons()
-    {
-        _confirmButton = new JButton("confirm");
-        _confirmButton.setEnabled(false);
-        
-        _backButton = new JButton("back");
-    }
-    
-    /**
-     * Creates the textfield
-     */
-    private void createTextField()
-    {
-        _textField = new JTextField("", 5); //number of colomns or dimension
-    }
-    
-    /**
-     * Initialization of the Labels
-     */
-    private void createLabels()
+
+    private void initializeVariables()
     {
         _label = new JLabel("Time in minutes");
+        _textField = new JTextField("", 5); //number of columns or dimension
+        _confirmButton = new JButton("confirm");
+        _confirmButton.setEnabled(false);
+
+        _backButton = new JButton("back");
+        _dialog = new JDialog();
     }
-    
-    /**
-     * Creates the panels
-     */
-    private void createPanels()
-    {
-        _topPanel = new JPanel();
-        _topPanel = generateToppanel();
-    
-        _centerPanel = new JPanel();
-        _centerPanel = generateCenterpanel();
-        
-        _botPanel = new JPanel();
-        _botPanel = generateBotpanel();
-    }
-    
-    /**
-     * Initialization of the _topPanel, containing the Label describing the action
-     * @return the _topPanel
-     */
-    private JPanel generateToppanel()
-    {
-        JPanel panel = new JPanel();
-        panel.add(_label);
-        
-        return panel;
-    }
-    
-    /**
-     * Initialization of the _centerPanel, containing the textfield for the input
-     * @return the _centerPanel
-     */
-    private JPanel generateCenterpanel()
-    {
-        JPanel panel = new JPanel();
-        panel.add(_textField);
-        
-        return panel;
-    }
-    
-    /**
-     * Initialization of the _botPanel, containing the two buttons for confirming and declining
-     * @return the _botPanel
-     */
-    private JPanel generateBotpanel()
-    {
-        JPanel panel1 = new JPanel();
-        panel1.add(_confirmButton);
-        JPanel panel2 = new JPanel();
-        panel2.add(_backButton);
-        
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        panel.add(panel1);
-        panel.add(panel2);
-        
-        return panel;
-    }
-    
+
     /**
      * Builds the JDialog
      */
     private void createWindow()
     {
-        _dialog = new JDialog();
-        _dialog.setTitle("Add");
-        _dialog.setLayout(new BorderLayout());
-        
-        _dialog.setSize(200,140);
-        
-        _dialog.setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
+        _dialog.setTitle(WINDOWTITLE);
         _dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        _dialog.setSize(WINDOWWIDTH,WINDOWHEIGHT);
+        _dialog.setLayout(new BorderLayout());
+
+        _dialog.setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
         _dialog.setResizable(false);
     }
-    
+
     /**
      * insert the panels onto the _mainFrame
      */
     private void initializeWindow()
     {
-        _dialog.add(_topPanel,BorderLayout.PAGE_START);
-        _dialog.add(_centerPanel);
-        _dialog.add(_botPanel,BorderLayout.PAGE_END);
+        _dialog.add(generateTopPanel(),BorderLayout.PAGE_START);
+        _dialog.add(generateCenterPanel());
+        _dialog.add(generateBotPanel(),BorderLayout.PAGE_END);
     }
-    
+
+    /**
+     * Initialization of the _topPanel, containing the Label describing the action
+     * @return the _topPanel
+     */
+    private JPanel generateTopPanel()
+    {
+        JPanel panel = new JPanel();
+        panel.add(_label);
+
+        return panel;
+    }
+
+    /**
+     * Initialization of the _centerPanel, containing the textField for the input
+     * @return the _centerPanel
+     */
+    private JPanel generateCenterPanel()
+    {
+        JPanel panel = new JPanel();
+        panel.add(_textField);
+
+        return panel;
+    }
+
+    /**
+     * Initialization of the _botPanel, containing the two buttons for confirming and declining
+     * @return the _botPanel
+     */
+    private JPanel generateBotPanel()
+    {
+        JPanel panel1 = new JPanel();
+        panel1.add(_confirmButton);
+        JPanel panel2 = new JPanel();
+        panel2.add(_backButton);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+        panel.add(panel1);
+        panel.add(panel2);
+
+        return panel;
+    }
+
     /**
      * Sets the UI's title
      */
@@ -163,16 +126,16 @@ public class AddProgressAreaUI
     }
     
     /**
-     * Returns the textfield of the UI
+     * Returns the textField of the UI
      * @return _textField
      */
-    public JTextField getTextfield()
+    public JTextField getTextField()
     {
         return _textField;
     }
     
     /**
-     * Returns the confirmationbutton
+     * Returns the confirmationButton
      * @return _confirmButton
      */
     public JButton getConfirmButton()
