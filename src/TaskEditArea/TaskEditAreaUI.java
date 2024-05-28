@@ -4,23 +4,23 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * UI of TopicArea
+ * UI of TaskEditArea
  */
 
 public class TaskEditAreaUI
 {
-    private JLabel _topicLabel;
+    private final int WINDOWWIDTH = 300;
+    private final int WINDOWHEIGHT = 200;
+
+    private JLabel _taskLabel;
     private JTextField _taskField;
     
-    private JLabel _lengthLabel;
-    private JTextField _lengthField;
+    private JLabel _targetTimeLabel;
+    private JTextField _targetTimeField;
     
     private JButton _confirmButton;
     private JButton _backButton;
-    
-    private JPanel _centerPanel;
-    private JPanel _botPanel;
-    
+
     private JDialog _dialog;
     
     /**
@@ -28,125 +28,94 @@ public class TaskEditAreaUI
      */
     public TaskEditAreaUI()
     {
-        createLabels();
-        createTextfields();
-        createButtons();
-        createPanels();
-    
+        initializeVariables();
         createWindow();
         initializeWindow();
     }
-    
-    /**
-     * Initialization of the Labels
-     */
-    private void createLabels()
+
+    private void initializeVariables()
     {
-        _topicLabel = new JLabel("Error");
-        _lengthLabel = new JLabel("Error");
-    }
-    
-    /**
-     * Creates the textfield
-     */
-    private void createTextfields()
-    {
+        _taskLabel = new JLabel("Error");
+        _targetTimeLabel = new JLabel("Error");
+
         _taskField = new JTextField("", 5); //number of colomns or dimension
-        _lengthField = new JTextField("", 5);
-    }
-    
-    /**
-     * Creates the buttons
-     */
-    private void createButtons()
-    {
+        _targetTimeField = new JTextField("", 5);
+
         _confirmButton = new JButton("confirm");
         _backButton = new JButton("back");
+
+        _dialog = new JDialog();
     }
-    
-    /**
-     * Creates the panels
-     */
-    private void createPanels()
-    {
-        _centerPanel = new JPanel();
-        _centerPanel = generateCenterpanel();
-        
-        _botPanel = new JPanel();
-        _botPanel = generateBotpanel();
-    }
-    
-    /**
-     * Initialization of the _centerPanel, containing JLabels and JTextfields for topicname and topiclength
-     *
-     * @return the _centerPanel
-     */
-    private JPanel generateCenterpanel()
-    {
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 2));
-        
-        JPanel panel1 = new JPanel();
-        panel1.add(_topicLabel);
-        panel.add(panel1);
-        
-        JPanel panel2 = new JPanel();
-        panel2.add(_taskField);
-        panel.add(panel2);
-        
-        JPanel panel3 = new JPanel();
-        panel3.add(_lengthLabel);
-        panel.add(panel3);
-        
-        JPanel panel4 = new JPanel();
-        panel4.add(_lengthField);
-        panel.add(panel4);
-        
-        return panel;
-    }
-    
-    /**
-     * Initialization of the _botPanel, containing the two buttons for confirming and declining
-     *
-     * @return the _botPanel
-     */
-    private JPanel generateBotpanel()
-    {
-        JPanel panel1 = new JPanel();
-        panel1.add(_confirmButton);
-        JPanel panel2 = new JPanel();
-        panel2.add(_backButton);
-        
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        panel.add(panel1);
-        panel.add(panel2);
-        
-        return panel;
-    }
-    
+
     /**
      * Builds the JDialog
      */
     private void createWindow()
     {
-        _dialog = new JDialog();
-        _dialog.setLayout(new BorderLayout());
-        
-        _dialog.setSize(300, 200);
-        
-        _dialog.setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
         _dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        _dialog.setSize(WINDOWWIDTH,WINDOWHEIGHT);
+        _dialog.setLayout(new BorderLayout());
+
+        _dialog.setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
         _dialog.setResizable(false);
     }
-    
+
     /**
      * Initialization of the Panels, which is devided into its 3 subpanels top, center and bot
      */
     private void initializeWindow()
     {
-        _dialog.add(_centerPanel);
-        _dialog.add(_botPanel, BorderLayout.PAGE_END);
+        _dialog.add(generateCenterPanel());
+        _dialog.add(generateBotPanel(), BorderLayout.PAGE_END);
+    }
+
+    /**
+     * Initialization of the central Panel, containing JLabels and JTextFields for name and targetLength
+     *
+     * @return the central Panel
+     */
+    private JPanel generateCenterPanel()
+    {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(2, 2));
+
+        JPanel panel1 = new JPanel();
+        panel1.add(_taskLabel);
+        panel.add(panel1);
+
+        JPanel panel2 = new JPanel();
+        panel2.add(_taskField);
+        panel.add(panel2);
+
+        JPanel panel3 = new JPanel();
+        panel3.add(_targetTimeLabel);
+        panel.add(panel3);
+
+        JPanel panel4 = new JPanel();
+        panel4.add(_targetTimeField);
+        panel.add(panel4);
+
+        return panel;
+    }
+
+    /**
+     * Initialization of the bottom Panel, containing the two buttons for confirming and declining
+     *
+     * @return the bottom Panel
+     */
+    private JPanel generateBotPanel()
+    {
+        JPanel panel1 = new JPanel();
+        panel1.add(_confirmButton);
+        JPanel panel2 = new JPanel();
+        panel2.add(_backButton);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+        panel.add(panel1);
+        panel.add(panel2);
+
+        return panel;
     }
     
     /**
@@ -174,7 +143,7 @@ public class TaskEditAreaUI
      */
     public void setTopicLabel(String s)
     {
-        _topicLabel.setText(s);
+        _taskLabel.setText(s);
     }
     
     /**
@@ -185,14 +154,18 @@ public class TaskEditAreaUI
     {
         return _taskField;
     }
-    
+
+    public void clearTaskField()
+    {
+        _taskField.setText("");
+    }
     /**
      * Sets the text of the _lengthLabel to the given String
      * @param s: text on _lengthLabel
      */
     public void setLengthLabel(String s)
     {
-        _lengthLabel.setText(s);
+        _targetTimeLabel.setText(s);
     }
     
     /**
@@ -201,7 +174,12 @@ public class TaskEditAreaUI
      */
     public JTextField getTargetTimeField()
     {
-        return _lengthField;
+        return _targetTimeField;
+    }
+
+    public void clearTargetTimeField()
+    {
+        _targetTimeField.setText("");
     }
     
     /**
@@ -240,8 +218,6 @@ public class TaskEditAreaUI
         _dialog.dispose();
     }
 
-    public void clearTaskField()
-    {
-        _taskField.setText("");
-    }
+
+
 }

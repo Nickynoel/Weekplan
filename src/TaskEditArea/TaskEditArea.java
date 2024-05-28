@@ -15,8 +15,8 @@ public class TaskEditArea
 {
     private int MAXTASKDISPLAYLENGTH = 13;
 
-    private Task _task;
-    private TaskEditAreaUI _ui;
+    private final Task _task;
+    private final TaskEditAreaUI _ui;
 
     //These values only get saved upon hitting "confirm"
     private String _taskName; // temporary name of the topic
@@ -61,7 +61,7 @@ public class TaskEditArea
         _ui.getTaskField().addActionListener(event ->
         {
             String input = _ui.getTaskField().getText();
-            if (isValidTaskTitel(input))
+            if (isValidTaskTitle(input))
             {
                 _taskName = input;
                 updateTaskLabel();
@@ -76,7 +76,7 @@ public class TaskEditArea
             {
                 _taskTargetTime = Integer.parseInt(input);
                 updateTargetTimeLabel();
-                _ui.getTargetTimeField().setText("");
+                _ui.clearTargetTimeField();
             }
         });
         
@@ -88,20 +88,17 @@ public class TaskEditArea
             _ui.close();
         });
         
-        _ui.getBackButton().addActionListener(event ->
-        {
-            _ui.close();
-        });
+        _ui.getBackButton().addActionListener(event -> _ui.close());
     }
     
     /**
      * Checks if a given string is valid as a title for a topic:
-     * Cant begin or end with an emptyspace or contain an '#'
+     * Cant begin or end with an empty space or contain an '#'
      *
      * @param s: String to potentially become the title of a topic
-     * @return result as boolen
+     * @return result as boolean
      */
-    private boolean isValidTaskTitel(String s)
+    private boolean isValidTaskTitle(String s)
     {
         return s.equals(s.trim()) && !s.contains("#");
     }
@@ -139,7 +136,7 @@ public class TaskEditArea
     }
     
     /**
-     * Updates the text on the UI's topicLabel with the current temporary _topicName
+     * Updates the text on the UI's taskLabel with the current temporary _taskName
      */
     private void updateTaskLabel()
     {
