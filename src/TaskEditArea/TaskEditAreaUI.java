@@ -10,7 +10,7 @@ import java.awt.*;
 public class TaskEditAreaUI
 {
     private JLabel _topicLabel;
-    private JTextField _topicField;
+    private JTextField _taskField;
     
     private JLabel _lengthLabel;
     private JTextField _lengthField;
@@ -51,7 +51,7 @@ public class TaskEditAreaUI
      */
     private void createTextfields()
     {
-        _topicField = new JTextField("", 5); //number of colomns or dimension
+        _taskField = new JTextField("", 5); //number of colomns or dimension
         _lengthField = new JTextField("", 5);
     }
     
@@ -91,7 +91,7 @@ public class TaskEditAreaUI
         panel.add(panel1);
         
         JPanel panel2 = new JPanel();
-        panel2.add(_topicField);
+        panel2.add(_taskField);
         panel.add(panel2);
         
         JPanel panel3 = new JPanel();
@@ -181,9 +181,9 @@ public class TaskEditAreaUI
      * GetA for _topicField
      * @return _topicField
      */
-    public JTextField getTopicField()
+    public JTextField getTaskField()
     {
-        return _topicField;
+        return _taskField;
     }
     
     /**
@@ -199,7 +199,7 @@ public class TaskEditAreaUI
      * GetA for _lengthField
      * @return _lengthField
      */
-    public JTextField getLengthField()
+    public JTextField getTargetTimeField()
     {
         return _lengthField;
     }
@@ -238,5 +238,10 @@ public class TaskEditAreaUI
     public void close()
     {
         _dialog.dispose();
+    }
+
+    public void clearTaskField()
+    {
+        _taskField.setText("");
     }
 }
