@@ -112,19 +112,7 @@ public class TaskEditArea
      */
     private boolean isValidTargetTime(String input)
     {
-        try
-        {
-            int tmpNumber = Integer.parseInt(input);
-            if (tmpNumber > 0)
-            {
-                return true;
-            }
-        }
-        catch (NumberFormatException e)
-        {
-        
-        }
-        return false;
+        return input.matches("\\d+") && !input.equals("0");
     }
     
     /**
