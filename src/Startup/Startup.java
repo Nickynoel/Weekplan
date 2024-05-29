@@ -12,9 +12,9 @@ public class Startup
     public static void main(String[] args)
     {
         _listOfTasks = TaskList.getInstance();
-        _listOfSettings = Settings.getInstance(Settings.SETTINGSFILE);
+        _listOfSettings = Settings.getInstance(Settings.DEFAULTSETTINGSFILE);
 
-        if(_listOfSettings.checkReset())
+        if(_listOfSettings.checkWeeklyReset())
         {
             _listOfTasks.resetProgress(_listOfSettings.getResetProgram());
         }

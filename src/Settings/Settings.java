@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Settings
 {
-    public static final File SETTINGSFILE = new File("Settings.txt");
+    public static final File DEFAULTSETTINGSFILE = new File("Settings.txt");
     
     private List<String> _settingsList; //Settings given by the file
     private File _file; //file that saves the settings
@@ -72,11 +72,11 @@ public class Settings
     }
     
     /**
-     * Checks if the (usually weekly) reset criteria is fulfilled
+     * Checks if the weekly reset criteria is fulfilled
      * Criteria #1: Current day is monday
      * Criteria #2: Goals are at least half completed
      */
-    public boolean checkReset()
+    public boolean checkWeeklyReset()
     {
         int weekday = ((Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) + 5) % 7; //Monday == 0... and so on
         if(weekday == 6)
@@ -122,17 +122,4 @@ public class Settings
         RowFileWriter writer = RowFileWriter.getInstance(list, _file);
         writer.saveFile();
     }
-    
-
-    
-    //    /**
-//     * Resets the progress of the topics
-//     */
-//    public void fullReset()
-//    {
-//        for (Topic t : _topicList)
-//        {
-//            t.setProgress(0);
-//        }
-//    }
 }

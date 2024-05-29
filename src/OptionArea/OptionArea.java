@@ -21,7 +21,7 @@ public class OptionArea
     public OptionArea()
     {
         _ui = new OptionAreaUI();
-        _settingList = Settings.getInstance(Settings.SETTINGSFILE);
+        _settingList = Settings.getInstance(Settings.DEFAULTSETTINGSFILE);
         setSettings();
         addListener();
     }
