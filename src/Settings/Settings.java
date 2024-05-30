@@ -1,6 +1,6 @@
 package Settings;
 
-import RowFileReader.RowFilereader;
+import RowFileReader.RowFileReader;
 import RowFileWriter.RowFileWriter;
 
 import java.io.File;
@@ -47,7 +47,7 @@ public class Settings
      */
     private void fillList(File file)
     {
-        RowFilereader reader = RowFilereader.getInstance(file);
+        RowFileReader reader = RowFileReader.getInstance(file);
         _settingsList = reader.getList();
     }
     

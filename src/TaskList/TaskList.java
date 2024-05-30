@@ -1,6 +1,6 @@
 package TaskList;
 
-import RowFileReader.RowFilereader;
+import RowFileReader.RowFileReader;
 import RowFileWriter.RowFileWriter;
 import TaskList.Task.*;
 
@@ -54,7 +54,7 @@ public class TaskList
      */
     private void loadTasksFromFile(File file)
     {
-        RowFilereader reader = RowFilereader.getInstance(file);
+        RowFileReader reader = RowFileReader.getInstance(file);
         List<String> weekplan = reader.getList();
         for (String s : weekplan)
         {
