@@ -13,7 +13,6 @@ import java.util.Scanner;
 
 public class RowFileReader
 {
-    private final File _file;
     private final List<String> _list;
 
     /**
@@ -28,6 +27,7 @@ public class RowFileReader
     /**
      * factory method to call a fileReader from a file, which reads each line
      * calls constructor if input is valid, null if invalid
+     * ToDo: This feels smelly
      */
     public static RowFileReader getInstance(File file)
     {
@@ -51,7 +51,6 @@ public class RowFileReader
 
     private RowFileReader(File file)
     {
-        _file = file;
         _list = loadFile(file);
     }
 
