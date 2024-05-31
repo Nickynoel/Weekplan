@@ -9,7 +9,7 @@ import javax.swing.*;
 
 /**
  * Functional class OptionArea, in which the user can choose between several options:
- * Change total goaltime to a positive number of hours
+ * Change total targetTime to a positive number of hours
  * AddTopic, DeleteTopic, Back
  */
 
@@ -20,12 +20,17 @@ public class OptionArea
     
     public OptionArea()
     {
-        _ui = new OptionAreaUI();
-        _settingList = Settings.getInstance(Settings.DEFAULTSETTINGSFILE);
+        initializeFields();
         setSettings();
         addListener();
     }
-    
+
+    private void initializeFields()
+    {
+        _ui = new OptionAreaUI();
+        _settingList = Settings.getInstance(Settings.DEFAULTSETTINGSFILE);
+    }
+
     /**
      * Transfers the settings onto the UI
      */
@@ -36,29 +41,26 @@ public class OptionArea
     
     /**
      * Adds the listeners of the components of AddAreaUI:
-     * TotalGoalInput.actionlistener: Sets the total amount to a given number
-     * AddButton.actionlistener: adds a new blank topic and goes back to Weekplan
-     * DeleteButton.actionlistener: opens a new menu with topics of which the chosen ones can be deleted
-     * BackButton.actionlistener: goes back to Weekplan
+     * TotalGoalInput.actionListener: Sets the total amount to a given number
+     * AddButton.actionListener: adds a new blank topic and goes back to Weekplan
+     * DeleteButton.actionListener: opens a new menu with topics of which the chosen ones can be deleted
+     * BackButton.actionListener: goes back to Weekplan
      */
     private void addListener()
     {
-        _ui.getTotalGoalInput().addActionListener(event ->
+        _ui.getTotalTargetInput().addActionListener(event ->
         {
-            String tmp = _ui.getTotalGoalInput().getText();
-            try
+            String input = _ui.getTotalTargetInput().getText();
+            if (isValidTotalTime(input))
             {
-                int number = Integer.parseInt(tmp);
-                if (number > 0)
-                {
-                    TaskList list = TaskList.getInstance();
-                    
-                    list.setTotalTargetTime(number * 60);//Turn entry from hours to minutes
-                    list.saveTasksOnFile();
-                    _ui.getTotalGoalInput().setText("");
-                }
+                int number = Integer.parseInt(input);
+                TaskList list = TaskList.getInstance();
+
+                list.setTotalTargetTime(number * 60); //Turn entry from hours to minutes
+                list.saveTasksOnFile();
+                _ui.clearTotalTargetInput();
             }
-            catch (NumberFormatException e) //should never happen, cause the textfield-keylistener checks this
+            else
             {
                 JOptionPane.showMessageDialog(new JFrame(), "Entry is not a positive integer");
             }
@@ -69,7 +71,7 @@ public class OptionArea
             _settingList.setResetProgram(_ui.getResetComboBox().getSelectedIndex());
             _settingList.save();
         });
-        
+
         _ui.getAddButton().addActionListener(event ->
         {
             TaskList list = TaskList.getInstance();
@@ -91,5 +93,17 @@ public class OptionArea
             _ui.close();
             new Weekplan();
         });
+    }
+
+    /**
+     * Checks if a given string is valid as a total amount of time for all targets:
+     * Has to be a positive integer-value
+     *
+     * @param input: String to potentially become the length of a task
+     * @return result as boolean
+     */
+    private boolean isValidTotalTime(String input)
+    {
+        return input.matches("\\d+") && !input.equals("0");
     }
 }
