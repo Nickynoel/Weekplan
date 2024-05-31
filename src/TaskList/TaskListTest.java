@@ -51,7 +51,7 @@ public class TaskListTest
         taskList.addNewEmptyTask();
         assertEquals(taskList.getSize(), 2);
         taskList.addNewEmptyTask();
-        assertEquals(taskList.getSize(), 2);
+        assertNotEquals(taskList.getSize(), 2);
         assertEquals(taskList.getSize(), 3);
         assertTrue(_testFile.delete());
     }
@@ -159,7 +159,7 @@ public class TaskListTest
     {
         TaskList taskList = TaskList.getInstance(_testFile);
         taskList.addTask(_task2);
-        assertEquals(taskList.getTotalProgressInPercent(), 50.0, 0.001);
+        assertEquals(taskList.getTotalProgressInPercent(), 25.0, 0.001);
         assertTrue(_testFile.delete());
     }
 

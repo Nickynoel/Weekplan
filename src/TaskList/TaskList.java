@@ -233,30 +233,18 @@ public class TaskList
 
     /**
      * Returns the percentage progress for the whole list
-     * capping the percentage of a single topic to 100
-     *
-     * The Progressbar needs an int for progress, hence the total boundaries are
-     * (0,n*100), not (0,100) -> Thanks Java
+     * capping the individual percentage of a single topic to 100
      *
      * @return total percent progress
      */
-    public double getTotalProgressInPercent()
+    public int getTotalProgressInPercent()
     {
         double sum = 0.0;
         for (Task t : _taskList)
         {
             sum += Math.min(t.getProgressInPercent(), 100);
         }
-        return sum;
-    }
-
-    /**
-     * Returns the max value for the total progress: No of Task * 100
-     * Todo: Maybe to 100
-     * @return Maximal Value for all Tasks combined
-     */
-    public int getMaxTotalProgressValue(){
-        return _taskList.size()*100;
+        return (int) (sum / _taskList.size());
     }
 
     /**

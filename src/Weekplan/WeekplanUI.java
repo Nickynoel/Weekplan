@@ -128,7 +128,7 @@ public class WeekplanUI
     private void createTotalProgressBar()
     {
         _totalProgress.setMinimum(0);
-        _totalProgress.setMaximum(_taskList.getMaxTotalProgressValue());
+        _totalProgress.setMaximum(100);
         _totalProgress.setStringPainted(true);
     }
 
@@ -310,10 +310,9 @@ public class WeekplanUI
     /**
      * Colors the final JProgressbar, that takes data from all topics
      */
-    private void colorTotalBar()
+    private void updateTotalBar()
     {
-        //setValue requires an integer, not a double
-        _totalProgress.setValue((int) (_taskList.getTotalProgressInPercent()));
+        _totalProgress.setValue(_taskList.getTotalProgressInPercent());
     }
 
 
@@ -334,7 +333,7 @@ public class WeekplanUI
     private void updateTotal()
     {
         updateTotalLabel();
-        colorTotalBar();
+        updateTotalBar();
     }
 
     /**
