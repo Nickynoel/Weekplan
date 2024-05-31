@@ -239,6 +239,8 @@ public class TaskList
      */
     public int getTotalProgressInPercent()
     {
+//        ToDo: Ask more knowledgeable people: the stream version does not look more convincing...
+//        double sum2 = _taskList.stream().map(Task::getProgressInPercent).reduce(0.0, (subtotal, element) -> subtotal + element);
         double sum = 0.0;
         for (Task t : _taskList)
         {
