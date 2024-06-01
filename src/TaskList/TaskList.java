@@ -268,18 +268,17 @@ public class TaskList
 
     /**
      * Navigates based on the given resetProgram how the taskList is supposed to be reset
-     * ToDo: Enum would be rad here
      *
      * @param resetProgram: parameter to choose the way of resetting
      */
-    public void resetProgress(int resetProgram)
+    public void resetProgress(String resetProgram)
     {
         switch (resetProgram)
         {
-            case 0:
+            case "Total":
                 fullProgressReset();
                 break;
-            case 1:
+            case "On Goal":
                 adjustedProgressReset();
                 break;
         }

@@ -2,6 +2,9 @@ package OptionArea;
 
 import javax.swing.*;
 import java.awt.*;
+import Settings.Settings;
+
+
 
 /**
  * UI of OptionArea
@@ -9,7 +12,6 @@ import java.awt.*;
 
 public class OptionAreaUI
 {
-    private final String[] RESETPROGRAMMS = new String[]{"Total", "On Goal"};
     private final int WINDOWWIDTH = 300;
     private final int WINDOWHEIGHT = 200;
     private final String WINDOWTITLE = "Options";
@@ -36,7 +38,7 @@ public class OptionAreaUI
     private void initializeVariables()
     {
         _totalTargetInput = new JTextField("",5);
-        _resetComboBox = new JComboBox<>(RESETPROGRAMMS);
+        _resetComboBox = new JComboBox<>((Settings.RESETPROGRAMS).toArray(new String[0]));
 
         _addButton = new JButton("Add Topic");
         _deleteButton = new JButton("Delete Topic");
@@ -149,9 +151,9 @@ public class OptionAreaUI
      * Defaults the comboBox-index to the current index
      * @param resetProgram: the reset-program given from the settings
      */
-    public void setResetProgram(int resetProgram)
+    public void setResetProgram(String resetProgram)
     {
-        _resetComboBox.setSelectedIndex(resetProgram);
+        _resetComboBox.setSelectedItem(resetProgram);
     }
 
     /**

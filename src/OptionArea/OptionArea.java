@@ -68,7 +68,7 @@ public class OptionArea
         
         _ui.getResetComboBox().addActionListener(event ->
         {
-            _settingList.setResetProgram(_ui.getResetComboBox().getSelectedIndex());
+            _settingList.setResetProgram(String.valueOf(_ui.getResetComboBox().getSelectedItem()));
             _settingList.saveSettings();
         });
 

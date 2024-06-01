@@ -181,10 +181,10 @@ public class TaskListTest
     {
         TaskList taskList = TaskList.getInstance(_testFile);
         taskList.get(0).addProgress(120);
-        taskList.resetProgress(1);
+        taskList.resetProgress("On Goal");
         // (progress - target) / 2 -> (120 - 60) / 2
         assertEquals(taskList.getTotalProgressTime(), 30);
-        taskList.resetProgress(0);
+        taskList.resetProgress("Total");
         assertEquals(taskList.getTotalProgressTime(), 0);
         assertTrue(_testFile.delete());
     }

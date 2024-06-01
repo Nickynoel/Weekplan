@@ -5,6 +5,7 @@ import RowFileWriter.RowFileWriter;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -15,12 +16,13 @@ import java.util.List;
 public class Settings
 {
     public static final File DEFAULTSETTINGSFILE = new File("Settings.txt");
+    public static final List<String> RESETPROGRAMS = Arrays.asList("Total", "On Goal", "None"); // ToDo: As Enum?
     private final String RESETPROGRAM = "Resetprogram:";
     private final String WEEKLYRESET = "Weekly Reset:";
 
     private List<String> _settingsList; //Settings given by the file
     private File _file; //file that saves the settings
-    private int _resetProgram; //number that says
+    private String _resetProgram;
     private boolean _isSunday; //Checks if we are moving from sunday to monday
     /**
      * Factory method that returns the _settings given a file
@@ -43,7 +45,7 @@ public class Settings
     {
         _settingsList = new ArrayList<>();
         _file = file;
-        _resetProgram = 0;
+        _resetProgram = "None";
         _isSunday = false;
     }
 
@@ -67,7 +69,7 @@ public class Settings
             if (s.startsWith(RESETPROGRAM))
             {
                 String prog = s.substring(RESETPROGRAM.length()).strip();
-                _resetProgram = Integer.parseInt(prog);
+                _resetProgram = RESETPROGRAMS.contains(prog) ?  prog : "None";
             }
             if(s.startsWith(WEEKLYRESET))
             {
@@ -104,18 +106,18 @@ public class Settings
      * Returns the number which signals how the plan is supposed to be reset
      * @return resetProgram
      */
-    public int getResetProgram()
+    public String getResetProgram()
     {
         return _resetProgram;
     }
     
     /**
      * Sets the resetProgram to the given index
-     * @param selectedIndex index of the newly chosen resetProgram
+     * @param prog name of the newly chosen resetProgram
      */
-    public void setResetProgram(int selectedIndex)
+    public void setResetProgram(String prog)
     {
-        _resetProgram = selectedIndex;
+        if (RESETPROGRAMS.contains(prog)) _resetProgram = prog;
     }
     
     /**
