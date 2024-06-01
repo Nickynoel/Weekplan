@@ -81,8 +81,8 @@ public class Weekplan
     
     /**
      * Opens the editing field of a (newly created) task
-     * - the "TopicArea" (TODO: Rename) -
-     * with the title "New Task"
+     * - the "TaskEditArea" with the title "New Task"
+     * TODO: This smells
      */
     public void openTaskEdit()
     {

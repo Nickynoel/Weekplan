@@ -87,7 +87,8 @@ public class Task
     }
 
     public double getProgressInPercent() {
-        return (_currentProgress * 100.0) / _targetTime; //No max for comparison TODO: Yet
+        //No max for comparison
+        return (_currentProgress * 100.0) / _targetTime;
     }
 
     public int getTargetTime() {
