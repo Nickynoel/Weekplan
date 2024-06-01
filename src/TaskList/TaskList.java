@@ -243,7 +243,7 @@ public class TaskList
     {
         double sum = _taskList.stream()
                 .map(Task::getProgressInPercent)
-                .reduce(0.0, (subtotal, element) -> subtotal + element);
+                .reduce(0.0, (subtotal, element) -> subtotal + Math.min(element, 100));
         return (int) (sum / _taskList.size());
     }
 
