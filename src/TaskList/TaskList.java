@@ -88,7 +88,8 @@ public class TaskList
         _taskList.add(Task.getInstance());
     }
 
-    public void addTask(Task t){
+    public void addTask(Task t)
+    {
         _taskList.add(t);
     }
 
@@ -190,6 +191,7 @@ public class TaskList
     /**
      * Removes the topics in the positions, given by an array, of the _topicList
      * TODO: as list maybe -> requires no duplicates
+     *
      * @param array: indices of topics in the list to be removed
      */
     public void removeTasks(int[] array)
@@ -239,13 +241,9 @@ public class TaskList
      */
     public int getTotalProgressInPercent()
     {
-//        ToDo: Ask more knowledgeable people: the stream version does not look more convincing...
-//        double sum2 = _taskList.stream().map(Task::getProgressInPercent).reduce(0.0, (subtotal, element) -> subtotal + element);
-        double sum = 0.0;
-        for (Task t : _taskList)
-        {
-            sum += Math.min(t.getProgressInPercent(), 100);
-        }
+        double sum = _taskList.stream()
+                .map(Task::getProgressInPercent)
+                .reduce(0.0, (subtotal, element) -> subtotal + element);
         return (int) (sum / _taskList.size());
     }
 
@@ -322,7 +320,8 @@ public class TaskList
      */
     public void checkReset()
     {
-        int weekday = ((Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) + 5) % 7; //Monday == 0... and so on
+        int weekday = ((Calendar.getInstance()
+                .get(Calendar.DAY_OF_WEEK)) + 5) % 7; //Monday == 0... and so on
         boolean sufficientProgress = (getTotalProgressTime() * 2 > getTotalTargetTime());
         sufficientProgress = true; //no sufficient progress for now
         if (weekday == 0 && sufficientProgress)
@@ -334,6 +333,7 @@ public class TaskList
 
     /**
      * Creates a string that reflects the progress in form "xx,x of xx,x hours"
+     *
      * @return
      */
     public String getTotalProgressInText()
@@ -353,6 +353,6 @@ public class TaskList
         int goalHours = getTotalTargetTime() / 60;
         int goalMinutes = (getTotalTargetTime() / 6) % 10;
 
-        return progressMinutes == 0 ?                                                                (sign + progressHours + " of " + goalHours + "," + goalMinutes + " hours") :                (sign + progressHours + "," + progressMinutes + " of " + goalHours + "," + goalMinutes + " hours");
+        return progressMinutes == 0 ? (sign + progressHours + " of " + goalHours + "," + goalMinutes + " hours") : (sign + progressHours + "," + progressMinutes + " of " + goalHours + "," + goalMinutes + " hours");
     }
 }
