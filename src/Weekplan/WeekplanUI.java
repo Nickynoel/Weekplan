@@ -26,6 +26,12 @@ public class WeekplanUI
     private List<JProgressBar> _taskProgressBars;
     private List<JButton> _addTimeButtons;
 
+    private JMenuBar _menuBar;
+    private JMenuItem _createItem;
+    private JMenuItem _deleteItem;
+    private JMenuItem _optionsItem;
+    private JMenuItem _closeItem;
+
     private JLabel _totalLabel;
     private JProgressBar _totalProgress;
     private JButton _saveButton;
@@ -43,6 +49,7 @@ public class WeekplanUI
     {
         initializeVariables(list);
         createElements();
+        createMenuBar();
         createWindow();
         initializeWindow();
     }
@@ -56,6 +63,12 @@ public class WeekplanUI
         _taskTitleButtons = new ArrayList<>();
         _taskProgressBars = new ArrayList<>();
         _addTimeButtons = new ArrayList<>();
+
+        _menuBar = new JMenuBar();
+        _createItem = new JMenuItem("New Task");
+        _deleteItem = new JMenuItem("Remove Tasks");
+        _optionsItem = new JMenuItem("Options");
+        _closeItem = new JMenuItem("Close");
 
         _saveButton = new JButton("Save");
         _optionButton = new JButton("Options");
@@ -75,6 +88,16 @@ public class WeekplanUI
         createTaskProgressBars();
         createAddButtons();
         createTotalProgressBar();
+    }
+
+    private void createMenuBar()
+    {
+        JMenu menu = new JMenu("File");
+        menu.add(_createItem);
+        menu.add(_deleteItem);
+        menu.add(_optionsItem);
+        menu.add(_closeItem);
+        _menuBar.add(menu);
     }
 
     /**
@@ -140,6 +163,7 @@ public class WeekplanUI
         _mainframe.setTitle(WINDOWTITLE);
         _mainframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //closes window
         _mainframe.setSize(WINDOWWIDTH, WINDOWHEIGHT);
+        _mainframe.setJMenuBar(_menuBar);
         _mainframe.setLayout(new BorderLayout());
 
         _mainframe.setLocationRelativeTo(null);
@@ -460,5 +484,25 @@ public class WeekplanUI
     {
         colorProgressBar(task);
         updateTotal();
+    }
+
+    public JMenuItem getCreateItem()
+    {
+        return _createItem;
+    }
+
+    public JMenuItem getDeleteItem()
+    {
+        return _deleteItem;
+    }
+
+    public JMenuItem getOptionsItem()
+    {
+        return _optionsItem;
+    }
+
+    public JMenuItem getCloseItem()
+    {
+        return _closeItem;
     }
 }
