@@ -38,8 +38,20 @@ public class Weekplan
         _ui.getOptionButton().addActionListener(event -> openOptionsArea());
         _ui.getSaveButton().addActionListener(event -> saveTracker());
         _ui.getCloseButton().addActionListener(event -> closeTracker());
+
+        _ui.getCloseItem().addActionListener(event -> closeTracker());
+        _ui.getCreateItem().addActionListener(event -> createTask());
     }
-    
+
+    private void createTask()
+    {
+        _listOfTasks.addNewEmptyTask();
+        _listOfTasks.saveTasksOnFile();
+        _ui.close();
+        Weekplan plan = new Weekplan();
+        plan.openTaskEdit();
+    }
+
     /**
      * Opens the editing field of a (newly created) task
      * - the "TaskEditArea" with the title "New Task"
