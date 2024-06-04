@@ -168,7 +168,6 @@ public class WeekplanUI
 
         _mainframe.setLocationRelativeTo(null);
         //_mainframe.setResizable(false);
-        _mainframe.setVisible(true);
     }
 
     private void initializeWindow()
@@ -178,6 +177,7 @@ public class WeekplanUI
         scrollPane.getVerticalScrollBar().setUnitIncrement(VERTICALSCROLLSPEED);
         _mainframe.add(scrollPane);
         _mainframe.add(buildBotPanel(), BorderLayout.PAGE_END);
+        _mainframe.setVisible(true);
     }
 
     /**
