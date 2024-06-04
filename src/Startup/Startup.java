@@ -18,7 +18,7 @@ public class Startup
         {
             _listOfTasks.resetProgress(_listOfSettings.getResetProgram());
         }
-        new Weekplan();
+        Weekplan.getInstance();
     }
 }
 

@@ -64,6 +64,6 @@ public class DeleteArea
     private void exitDeleteArea()
     {
         _ui.close();
-        new Weekplan();
+        Weekplan.getInstance();
     }
 }

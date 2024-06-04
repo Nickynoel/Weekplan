@@ -78,7 +78,7 @@ public class OptionArea
             list.addNewEmptyTask();
             list.saveTasksOnFile();
             _ui.close();
-            Weekplan plan = new Weekplan();
+            Weekplan plan = Weekplan.getInstance();
             plan.openTaskEdit();
         });
         
@@ -91,7 +91,7 @@ public class OptionArea
         _ui.getBackButton().addActionListener(event ->
         {
             _ui.close();
-            new Weekplan();
+            Weekplan.getInstance();
         });
     }
 
