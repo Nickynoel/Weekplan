@@ -65,10 +65,10 @@ public class WeekplanUI
         _addTimeButtons = new ArrayList<>();
 
         _menuBar = new JMenuBar();
-        _createItem = new JMenuItem("New Task");
-        _deleteItem = new JMenuItem("Remove Tasks");
-        _optionsItem = new JMenuItem("Options");
-        _closeItem = new JMenuItem("Close");
+        _createItem = new JMenuItem("New Task", 'N');
+        _deleteItem = new JMenuItem("Remove Tasks", 'D');
+        _optionsItem = new JMenuItem("Options", 'O');
+        _closeItem = new JMenuItem("Close", 'E');
 
         _saveButton = new JButton("Save");
         _optionButton = new JButton("Options");
@@ -93,6 +93,7 @@ public class WeekplanUI
     private void createMenuBar()
     {
         JMenu menu = new JMenu("File");
+        menu.setMnemonic('F');
         menu.add(_createItem);
         menu.add(_deleteItem);
         menu.add(_optionsItem);
