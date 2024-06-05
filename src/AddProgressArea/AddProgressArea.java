@@ -10,15 +10,14 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * Functional class AddArea for the window that accepts the input of the length of an action
- * and adds its value to the progress of a given topic
+ * Functional class AddProgressArea for the window that accepts the input of the length of an action
+ * and adds its value to the progress of a given task
  */
 public class AddProgressArea
 {
-    private final AddProgressAreaUI _ui;
-    private final Task _task;
-
     private final PropertyChangeSupport _support; //basically observable just newer
+    private final Task _task;
+    private final AddProgressAreaUI _ui;
 
     public AddProgressArea(Task task, JFrame frame)
     {
@@ -31,50 +30,47 @@ public class AddProgressArea
         addListener();
     }
 
-    /**
-     * Adds the listeners of the components of AddAreaUI:
-     * BackButton.actionListener: just closes,
-     * TextField.keyListener: checks the validity of the entry,
-     * TextField.actionListener: Shortcut to confirmButton,
-     * ConfirmButton.actionListener: Processing of the entry
-     */
     private void addListener()
     {
         _ui.getBackButton().addActionListener(event -> _ui.close());
 
-        //If the text gets changed it checks it anew and controls the availability of the button
         _ui.getTextField().addKeyListener(new KeyAdapter()
         {
             @Override
             public void keyReleased(KeyEvent e)
             {
                 super.keyReleased(e);
-                String tmp = _ui.getTextField().getText();
-                if (isValidEntry(tmp))
-                {
-                    _ui.enableConfirmButton();
-                } else
-                {
-                    _ui.disableConfirmButton();
-                }
+                validateInputForConfirmButton();
             }
         });
 
-        //Shortcut for enter-key
-        _ui.getTextField().addActionListener(event ->
-        {
-            //doClick() automatically checks "isEnabled()"
-            _ui.getConfirmButton().doClick();
-        });
+        _ui.getTextField().addActionListener(event -> submitEntry()); //Shortcut for enter-key
+        _ui.getConfirmButton().addActionListener(event -> submitEntry());
+    }
 
-        _ui.getConfirmButton().addActionListener(event ->
+    private boolean isTextFieldEntryValid()
+    {
+        return _ui.getUserInput().matches("-?\\d+"); // positive or negative number
+    }
+
+    private void validateInputForConfirmButton()
+    {
+        if (isTextFieldEntryValid())
+            _ui.enableConfirmButton();
+        else
+            _ui.disableConfirmButton();
+    }
+
+    private void submitEntry()
+    {
+        if (isTextFieldEntryValid())
         {
-            String tmp = _ui.getTextField().getText();
             try
             {
-                int number = Integer.parseInt(tmp);
+                int number = Integer.parseInt(_ui.getUserInput());
                 _task.addProgress(number);
-                confirmChange(number);
+                //Tells the PropertyChangeListeners that a change happens if number!=0
+                _support.firePropertyChange("Test", 0, number);
                 _ui.close();
             }
             //should never happen, cause the textField-keyListener checks this
@@ -82,28 +78,7 @@ public class AddProgressArea
             {
                 JOptionPane.showMessageDialog(new JFrame(), "Entry is NaN and the TextField-check was wrong");
             }
-        });
-    }
-
-    /**
-     * Checks if the input/given string is a number or a negative number
-     *
-     * @param tmp: checked entry
-     * @return boolean: validity of the string
-     */
-    private boolean isValidEntry(String tmp)
-    {
-        return tmp.matches("-?\\d+");
-    }
-
-    /**
-     * Tells the PropertyChangeListeners that a change happens if number!=0
-     *
-     * @param number: the number typed into the JTextField
-     */
-    private void confirmChange(int number)
-    {
-        _support.firePropertyChange("Test", 0, number);
+        }
     }
 
     /**
@@ -117,8 +92,7 @@ public class AddProgressArea
     }
 
     /**
-     * Shows the AddAreaUI
-     * Necessary for observer Weekplan
+     * Sets the visibility of the UI to true
      */
     public void showUI()
     {

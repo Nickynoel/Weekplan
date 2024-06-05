@@ -13,86 +13,68 @@ public class AddProgressAreaUI
     private final int WINDOWHEIGHT = 140;
     private final String WINDOWTITLE = "Add";
 
-    private JLabel _label;
-    private JTextField _textField;
+    private JLabel _descriptionLabel;
+    private JTextField _inputField;
     private JButton _confirmButton;
     private JButton _backButton;
 
-    private JDialog _dialog;
+    private JDialog _dialogWindow;
     
     /**
      * Initializing the UI
      */
     public AddProgressAreaUI()
     {
-        initializeVariables();
+        initializeElements();
         createWindow();
         initializeWindow();
     }
 
-    private void initializeVariables()
+    private void initializeElements()
     {
-        _label = new JLabel("Time in minutes");
-        _textField = new JTextField("", 5); //number of columns or dimension
+        _descriptionLabel = new JLabel("Time in minutes");
+        _inputField = new JTextField("", 5); //number of columns or dimension
         _confirmButton = new JButton("confirm");
         _confirmButton.setEnabled(false);
 
         _backButton = new JButton("back");
-        _dialog = new JDialog();
+        _dialogWindow = new JDialog();
     }
 
-    /**
-     * Builds the JDialog
-     */
     private void createWindow()
     {
-        _dialog.setTitle(WINDOWTITLE);
-        _dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        _dialog.setSize(WINDOWWIDTH,WINDOWHEIGHT);
-        _dialog.setLayout(new BorderLayout());
+        _dialogWindow.setTitle(WINDOWTITLE);
+        _dialogWindow.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        _dialogWindow.setSize(WINDOWWIDTH,WINDOWHEIGHT);
+        _dialogWindow.setLayout(new BorderLayout());
 
-        _dialog.setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
-        _dialog.setResizable(false);
+        _dialogWindow.setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
+        _dialogWindow.setResizable(false);
     }
 
-    /**
-     * insert the panels onto the _mainFrame
-     */
     private void initializeWindow()
     {
-        _dialog.add(generateTopPanel(),BorderLayout.PAGE_START);
-        _dialog.add(generateCenterPanel());
-        _dialog.add(generateBotPanel(),BorderLayout.PAGE_END);
+        _dialogWindow.add(generateTopPanel(),BorderLayout.PAGE_START);
+        _dialogWindow.add(generateCenterPanel());
+        _dialogWindow.add(generateBotPanel(),BorderLayout.PAGE_END);
     }
 
-    /**
-     * Initialization of the upper Panel, containing the Label describing the action
-     * @return the upper Panel
-     */
     private JPanel generateTopPanel()
     {
         JPanel panel = new JPanel();
-        panel.add(_label);
+        panel.add(_descriptionLabel);
 
         return panel;
     }
 
-    /**
-     * Initialization of the central Panel, containing the textField for the input
-     * @return the central Panel
-     */
     private JPanel generateCenterPanel()
     {
         JPanel panel = new JPanel();
-        panel.add(_textField);
+        panel.add(_inputField);
 
         return panel;
     }
 
-    /**
-     * Initialization of the bottom Panel, containing the two buttons for confirming and declining
-     * @return the bottom Panel
-     */
     private JPanel generateBotPanel()
     {
         JPanel panel1 = new JPanel();
@@ -100,43 +82,49 @@ public class AddProgressAreaUI
         JPanel panel2 = new JPanel();
         panel2.add(_backButton);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        panel.add(panel1);
-        panel.add(panel2);
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new FlowLayout());
+        mainPanel.add(panel1);
+        mainPanel.add(panel2);
 
-        return panel;
+        return mainPanel;
     }
 
     /**
-     * Sets the UI's title
+     * Sets the title of the UI
      */
     public void setTitle(String s)
     {
-        _dialog.setTitle(s);
+        _dialogWindow.setTitle(s);
     }
     
     /**
-     * Sets the UI to a certain point
+     * Sets the position of the UI to a certain point
      * @param p: Point for positioning the JDialog
      */
     public void setPosition(Point p)
     {
-        _dialog.setLocation(p);
+        _dialogWindow.setLocation(p);
     }
     
     /**
      * Returns the textField of the UI
-     * @return _textField
      */
     public JTextField getTextField()
     {
-        return _textField;
+        return _inputField;
     }
-    
+
+    /**
+     * Returns the text within the textField of the UI
+     */
+    public String getUserInput()
+    {
+        return _inputField.getText();
+    }
+
     /**
      * Returns the confirmationButton
-     * @return _confirmButton
      */
     public JButton getConfirmButton()
     {
@@ -160,8 +148,7 @@ public class AddProgressAreaUI
     }
     
     /**
-     * Returns the declining _backButton
-     * @return _backButton
+     * Returns the _backButton
      */
     public JButton getBackButton()
     {
@@ -169,11 +156,11 @@ public class AddProgressAreaUI
     }
     
     /**
-     * Sets the UI's visibility to true
+     * Sets the visibility of the UI to true
      */
     public void showUI()
     {
-        _dialog.setVisible(true);
+        _dialogWindow.setVisible(true);
     }
     
     /**
@@ -181,6 +168,6 @@ public class AddProgressAreaUI
      */
     public void close()
     {
-        _dialog.dispose();
+        _dialogWindow.dispose();
     }
 }
