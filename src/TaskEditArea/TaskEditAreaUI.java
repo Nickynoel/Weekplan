@@ -1,5 +1,7 @@
 package TaskEditArea;
 
+import TaskList.Task.Task;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,6 +11,7 @@ import java.awt.*;
 
 public class TaskEditAreaUI
 {
+    private final int MAXTASKDISPLAYLENGTH = 13;
     private final int WINDOWWIDTH = 300;
     private final int WINDOWHEIGHT = 200;
 
@@ -38,7 +41,7 @@ public class TaskEditAreaUI
         _taskLabel = new JLabel("Error");
         _targetTimeLabel = new JLabel("Error");
 
-        _taskField = new JTextField("", 5); //number of colomns or dimension
+        _taskField = new JTextField("", 5); //number of columns or dimension
         _targetTimeField = new JTextField("", 5);
 
         _confirmButton = new JButton("confirm");
@@ -61,7 +64,7 @@ public class TaskEditAreaUI
     }
 
     /**
-     * Initialization of the Panels, which is devided into its 3 subpanels top, center and bot
+     * Initialization of the Panels, which is divided into its 3 subPanels top, center and bot
      */
     private void initializeWindow()
     {
@@ -117,38 +120,44 @@ public class TaskEditAreaUI
 
         return panel;
     }
+
+    public void loadTaskData(Task task)
+    {
+        setTitle(task.getTitle() + ": " + task.getProgress() + " Min.");
+        setTaskLabel(task.getTitle());
+        setTargetTimeLabel(task.getTargetTime());
+    }
+
+    public void setPositionRelativeToMainFrame(JFrame frame)
+    {
+        _dialog.setLocation(new Point
+                (frame.getLocation().x + 50, frame.getLocation().y + 100));
+    }
     
     /**
      * Sets the title of the window according to the topic at hand
      *
-     * @param titel: name of the topic
+     * @param title: name of the topic
      */
-    public void setTitle(String titel)
+    private void setTitle(String title)
     {
-        _dialog.setTitle(titel);
+        _dialog.setTitle(title);
     }
-    
+
     /**
-     * Sets the UI to a certain point
-     * @param p: Point for positioning the JDialog
+     * Sets the text on the taskLabel with the current temporary taskName
      */
-    public void setPosition(Point p)
+    public void setTaskLabel(String newName)
     {
-        _dialog.setLocation(p);
+        if (newName.length() > MAXTASKDISPLAYLENGTH)
+            _taskLabel.setText("Name: " + newName.substring(0, MAXTASKDISPLAYLENGTH)+".");
+        else
+            _taskLabel.setText("Name: " + newName);
     }
-    
+
     /**
-     * Sets the text of the _topicLabel to the given String
-     * @param s: text on _topicLabel
-     */
-    public void setTopicLabel(String s)
-    {
-        _taskLabel.setText(s);
-    }
-    
-    /**
-     * GetA for _topicField
-     * @return _topicField
+     * GetA for _taskField
+     * @return _taskField
      */
     public JTextField getTaskField()
     {
@@ -159,15 +168,15 @@ public class TaskEditAreaUI
     {
         _taskField.setText("");
     }
+
     /**
-     * Sets the text of the _lengthLabel to the given String
-     * @param s: text on _lengthLabel
+     * Updates the text on the targetTimeLabel with the current temporary targetTime value
      */
-    public void setLengthLabel(String s)
+    public void setTargetTimeLabel(int newTargetTime)
     {
-        _targetTimeLabel.setText(s);
+        _targetTimeLabel.setText("Goal: " + newTargetTime + " Minutes");
     }
-    
+
     /**
      * GetA for _lengthField
      * @return _lengthField
@@ -183,7 +192,7 @@ public class TaskEditAreaUI
     }
     
     /**
-     * Returns the confirmationbutton
+     * Returns the confirmation button
      *
      * @return _confirmButton
      */
@@ -217,7 +226,5 @@ public class TaskEditAreaUI
     {
         _dialog.dispose();
     }
-
-
 
 }

@@ -3,7 +3,6 @@ package TaskEditArea;
 import TaskList.Task.Task;
 
 import javax.swing.*;
-import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -13,40 +12,27 @@ import java.beans.PropertyChangeSupport;
  */
 public class TaskEditArea
 {
-    private int MAXTASKDISPLAYLENGTH = 13;
-
+    private final PropertyChangeSupport _support;
     private final Task _task;
     private final TaskEditAreaUI _ui;
 
-    //These values only get saved upon hitting "confirm"
-    private String _taskName; // temporary name of the topic
-    private int _taskTargetTime; // temporary length of the topic
-    
-    private PropertyChangeSupport _support;
-    
+    //These values only get saved upon hitting "confirm" - temporary cache until then
+    private String _taskName;
+    private int _taskTargetTime;
+
     public TaskEditArea(Task task, JFrame frame)
     {
+        _support = new PropertyChangeSupport(this);
         _task = task;
+
         _ui = new TaskEditAreaUI();
+        _ui.loadTaskData(task);
+        _ui.setPositionRelativeToMainFrame(frame);
+
         _taskName = task.getTitle();
         _taskTargetTime = task.getTargetTime();
-        _support = new PropertyChangeSupport(this);
 
-        createUI(frame);
         addListener();
-    }
-    
-    /**
-     * Creates the UI provided by TopicAreaUI
-     * Also sets its title and provides the topics name and length
-     */
-    private void createUI(JFrame frame)
-    {
-        _ui.setTitle(_task.getTitle() + ": " + _task.getProgress() + " Min.");
-        //location relative to the frame in the background
-        _ui.setPosition(new Point(frame.getLocation().x + 50, frame.getLocation().y + 100));
-        updateTaskLabel();
-        updateTargetTimeLabel();
     }
     
     /**
@@ -64,7 +50,7 @@ public class TaskEditArea
             if (isValidTaskTitle(input))
             {
                 _taskName = input;
-                updateTaskLabel();
+                _ui.setTaskLabel(_taskName);
                 _ui.clearTaskField();
             }
         });
@@ -75,7 +61,7 @@ public class TaskEditArea
             if (isValidTargetTime(input))
             {
                 _taskTargetTime = Integer.parseInt(input);
-                updateTargetTimeLabel();
+                _ui.setTargetTimeLabel(_taskTargetTime);
                 _ui.clearTargetTimeField();
             }
         });
@@ -114,31 +100,7 @@ public class TaskEditArea
     {
         return input.matches("\\d+") && !input.equals("0");
     }
-    
-    /**
-     * Updates the text on the UI's lengthLabel with the current temporary _topicLength value
-     */
-    private void updateTargetTimeLabel()
-    {
-        _ui.setLengthLabel("Goal: " + _taskTargetTime + " Minutes");
-    }
-    
-    /**
-     * Updates the text on the UI's taskLabel with the current temporary _taskName
-     */
-    private void updateTaskLabel()
-    {
-        if (_taskName.length() > MAXTASKDISPLAYLENGTH)
-        {
-            _ui.setTopicLabel("Name: " + _taskName.substring(0, MAXTASKDISPLAYLENGTH)+".");
-        }
-        else
-        {
-            _ui.setTopicLabel("Name: " + _taskName);
-        }
-        
-    }
-    
+
     /**
      * Makes the UI visible (important for the Observer Weekplan)
      */
