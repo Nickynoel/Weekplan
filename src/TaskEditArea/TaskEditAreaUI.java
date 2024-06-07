@@ -60,7 +60,6 @@ public class TaskEditAreaUI
         _dialog.setLayout(new BorderLayout());
 
         _dialog.setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
-        _dialog.setResizable(false);
     }
 
     /**
@@ -70,12 +69,14 @@ public class TaskEditAreaUI
     {
         _dialog.add(generateCenterPanel());
         _dialog.add(generateBotPanel(), BorderLayout.PAGE_END);
+
+        _dialog.setResizable(false);
     }
 
     /**
-     * Initialization of the central Panel, containing JLabels and JTextFields for name and targetLength
+     * Initialization of the central panel, containing JLabels and JTextFields for name and targetLength
      *
-     * @return the central Panel
+     * @return the central panel
      */
     private JPanel generateCenterPanel()
     {

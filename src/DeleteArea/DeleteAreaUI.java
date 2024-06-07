@@ -1,5 +1,7 @@
 package DeleteArea;
 
+import TaskList.TaskList;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -72,8 +74,8 @@ public class DeleteAreaUI
     }
 
     /**
-     * Initialization of the _topPanel, containing the Label describing the action
-     * @return the _topPanel
+     * Initialization of the upper panel, containing the label that describes the action
+     * @return the upper panel
      */
     private JPanel generateTopPanel()
     {
@@ -84,8 +86,8 @@ public class DeleteAreaUI
     }
 
     /**
-     * Initialization of the _centerPanel, containing the JList for the input
-     * @return the _centerPanel
+     * Initialization of the central panel, containing the JList for the input
+     * @return the central panel
      */
     private JPanel generateCenterPanel()
     {
@@ -95,8 +97,8 @@ public class DeleteAreaUI
     }
 
     /**
-     * Initialization of the _botPanel, containing the two buttons for confirming and declining
-     * @return the _botPanel
+     * Initialization of the bottom panel, containing the two buttons for confirming and declining
+     * @return the bottom panel
      */
     private JPanel generateBotPanel()
     {
@@ -112,7 +114,12 @@ public class DeleteAreaUI
 
         return panel;
     }
-    
+
+    public void loadTaskList(TaskList taskList)
+    {
+        _jListOfTasks.setListData(taskList.getArrayOfTaskTitles());
+    }
+
     /**
      * Returns the JList
      * @return _jListOfTasks
@@ -121,24 +128,7 @@ public class DeleteAreaUI
     {
         return _jListOfTasks;
     }
-    
-    /**
-     * Sets the list with a given String-array
-     * @param list: List of Topic-titles
-     */
-    public void setList(String[] list)
-    {
-        _jListOfTasks.setListData(list);
-    }
-    
-    /**
-     * Returns the declining _backButton
-     * @return _backButton
-     */
-    public JButton getBackButton()
-    {
-        return _backButton;
-    }
+
     
     /**
      * Returns the _deleteButton
@@ -148,7 +138,7 @@ public class DeleteAreaUI
     {
         return _deleteButton;
     }
-    
+
     /**
      * Enables the _deleteButton
      */
@@ -156,7 +146,7 @@ public class DeleteAreaUI
     {
         _deleteButton.setEnabled(true);
     }
-    
+
     /**
      * Disables the _deleteButton
      */
@@ -164,7 +154,16 @@ public class DeleteAreaUI
     {
         _deleteButton.setEnabled(false);
     }
-    
+
+    /**
+     * Returns the declining _backButton
+     * @return _backButton
+     */
+    public JButton getBackButton()
+    {
+        return _backButton;
+    }
+
     /**
      * Closes the UI
      */
@@ -172,4 +171,6 @@ public class DeleteAreaUI
     {
         _mainframe.dispose();
     }
+
+
 }
