@@ -17,7 +17,7 @@ public class DeleteAreaUI
     private final String WINDOWTITLE = "Delete";
 
     private JLabel _titleLabel;
-    private JList _jListOfTasks;
+    private JList<String> _jListOfTasks;
     private JButton _deleteButton;
     private JButton _backButton;
     
@@ -36,7 +36,7 @@ public class DeleteAreaUI
     private void initializeVariables()
     {
         _titleLabel = new JLabel("List of current tasks");
-        _jListOfTasks = new JList();
+        _jListOfTasks = new JList<>();
         _deleteButton = new JButton("Delete");
         _deleteButton.setEnabled(false); //assumption that initial selection of the JList is empty
 
@@ -50,7 +50,7 @@ public class DeleteAreaUI
     private void createWindow()
     {
         _mainframe.setTitle(WINDOWTITLE);
-        _mainframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //Schließt Fenster
+        _mainframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _mainframe.setSize(WINDOWWIDTH,WINDOWHEIGHT);
         _mainframe.setLayout(new BorderLayout());
 

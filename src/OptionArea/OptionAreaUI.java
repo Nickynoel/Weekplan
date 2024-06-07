@@ -32,7 +32,6 @@ public class OptionAreaUI
         initializeVariables();
         createWindow();
         initializeWindow();
-        showUI();
     }
 
     private void initializeVariables()
@@ -40,8 +39,8 @@ public class OptionAreaUI
         _totalTargetInput = new JTextField("",5);
         _resetComboBox = new JComboBox<>((Settings.RESETPROGRAMS).toArray(new String[0]));
 
-        _addButton = new JButton("Add Topic");
-        _deleteButton = new JButton("Delete Topic");
+        _addButton = new JButton("Add Task");
+        _deleteButton = new JButton("Delete Tasks");
         _backButton = new JButton("Back");
 
         _mainframe = new JFrame();
@@ -59,11 +58,11 @@ public class OptionAreaUI
         _mainframe.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         _mainframe.setLocationRelativeTo(null);
-        //_mainframe.setResizable(false);
     }
     
     /**
      * Puts JButtons onto the JFrame
+     * ToDo: This Layout is bad
      */
     private void initializeWindow()
     {
@@ -96,8 +95,16 @@ public class OptionAreaUI
         JPanel panel3 = new JPanel();
         panel3.add(_backButton);
         _mainframe.add(panel3);
+
+        //_mainframe.setResizable(false);
+        _mainframe.setVisible(true);
     }
-    
+
+    public void loadSettings(Settings settingList)
+    {
+        setResetProgram(settingList.getResetProgram());
+    }
+
     /**
      * GetA for the _totalTargetInput JTextField
      * @return _totalTargetInput
@@ -110,6 +117,24 @@ public class OptionAreaUI
     public void clearTotalTargetInput()
     {
         _totalTargetInput.setText("");
+    }
+
+    /**
+     * GetA for the _resetJComboBox
+     * @return _resetComboBox
+     */
+    public JComboBox<String> getResetComboBox()
+    {
+        return _resetComboBox;
+    }
+
+    /**
+     * Defaults the comboBox-index to the current index
+     * @param resetProgram: the reset-program given from the settings
+     */
+    public void setResetProgram(String resetProgram)
+    {
+        _resetComboBox.setSelectedItem(resetProgram);
     }
 
     /**
@@ -147,34 +172,4 @@ public class OptionAreaUI
         _mainframe.dispose();
     }
 
-    /**
-     * Defaults the comboBox-index to the current index
-     * @param resetProgram: the reset-program given from the settings
-     */
-    public void setResetProgram(String resetProgram)
-    {
-        _resetComboBox.setSelectedItem(resetProgram);
-    }
-
-    /**
-     * GetA for the _resetJComboBox
-     * @return _resetComboBox
-     */
-    public JComboBox<String> getResetComboBox()
-    {
-        return _resetComboBox;
-    }
-
-    /**
-     * Sets the UI's visibility to true
-     */
-    private void showUI()
-    {
-        _mainframe.setVisible(true);
-    }
-
-    public void loadSettings(Settings settingList)
-    {
-        setResetProgram(settingList.getResetProgram());
-    }
 }
