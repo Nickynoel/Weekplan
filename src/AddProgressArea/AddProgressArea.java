@@ -3,7 +3,6 @@ package AddProgressArea;
 import TaskList.Task.Task;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeListener;
@@ -23,10 +22,11 @@ public class AddProgressArea
     {
         _support = new PropertyChangeSupport(this);
         _task = task;
+
         _ui = new AddProgressAreaUI();
-        _ui.setTitle(task.getTitle());
-        //Sets position based on the mainframe
-        _ui.setPosition(new Point(frame.getLocation().x + 100, frame.getLocation().y + 100));
+        _ui.loadTaskData(task);
+        _ui.setPositionRelativeToMainFrame(frame);
+
         addListener();
     }
 

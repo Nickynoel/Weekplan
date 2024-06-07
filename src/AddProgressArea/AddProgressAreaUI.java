@@ -1,5 +1,7 @@
 package AddProgressArea;
 
+import TaskList.Task.Task;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -90,23 +92,30 @@ public class AddProgressAreaUI
         return mainPanel;
     }
 
+
+    public void loadTaskData(Task task)
+    {
+        setTitle(task.getTitle());
+    }
+
+    /**
+     * Sets the position of the UI to a certain point
+     * @param frame: Underlying base frame
+     */
+    public void setPositionRelativeToMainFrame(JFrame frame)
+    {
+        _dialogWindow.setLocation(new Point
+                (frame.getLocation().x + 100, frame.getLocation().y + 100));
+    }
+
     /**
      * Sets the title of the UI
      */
-    public void setTitle(String s)
+    private void setTitle(String s)
     {
         _dialogWindow.setTitle(s);
     }
-    
-    /**
-     * Sets the position of the UI to a certain point
-     * @param p: Point for positioning the JDialog
-     */
-    public void setPosition(Point p)
-    {
-        _dialogWindow.setLocation(p);
-    }
-    
+
     /**
      * Returns the textField of the UI
      */
