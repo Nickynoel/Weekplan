@@ -172,4 +172,9 @@ public class OptionAreaUI
     {
         _mainframe.setVisible(true);
     }
+
+    public void loadSettings(Settings settingList)
+    {
+        setResetProgram(settingList.getResetProgram());
+    }
 }

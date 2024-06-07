@@ -15,84 +15,86 @@ import javax.swing.*;
 
 public class OptionArea
 {
-    private OptionAreaUI _ui;
-    private Settings _settingList;
-    
+    private final Settings _settingList;
+    private final OptionAreaUI _ui;
+
     public OptionArea()
     {
-        initializeFields();
-        setSettings();
-        addListener();
-    }
-
-    private void initializeFields()
-    {
-        _ui = new OptionAreaUI();
         _settingList = Settings.getInstance(Settings.DEFAULTSETTINGSFILE);
+        _ui = new OptionAreaUI();
+        _ui.loadSettings(_settingList);
+
+        addListeners();
     }
 
     /**
-     * Transfers the settings onto the UI
+     * Adds the listeners of the components of AddAreaUI
      */
-    private void setSettings()
+    private void addListeners()
     {
-        _ui.setResetProgram(_settingList.getResetProgram());
+        _ui.getTotalTargetInput().addActionListener(event -> changeTotalTargetTime());
+        _ui.getResetComboBox().addActionListener(event -> changeResetType());
+        _ui.getAddButton().addActionListener(event -> createNewTask());
+        _ui.getDeleteButton().addActionListener(event -> goToDeleteArea());
+        _ui.getBackButton().addActionListener(event -> goToWeekplan());
     }
-    
+
     /**
-     * Adds the listeners of the components of AddAreaUI:
-     * TotalGoalInput.actionListener: Sets the total amount to a given number
-     * AddButton.actionListener: adds a new blank topic and goes back to Weekplan
-     * DeleteButton.actionListener: opens a new menu with topics of which the chosen ones can be deleted
-     * BackButton.actionListener: goes back to Weekplan
+     * Sets the total amount to a given number and adjust individual target times
      */
-    private void addListener()
+    private void changeTotalTargetTime()
     {
-        _ui.getTotalTargetInput().addActionListener(event ->
+        String input = _ui.getTotalTargetInput().getText();
+        if (isValidTotalTime(input))
         {
-            String input = _ui.getTotalTargetInput().getText();
-            if (isValidTotalTime(input))
-            {
-                int number = Integer.parseInt(input);
-                TaskList list = TaskList.getInstance();
-
-                list.setTotalTargetTime(number * 60); //Turn entry from hours to minutes
-                list.saveTasksOnFile();
-                _ui.clearTotalTargetInput();
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(new JFrame(), "Entry is not a positive integer");
-            }
-        });
-        
-        _ui.getResetComboBox().addActionListener(event ->
-        {
-            _settingList.setResetProgram(String.valueOf(_ui.getResetComboBox().getSelectedItem()));
-            _settingList.saveSettings();
-        });
-
-        _ui.getAddButton().addActionListener(event ->
-        {
+            int number = Integer.parseInt(input);
             TaskList list = TaskList.getInstance();
-            list.addNewEmptyTask();
+
+            list.setTotalTargetTime(number * 60); // Turn entry from hours to minutes
             list.saveTasksOnFile();
-            _ui.close();
-            Weekplan plan = Weekplan.getInstance();
-            plan.openTaskEdit();
-        });
-        
-        _ui.getDeleteButton().addActionListener(event ->
+            _ui.clearTotalTargetInput();
+        }
+        else
         {
-            _ui.close();
-            new DeleteArea();
-        });
-        
-        _ui.getBackButton().addActionListener(event ->
-        {
-            _ui.close();
-            Weekplan.getInstance();
-        });
+            JOptionPane.showMessageDialog(new JFrame(), "Entry is not a positive integer");
+        }
+    }
+
+    private void changeResetType()
+    {
+        _settingList.setResetProgram(String.valueOf(_ui.getResetComboBox().getSelectedItem()));
+        _settingList.saveSettings();
+    }
+
+    /**
+     * Creates a new blank task and goes back to Weekplan
+     */
+    private void createNewTask()
+    {
+        TaskList list = TaskList.getInstance();
+        list.addNewEmptyTask();
+        list.saveTasksOnFile();
+        _ui.close();
+        Weekplan plan = Weekplan.getInstance();
+        plan.openTaskEdit();
+    }
+
+    /**
+     * Opens a new menu with a list of tasks of which the chosen ones can be deleted
+     */
+    private void goToDeleteArea()
+    {
+        _ui.close();
+        new DeleteArea();
+    }
+
+    /**
+     * Returns back to Weekplan
+     */
+    private void goToWeekplan()
+    {
+        _ui.close();
+        Weekplan.getInstance();
     }
 
     /**

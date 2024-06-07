@@ -10,8 +10,8 @@ import Weekplan.Weekplan;
 
 public class DeleteArea
 {
-    private TaskList _taskList;
-    private DeleteAreaUI _ui;
+    private final TaskList _taskList;
+    private final DeleteAreaUI _ui;
 
     public DeleteArea()
     {
