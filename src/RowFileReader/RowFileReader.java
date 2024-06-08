@@ -39,7 +39,7 @@ public class RowFileReader
             }
             catch (IOException e)
             {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(new JFrame(), "Invalid Filepath");
             }
         }
         if (file.canRead())
@@ -72,7 +72,6 @@ public class RowFileReader
         }
         catch (FileNotFoundException e1)
         {
-            e1.printStackTrace();
             javax.swing.JOptionPane.showMessageDialog(new JFrame(),"Unexpected error while reading from the file!");
         }
 

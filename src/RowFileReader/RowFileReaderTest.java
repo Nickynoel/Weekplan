@@ -2,6 +2,7 @@ package RowFileReader;
 
 import org.junit.Test;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,9 +28,10 @@ public class RowFileReaderTest
         {
             wr.write(_line1 + "\n"); //Write tested String into file
             wr.write(_line2 + "\n");
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(new JFrame(), "Unexpected error while reading from the file!");
         }
 
         //actual test class reading the test file
