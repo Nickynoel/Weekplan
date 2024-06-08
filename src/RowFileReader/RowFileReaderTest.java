@@ -31,7 +31,8 @@ public class RowFileReaderTest
         }
         catch (IOException e)
         {
-            JOptionPane.showMessageDialog(new JFrame(), "Unexpected error while reading from the file!");
+            JOptionPane.showMessageDialog
+                    (new JFrame(), "Unexpected error while reading from the file!");
         }
 
         //actual test class reading the test file

@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -55,7 +56,7 @@ public class RowFileWriter
      */
     public void saveFile()
     {
-        try (FileWriter wr = new FileWriter(_file))
+        try (FileWriter wr = new FileWriter(_file, StandardCharsets.UTF_8))
         {
             for (String s : _list)
             {
@@ -65,7 +66,8 @@ public class RowFileWriter
         catch (IOException e)
         {
             System.err.println("Error writing on a file");
-            javax.swing.JOptionPane.showMessageDialog(new JFrame(),"An error occurred while trying to save!");
+            javax.swing.JOptionPane.showMessageDialog
+                    (new JFrame(),"An error occurred while trying to save!");
         }
     }
 }
