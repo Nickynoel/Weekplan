@@ -136,9 +136,9 @@ public class TaskEditAreaUI
     }
     
     /**
-     * Sets the title of the window according to the topic at hand
+     * Sets the title of the window according to the task at hand
      *
-     * @param title: name of the topic
+     * @param title: name of the task
      */
     private void setTitle(String title)
     {

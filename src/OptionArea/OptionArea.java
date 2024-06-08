@@ -10,7 +10,7 @@ import javax.swing.*;
 /**
  * Functional class OptionArea, in which the user can choose between several options:
  * Change total targetTime to a positive number of hours
- * AddTopic, DeleteTopic, Back
+ * AddTask, DeleteTask, Back
  */
 
 public class OptionArea

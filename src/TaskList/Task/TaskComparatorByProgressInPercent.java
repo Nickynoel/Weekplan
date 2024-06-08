@@ -9,10 +9,10 @@ import java.util.Comparator;
 public class TaskComparatorByProgressInPercent implements Comparator
 {
     /**
-     * The actual comparation method
-     * @param o1: the first topic
-     * @param o2: the second topic
-     * @return -1,0,1 to show how the two topics compare via getPercentProgress
+     * The actual comparison method
+     * @param o1: the first task
+     * @param o2: the second task
+     * @return -1,0,1 to show how the two tasks compare via getPercentProgress
      */
     @Override
     public int compare(Object o1, Object o2)
@@ -33,7 +33,9 @@ public class TaskComparatorByProgressInPercent implements Comparator
         }
         catch (ClassCastException e)
         {
-            javax.swing.JOptionPane.showMessageDialog(new javax.swing.JFrame(),"This comparator is only meant to be used for comparison between two elements of the class Topic");
+            javax.swing.JOptionPane.showMessageDialog
+                    (new javax.swing.JFrame(),"This comparator is only meant to be used " +
+                            "for comparison between two elements of the class Task");
         }
         return 0;
     }

@@ -86,7 +86,6 @@ public class Weekplan
 
     /**
      * TitleButton.actionListener: Opens TaskEditArea and gives it an observer
-     * @param button
      */
     private void openTaskEditArea(JButton button)
     {
@@ -100,12 +99,11 @@ public class Weekplan
 
     /**
      * AddButton.actionListener: Opens AddProgressArea and gives it an observer
-     * @param button
      */
     private void openAddProgressArea(JButton button)
     {
-        int topicNumber = _ui.getAddButtonlist().indexOf(button);
-        Task task = _listOfTasks.get(topicNumber);
+        int taskNumber = _ui.getAddButtonlist().indexOf(button);
+        Task task = _listOfTasks.get(taskNumber);
         final AddProgressArea area = new AddProgressArea(task, _ui.getMainframe());
 
         area.addPropertyChangeListener(evt -> _ui.updateProgress(task));
@@ -113,7 +111,7 @@ public class Weekplan
     }
 
     /**
-     * SaveButton.actionListener: Saves the topic-values onto the file TopicList.FILENAME
+     * SaveButton.actionListener: Saves the task-values onto the file TaskList.FILENAME
      */
     private void saveTracker()
     {
@@ -127,6 +125,6 @@ public class Weekplan
      */
     public void openTaskEdit()
     {
-        _ui.openNewTopicMenu();
+        _ui.openNewTaskMenu();
     }
 }

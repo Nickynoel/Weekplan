@@ -106,9 +106,9 @@ public class TaskList
     }
 
     /**
-     * Returns the titles of all topics as an array
+     * Returns the titles of all tasks as an array
      *
-     * @return array with all topic-titles
+     * @return array with all task-titles
      */
     public String[] getArrayOfTaskTitles()
     {
@@ -134,10 +134,10 @@ public class TaskList
     }
 
     /**
-     * Returns the index of a topic in the _topicList, -1 if not in the list
+     * Returns the index of a task in the _taskList, -1 if not in the list
      *
-     * @param task: the checked topic
-     * @return the topic's position
+     * @param task: the checked task
+     * @return the task's position
      */
     public int indexOf(Task task)
     {
@@ -145,10 +145,11 @@ public class TaskList
     }
 
     /**
-     * Returns the first index of a topic in the _topicList with the given title, -1 if not in the list
+     * Returns the first index of a task in the _taskList with the given title,
+     * -1 if not in the list
      *
-     * @param taskTitle: the title of the topic
-     * @return the topic's position
+     * @param taskTitle: the title of the task
+     * @return the task's position
      */
     public int indexOf(String taskTitle)
     {
@@ -163,10 +164,10 @@ public class TaskList
     }
 
     /**
-     * Returns the title of the i-th topic in the list
+     * Returns the title of the i-th task in the list
      *
-     * @param i: index of the topic
-     * @return title of the i-th topic
+     * @param i: index of the task
+     * @return title of the i-th task
      */
     private String getTitle(int i)
     {
@@ -181,7 +182,7 @@ public class TaskList
      * Returns the task on the given position in the _taskList
      *
      * @param i: position in the list
-     * @return the topic in the position i
+     * @return the task in the position i
      */
     public Task get(int i)
     {
@@ -189,14 +190,14 @@ public class TaskList
     }
 
     /**
-     * Removes the topics in the positions, given by an array, of the _topicList
+     * Removes the tasks in the positions, given by an array, of the _taskList
      * TODO: as list maybe -> requires no duplicates
      *
-     * @param array: indices of topics in the list to be removed
+     * @param array: indices of tasks in the list to be removed
      */
     public void removeTasks(int[] array)
     {
-        //going the list backwards and deleting them from the _topicList. to ensure indices
+        //going the list backwards and deleting them from the _taskList to ensure indices
         for (int i = array.length - 1; i >= 0; i--)
         {
             _taskList.remove(array[i]);
@@ -204,7 +205,7 @@ public class TaskList
     }
 
     /**
-     * Returns the total target time of all topics
+     * Returns the total target time of all tasks
      *
      * @return sum of target times
      */
@@ -219,7 +220,7 @@ public class TaskList
     }
 
     /**
-     * Returns the total progress time of all topics
+     * Returns the total progress time of all tasks
      *
      * @return sum of progresses times
      */
@@ -235,7 +236,7 @@ public class TaskList
 
     /**
      * Returns the percentage progress for the whole list
-     * capping the individual percentage of a single topic to 100
+     * capping the individual percentage of a single task to 100
      *
      * @return total percent progress
      */
@@ -285,7 +286,7 @@ public class TaskList
     }
 
     /**
-     * Resets the progress of the topics
+     * Resets the progress of the tasks
      */
     private void fullProgressReset()
     {

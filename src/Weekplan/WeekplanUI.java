@@ -43,7 +43,7 @@ public class WeekplanUI
     /**
      * Initializing the UI
      *
-     * @param list the list of topics
+     * @param list the list of tasks
      */
     public WeekplanUI(TaskList list)
     {
@@ -102,7 +102,7 @@ public class WeekplanUI
     }
 
     /**
-     * Creates the titles as borderless JButtons with the names of the topics
+     * Creates the titles as borderless JButtons with the names of the tasks
      * as well as the _totalLabel
      */
     private void createTaskTitleButtons()
@@ -117,7 +117,7 @@ public class WeekplanUI
     }
 
     /**
-     * Creates the JProgressBars with the data of the topics
+     * Creates the JProgressBars with the data of the tasks
      */
     private void createTaskProgressBars()
     {
@@ -131,10 +131,7 @@ public class WeekplanUI
     }
 
     /**
-     * Creates the remaining JButtons of the UI
-     * AddButton: A JButton for adding a value for every topic
-     * SaveButton: A JButton to save the progress
-     * OptionButton: A JButton to go to the options
+     * Creates the remaining JButtons used to add progress to tasks in the UI
      */
     private void createAddButtons()
     {
@@ -333,7 +330,7 @@ public class WeekplanUI
     }
 
     /**
-     * Colors the final JProgressbar, that takes data from all topics
+     * Colors the final JProgressbar, that takes data from all tasks
      */
     private void updateTotalBar()
     {
@@ -362,9 +359,9 @@ public class WeekplanUI
     }
 
     /**
-     * Returns the list of JLabels
+     * Returns the list of Title-Buttons
      *
-     * @return _topicLabels
+     * @return a list of all Title-Buttons
      */
     public List<JButton> getTitleButtonList()
     {
@@ -372,9 +369,9 @@ public class WeekplanUI
     }
 
     /**
-     * Returns the list of JButtons for adding values
+     * Returns the list of JButtons for adding progress
      *
-     * @return _topicButtons
+     * @return the list of JButtons for adding progress
      */
     public List<JButton> getAddButtonlist()
     {
@@ -382,9 +379,9 @@ public class WeekplanUI
     }
 
     /**
-     * Updates the displayed title of the given topic
+     * Updates the displayed title of the given task
      *
-     * @param task: the topic which title might have changed
+     * @param task: the task which title might have changed
      */
     public void updateTaskName(Task task)
     {
@@ -453,11 +450,11 @@ public class WeekplanUI
 
 
     /**
-     * Opens a newly created topic standardized with the title "New"
+     * Opens a newly created task standardized with the title "New"
      * by opening the first entry of Task.DEFAULTNAME in the _taskList
      * TODO: Direkter Bezug auf Task? -> Redone wenn Options im Mainframe
      */
-    public void openNewTopicMenu()
+    public void openNewTaskMenu()
     {
         int index = _taskList.indexOf(Task.DEFAULTNAME);
         _taskTitleButtons.get(index).doClick();
