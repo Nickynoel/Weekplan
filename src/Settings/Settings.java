@@ -20,10 +20,9 @@ public class Settings
     private final String RESETPROGRAM = "Resetprogram:";
     private final String WEEKLYRESET = "Weekly Reset:";
 
-    private List<String> _settingsList; //Settings given by the file
-    private File _file; //file that saves the settings
+    private File _saveFile;
     private String _resetProgram;
-    private boolean _isSunday; //Checks if we are moving from sunday to monday
+    private boolean _isSunday;
     /**
      * Factory method that returns the _settings given a file
      * @param file: file with the settings
@@ -38,47 +37,38 @@ public class Settings
     {
         initializeFields(file);
         loadSettingsList(file);
-        executeSettingsList();
     }
 
     private void initializeFields(File file)
     {
-        _settingsList = new ArrayList<>();
-        _file = file;
+        _saveFile = file;
         _resetProgram = "None";
         _isSunday = false;
     }
 
     /**
-     * The actual generation of the list, by loading the data from the file
+     * Loads the data from the file and reads the settings out of it
      * If the file doesn't exist, the RowFileReader will create it as an empty file
      */
     private void loadSettingsList(File file)
     {
         RowFileReader reader = RowFileReader.getInstance(file);
-        _settingsList = reader.getList();
-    }
-    
-    /**
-     * Loads the data from the list
-     */
-    private void executeSettingsList()
-    {
-        for (String s: _settingsList)
+
+        for (String s: reader.getList())
         {
             if (s.startsWith(RESETPROGRAM))
             {
-                String prog = s.substring(RESETPROGRAM.length()).strip();
+                String prog = s.strip().split(" ")[1];
                 _resetProgram = RESETPROGRAMS.contains(prog) ?  prog : "None";
             }
             if(s.startsWith(WEEKLYRESET))
             {
-                String week = s.substring(WEEKLYRESET.length()).strip();
+                String week = s.strip().split(" ")[1];
                 _isSunday = Boolean.parseBoolean(week);
             }
         }
     }
-    
+
     /**
      * Checks if the weekly reset criteria is fulfilled
      * Criteria #1: Current day is monday
@@ -121,19 +111,19 @@ public class Settings
     }
     
     /**
-     * Saves the _settingList on _file
+     * Saves the settings on the _saveFile
      */
     public void saveSettings()
     {
-        RowFileWriter writer = RowFileWriter.getInstance(stringifySettings(), _file);
+        RowFileWriter writer = RowFileWriter.getInstance(stringifySettings(), _saveFile);
         writer.saveFile();
     }
 
     private List<String> stringifySettings()
     {
         List<String> list = new ArrayList<>();
-        list.add(RESETPROGRAM + " " + _resetProgram);
-        list.add(WEEKLYRESET + " " + _isSunday);
+        list.add(RESETPROGRAM + ": " + _resetProgram);
+        list.add(WEEKLYRESET + ": " + _isSunday);
         return list;
     }
 }
