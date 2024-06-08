@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -22,28 +21,25 @@ public class RowFileWriter
      */
     public static RowFileWriter getInstance(List<String> list, File file)
     {
-        return isValidFile(file) ? new RowFileWriter(list, file) : null;
+        return isValidFilePath(file) ? new RowFileWriter(list, file) : null;
     }
 
     /**
      * File is created if it doesn't exist and then gets tested if editable
-     * ToDo: This feels very unclean
      * @param file Tested File
      * @return boolean if file is editable
      */
-    private static boolean isValidFile(File file){
-        if (!file.isFile())
+    private static boolean isValidFilePath(File file)
+    {
+        try
         {
-            try (FileWriter wr = new FileWriter(file.getName(), StandardCharsets.UTF_8))
-            {
-                file.createNewFile();
-            }
-            catch (IOException e)
-            {
-                javax.swing.JOptionPane.showMessageDialog(new JFrame(),"File cant be created");
-                System.err.println("Error creating a new file");
-                return false;
-            }
+            file.createNewFile(); // creates the file if not existent
+        }
+        catch (IOException e)
+        {
+            javax.swing.JOptionPane.showMessageDialog(new JFrame(),"File can't be created");
+            System.err.println("Error creating a new file");
+            return false;
         }
         return file.canWrite();
     }

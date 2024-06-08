@@ -2,7 +2,6 @@ package RowFileReader;
 
 import javax.swing.*;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -27,26 +26,28 @@ public class RowFileReader
     /**
      * factory method to call a fileReader from a file, which reads each line
      * calls constructor if input is valid, null if invalid
-     * ToDo: This feels smelly
      */
     public static RowFileReader getInstance(File file)
     {
-        if (!file.isFile())
+        return isValidFilePath(file) ? new RowFileReader(file) : null;
+    }
+    /**
+     * File is created if it doesn't exist and then gets tested if readable
+     * @param file Tested File
+     * @return boolean if file is readable
+     */
+    private static boolean isValidFilePath(File file)
+    {
+        try
         {
-            try (FileWriter wr = new FileWriter(file.getName(), StandardCharsets.UTF_8))
-            {
-                return new RowFileReader(file);
-            }
-            catch (IOException e)
-            {
-                JOptionPane.showMessageDialog(new JFrame(), "Invalid Filepath");
-            }
+            file.createNewFile(); // creates the file if not existent
         }
-        if (file.canRead())
+        catch(IOException e)
         {
-            return new RowFileReader(file);
+            JOptionPane.showMessageDialog(new JFrame(), "Invalid Filepath");
+            return false;
         }
-        return null;
+        return file.canRead();
     }
 
     private RowFileReader(File file)
