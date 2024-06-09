@@ -25,8 +25,8 @@ public class Settings
     private boolean _isSunday;
     /**
      * Factory method that returns the _settings given a file
-     * @param file: file with the settings
-     * @return _settings
+     * @param file: file with the settings saved
+     * @return object with the settings
      */
     public static Settings getInstance(File file)
     {
@@ -122,8 +122,8 @@ public class Settings
     private List<String> stringifySettings()
     {
         List<String> list = new ArrayList<>();
-        list.add(RESETPROGRAM + ": " + _resetProgram);
-        list.add(WEEKLYRESET + ": " + _isSunday);
+        list.add(RESETPROGRAM + " " + _resetProgram);
+        list.add(WEEKLYRESET + " " + _isSunday);
         return list;
     }
 }

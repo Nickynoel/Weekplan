@@ -49,7 +49,6 @@ public class WeekplanUI
     {
         initializeVariables(list);
         createElements();
-        createMenuBar();
         createWindow();
         initializeWindow();
     }
@@ -66,7 +65,7 @@ public class WeekplanUI
 
         _menuBar = new JMenuBar();
         _createItem = new JMenuItem("New Task", 'N');
-        _deleteItem = new JMenuItem("Remove Tasks", 'D');
+        _deleteItem = new JMenuItem("Delete Tasks", 'D');
         _optionsItem = new JMenuItem("Options", 'O');
         _closeItem = new JMenuItem("Close", 'E');
 
@@ -84,6 +83,7 @@ public class WeekplanUI
      */
     private void createElements()
     {
+        createMenuBar();
         createTaskTitleButtons();
         createTaskProgressBars();
         createAddButtons();
@@ -165,7 +165,7 @@ public class WeekplanUI
         _mainframe.setLayout(new BorderLayout());
 
         _mainframe.setLocationRelativeTo(null);
-        //_mainframe.setResizable(false);
+
     }
 
     private void initializeWindow()
@@ -174,7 +174,9 @@ public class WeekplanUI
         JScrollPane scrollPane = new JScrollPane(centerPanel);
         scrollPane.getVerticalScrollBar().setUnitIncrement(VERTICALSCROLLSPEED);
         _mainframe.add(scrollPane);
+
         _mainframe.add(buildBotPanel(), BorderLayout.PAGE_END);
+        //_mainframe.setResizable(false);
         _mainframe.setVisible(true);
     }
 
@@ -192,7 +194,8 @@ public class WeekplanUI
         for (int i = 0; i < _taskList.getSize(); i++)
         {
             JPanel taskPanel = new JPanel();
-            taskPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0)); //for vertical space inbetween
+            //for vertical space in between
+            taskPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
             taskPanel.add(buildTitlePanel(i));
             taskPanel.add(buildProgressbarPanel(i));
             taskPanel.add(buildAddButtonPanel(i));
@@ -321,41 +324,24 @@ public class WeekplanUI
         return botPanel;
     }
 
-    /**
-     * Updates the text on the _totalLabel
-     */
-    private void updateTotalLabel()
+    public JMenuItem getCreateItem()
     {
-        _totalLabel.setText(_taskList.getTotalProgressInText());
+        return _createItem;
     }
 
-    /**
-     * Colors the final JProgressbar, that takes data from all tasks
-     */
-    private void updateTotalBar()
+    public JMenuItem getDeleteItem()
     {
-        _totalProgress.setValue(_taskList.getTotalProgressInPercent());
+        return _deleteItem;
     }
 
-
-    /**
-     * Colors the JProgressBars with the data provided from the task
-     *
-     * @param task task corresponding the JProgressBar
-     */
-    public void colorProgressBar(Task task)
+    public JMenuItem getOptionsItem()
     {
-        JProgressBar bar = _taskProgressBars.get(_taskList.indexOf(task));
-        bar.setValue(task.getProgress());
+        return _optionsItem;
     }
 
-    /**
-     * Updates the total area consisting of the JLabel and the JProgressbar
-     */
-    private void updateTotal()
+    public JMenuItem getCloseItem()
     {
-        updateTotalLabel();
-        updateTotalBar();
+        return _closeItem;
     }
 
     /**
@@ -376,88 +362,6 @@ public class WeekplanUI
     public List<JButton> getAddButtonlist()
     {
         return _addTimeButtons;
-    }
-
-    /**
-     * Updates the displayed title of the given task
-     *
-     * @param task: the task which title might have changed
-     */
-    public void updateTaskName(Task task)
-    {
-        int taskNumber = _taskList.indexOf(task);
-        _taskTitleButtons.get(taskNumber).setText(task.getTitle());
-    }
-
-    /**
-     * Updates the target time of the given task
-     *
-     * @param task: the task which goal might have changed
-     */
-    public void updateTargetTime(Task task)
-    {
-        int taskNumber = _taskList.indexOf(task);
-        _taskProgressBars.get(taskNumber).setMaximum(task.getTargetTime());
-    }
-
-    /**
-     * Returns the JButton for saving
-     *
-     * @return _saveButton
-     */
-    public JButton getSaveButton()
-    {
-        return _saveButton;
-    }
-
-    /**
-     * GetA for _optionButton
-     *
-     * @return _optionButton
-     */
-    public JButton getOptionButton()
-    {
-        return _optionButton;
-    }
-
-    /**
-     * Closes the UI
-     */
-    public void close()
-    {
-        _mainframe.dispose();
-    }
-
-    /**
-     * GetA for _closeButton
-     *
-     * @return _closeButton
-     */
-    public JButton getCloseButton()
-    {
-        return _closeButton;
-    }
-
-    /**
-     * GetA for the _mainframe
-     *
-     * @return _mainframe
-     */
-    public JFrame getMainframe()
-    {
-        return _mainframe;
-    }
-
-
-    /**
-     * Opens a newly created task standardized with the title "New"
-     * by opening the first entry of Task.DEFAULTNAME in the _taskList
-     * TODO: Direkter Bezug auf Task? -> Redone wenn Options im Mainframe
-     */
-    public void openNewTaskMenu()
-    {
-        int index = _taskList.indexOf(Task.DEFAULTNAME);
-        _taskTitleButtons.get(index).doClick();
     }
 
     /**
@@ -484,23 +388,121 @@ public class WeekplanUI
         updateTotal();
     }
 
-    public JMenuItem getCreateItem()
+    /**
+     * Updates the displayed title of the given task
+     *
+     * @param task: the task which title might have changed
+     */
+    private void updateTaskName(Task task)
     {
-        return _createItem;
+        int taskNumber = _taskList.indexOf(task);
+        _taskTitleButtons.get(taskNumber).setText(task.getTitle());
     }
 
-    public JMenuItem getDeleteItem()
+    /**
+     * Updates the target time of the given task
+     *
+     * @param task: the task which goal might have changed
+     */
+    private void updateTargetTime(Task task)
     {
-        return _deleteItem;
+        int taskNumber = _taskList.indexOf(task);
+        _taskProgressBars.get(taskNumber).setMaximum(task.getTargetTime());
     }
 
-    public JMenuItem getOptionsItem()
+    /**
+     * Colors the JProgressBars with the data provided from the task
+     *
+     * @param task task corresponding the JProgressBar
+     */
+    private void colorProgressBar(Task task)
     {
-        return _optionsItem;
+        JProgressBar bar = _taskProgressBars.get(_taskList.indexOf(task));
+        bar.setValue(task.getProgress());
     }
 
-    public JMenuItem getCloseItem()
+    /**
+     * Updates the total area consisting of the JLabel and the JProgressbar
+     */
+    private void updateTotal()
     {
-        return _closeItem;
+        updateTotalLabel();
+        updateTotalBar();
+    }
+
+    /**
+     * Updates the text on the _totalLabel
+     */
+    private void updateTotalLabel()
+    {
+        _totalLabel.setText(_taskList.getTotalProgressInText());
+    }
+
+    /**
+     * Colors the final JProgressbar, that takes data from all tasks
+     */
+    private void updateTotalBar()
+    {
+        _totalProgress.setValue(_taskList.getTotalProgressInPercent());
+    }
+
+    /**
+     * Returns the JButton for saving
+     *
+     * @return _saveButton
+     */
+    public JButton getSaveButton()
+    {
+        return _saveButton;
+    }
+
+    /**
+     * GetA for _optionButton
+     *
+     * @return _optionButton
+     */
+    public JButton getOptionButton()
+    {
+        return _optionButton;
+    }
+
+    /**
+     * GetA for _closeButton
+     *
+     * @return _closeButton
+     */
+    public JButton getCloseButton()
+    {
+        return _closeButton;
+    }
+
+    /**
+     * Closes the UI
+     */
+    public void close()
+    {
+        _mainframe.dispose();
+    }
+
+    /**
+     * GetA for the _mainframe
+     *
+     * @return _mainframe
+     */
+    public JFrame getMainframe()
+    {
+        return _mainframe;
+    }
+
+
+    /**
+     * Opens a newly created task standardized with the title "New"
+     * by opening the first entry of Task.DEFAULTNAME in the _taskList
+     * TODO: Direct reference to Task? -> Redone when Options in Mainframe
+     */
+    public void openNewTaskMenu()
+    {
+        int index = _taskList.indexOf(Task.DEFAULTNAME);
+        _taskTitleButtons.get(index).doClick();
     }
 }

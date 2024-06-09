@@ -20,6 +20,7 @@ public class RowFileWriterTest
     public void testSaveFile() throws FileNotFoundException
     {
         RowFileWriter wr = RowFileWriter.getInstance(_list, _testFile);
+        // ToDo: JUnit5 should have assertDoesNotThrow
         wr.saveFile();
 
         Scanner res = new Scanner(_testFile);
