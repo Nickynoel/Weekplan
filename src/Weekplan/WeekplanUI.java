@@ -498,7 +498,6 @@ public class WeekplanUI
     /**
      * Opens a newly created task standardized with the title "New"
      * by opening the first entry of Task.DEFAULTNAME in the _taskList
-     * TODO: Direct reference to Task? -> Redone when Options in Mainframe
      */
     public void openNewTaskMenu()
     {

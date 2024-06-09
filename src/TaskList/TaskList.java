@@ -117,7 +117,6 @@ public class TaskList
 
     /**
      * Currently completely unused, though list > array
-     * ToDo: One or the other I guess...
      */
     public List<String> getListOfTaskTitles()
     {
