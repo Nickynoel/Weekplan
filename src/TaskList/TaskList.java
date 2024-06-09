@@ -18,8 +18,8 @@ public class TaskList
 {
     private static final File DEFAULTFILENAME = new File("Weekplan.csv"); //Globally accessible file
 
-    private List<Task> _taskList;
-    private File _file;
+    private final File _saveFile;
+    private final List<Task> _taskList;
 
     public static TaskList getInstance(File file)
     {
@@ -33,19 +33,14 @@ public class TaskList
 
     private TaskList(File file)
     {
+        _saveFile = file;
         _taskList = new ArrayList<>();
-        _file = file;
-
-        loadTasksFromFile(_file);
+        loadTasksFromFile(file);
 
         if (_taskList.isEmpty())
-        {
             createDefaultList();
-        } else
-        {
+        else
             _taskList.sort(new TaskComparatorByProgressInPercent());
-        }
-
     }
 
     /**
@@ -55,42 +50,11 @@ public class TaskList
     private void loadTasksFromFile(File file)
     {
         RowFileReader reader = RowFileReader.getInstance(file);
-        List<String> weekplan = reader.getList();
-        for (String s : weekplan)
+        List<String> savedStrings = reader.getList();
+        for (String s : savedStrings)
         {
             _taskList.add(Task.getInstance(s));
         }
-    }
-
-    public void saveTasksOnFile()
-    {
-        List<String> list = new ArrayList<>();
-        for (Task t : _taskList)
-        {
-            list.add(t.toSavableString());
-        }
-        RowFileWriter writer = RowFileWriter.getInstance(list, _file);
-        writer.saveFile();
-    }
-
-    public File getFile()
-    {
-        return _file;
-    }
-
-    public List<Task> getList()
-    {
-        return _taskList;
-    }
-
-    public void addNewEmptyTask()
-    {
-        _taskList.add(Task.getInstance());
-    }
-
-    public void addTask(Task t)
-    {
-        _taskList.add(t);
     }
 
     private void createDefaultList()
@@ -103,6 +67,37 @@ public class TaskList
     private void emptyList()
     {
         _taskList.clear();
+    }
+
+    public void addNewEmptyTask()
+    {
+        _taskList.add(Task.getInstance());
+    }
+
+    public void saveTasksOnFile()
+    {
+        List<String> list = new ArrayList<>();
+        for (Task t : _taskList)
+        {
+            list.add(t.toSavableString());
+        }
+        RowFileWriter writer = RowFileWriter.getInstance(list, _saveFile);
+        writer.saveFile();
+    }
+
+    public File getSaveFile()
+    {
+        return _saveFile;
+    }
+
+    public List<Task> getList()
+    {
+        return _taskList;
+    }
+
+    public void addTask(Task t)
+    {
+        _taskList.add(t);
     }
 
     /**
@@ -120,6 +115,10 @@ public class TaskList
         return titleArray;
     }
 
+    /**
+     * Currently completely unused, though list > array
+     * ToDo: One or the other I guess...
+     */
     public List<String> getListOfTaskTitles()
     {
         List<String> titleList = new ArrayList<>();
@@ -334,7 +333,7 @@ public class TaskList
     /**
      * Creates a string that reflects the progress in form "xx,x of xx,x hours"
      *
-     * @return
+     * @return String that reflects the full progress for the TotalLabel of the UI
      */
     public String getTotalProgressInText()
     {
@@ -353,6 +352,9 @@ public class TaskList
         int goalHours = getTotalTargetTime() / 60;
         int goalMinutes = (getTotalTargetTime() / 6) % 10;
 
-        return progressMinutes == 0 ? (sign + progressHours + " of " + goalHours + "," + goalMinutes + " hours") : (sign + progressHours + "," + progressMinutes + " of " + goalHours + "," + goalMinutes + " hours");
+        return progressMinutes == 0
+                ? (sign + progressHours + " of " + goalHours + "," + goalMinutes + " hours")
+                : (sign + progressHours + "," + progressMinutes + " of " + goalHours + "," +
+                    goalMinutes + " hours");
     }
 }

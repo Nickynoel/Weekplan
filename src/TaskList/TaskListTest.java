@@ -24,7 +24,7 @@ public class TaskListTest
     public void testDefaultConstructor()
     {
         TaskList taskList = TaskList.getInstance();
-        assertEquals(taskList.getFile(), new File("Weekplan.csv"));
+        assertEquals(taskList.getSaveFile(), new File("Weekplan.csv"));
     }
 
     @Test
@@ -32,7 +32,7 @@ public class TaskListTest
     {
         TaskList taskList = TaskList.getInstance(_testFile);
         assertTrue(_testFile.delete());
-        assertEquals(taskList.getFile(), new File("Test.csv"));
+        assertEquals(taskList.getSaveFile(), new File("Test.csv"));
         assertEquals(taskList.getList().size(), 1);
         assertFalse(_testFile.delete());
     }
