@@ -94,13 +94,9 @@ public class TaskTest
     }
 
     @Test
-    public void testToString(){
-
-    }
-
-    @Test
     public void testToSavableString(){
-
+        Task task = Task.getInstance("Hello", 42, 420);
+        assertEquals(task.toSavableString(), "Hello,42,420");
     }
 
 }

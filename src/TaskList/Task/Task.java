@@ -3,22 +3,17 @@ package TaskList.Task;
 /**
  * Class of the main component of the program, a task consisting of
  * String: name, int: currentProgress, int: targetTime
- * When created and saved the corresponding string codes the emptyspace in the name with the '#' symbol
+ * When created and saved the corresponding string codes the empty space in the name with the '#' symbol
  */
-
-//TODO: ToString and ToSavableString Rework?
-//TODO: Overwrite equals?
 
 public class Task
 {
     public static final String DEFAULTNAME = "New Task";
+    private static final char CSVBANNEDLETTER = ',';
 
     private String _name;
     private int _currentProgress;
     private int _targetTime;
-
-    private static final char CSVBANNEDLETTER = ',';
-
 
     public static Task getInstance(String name, int progress, int target){
         return new Task(name, progress, target);
@@ -32,7 +27,8 @@ public class Task
         if (isValidCSVInput(csvInput))
         {
             String[] splitInput = csvInput.split(",");
-            return new Task(splitInput[0], Integer.parseInt(splitInput[1]), Integer.parseInt(splitInput[2]));
+            return new Task(splitInput[0], Integer.parseInt(splitInput[1]),
+                    Integer.parseInt(splitInput[2]));
         }
         else {
             return new Task();
@@ -87,7 +83,7 @@ public class Task
     }
 
     public double getProgressInPercent() {
-        //No max for comparison
+        //Going over 100%, so those above are still compared properly
         return (_currentProgress * 100.0) / _targetTime;
     }
 
@@ -100,18 +96,6 @@ public class Task
         if (number > 0) { _targetTime = number; }
     }
 
-
-
-    /**
-     * Returns a string representation of the Task
-     *
-     * @return _name _progress _goal
-     */
-    public String toString()
-    {
-        return _name + " " + _currentProgress + " " + _targetTime;
-    }
-    
     /**
      * Returns the string in a state suited for saving
      */
