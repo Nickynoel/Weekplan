@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * The Testclass for Task
+ * The test class for Task
  */
 
 public class TaskTest
@@ -15,25 +15,25 @@ public class TaskTest
     {
         Task task = Task.getInstance();
         assertEquals(task.getTitle(),Task.DEFAULTNAME);
-        assertTrue(task.getProgress() == 0);
-        assertTrue(task.getTargetTime() == 60);
+        assertEquals(task.getProgress(), 0);
+        assertEquals(task.getTargetTime(), 60);
 
     }
 
     @Test
     public void testValueConstructor(){
         Task task = Task.getInstance("Hello", 42, 69);
-        assertTrue(task.getTitle().equals("Hello"));
-        assertTrue(task.getProgress() == 42);
-        assertTrue(task.getTargetTime() == 69);
+        assertEquals(task.getTitle(), "Hello");
+        assertEquals(task.getProgress(), 42);
+        assertEquals(task.getTargetTime(), 69);
     }
 
     @Test
     public void testInputConstructor(){
         Task task = Task.getInstance("Hello,42,69");
-        assertTrue(task.getTitle().equals("Hello"));
-        assertTrue(task.getProgress() == 42);
-        assertTrue(task.getTargetTime() == 69);
+        assertEquals(task.getTitle(), "Hello");
+        assertEquals(task.getProgress(), 42);
+        assertEquals(task.getTargetTime(), 69);
     }
 
     @Test
@@ -73,24 +73,24 @@ public class TaskTest
     public void testGetProgressInPercent(){
         Task task = Task.getInstance("Hello", 42, 420);
         Task task2 = Task.getInstance("Hello", 4, 4000);
-        assertTrue(task.getProgressInPercent() == 10);
-        assertTrue(task2.getProgressInPercent() == 0.1);
+        assertEquals(task.getProgressInPercent(), 10.0, 0.0005);
+        assertEquals(task2.getProgressInPercent(), 0.1, 0.0005);
     }
 
     @Test
     public void testGetTargetTime(){
         Task task = Task.getInstance("Hello", 42, 420);
-        assertTrue(task.getTargetTime() == 420);
+        assertEquals(task.getTargetTime(), 420);
     }
 
     @Test
     public void testSetTargetTime(){
         Task task = Task.getInstance("Hello", 42, 420);
         task.setTargetTime(69);
-        assertTrue(task.getTargetTime() == 69);
+        assertEquals(task.getTargetTime(), 69);
         task.setTargetTime(-5);
-        assertTrue(task.getTargetTime() == 69);
-        assertFalse(task.getTargetTime() == 68);
+        assertEquals(task.getTargetTime(), 69);
+        assertNotEquals(task.getTargetTime(), 68);
     }
 
     @Test
