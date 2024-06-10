@@ -6,7 +6,6 @@ import TaskList.Task.*;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -16,7 +15,8 @@ import java.util.List;
 
 public class TaskList
 {
-    private static final File DEFAULTFILENAME = new File("Weekplan.csv"); //Globally accessible file
+    //Globally accessible file
+    private static final File DEFAULTFILENAME = new File("Weekplan.csv");
 
     private final File _saveFile;
     private final List<Task> _taskList;
