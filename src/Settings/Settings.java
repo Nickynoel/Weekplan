@@ -70,12 +70,9 @@ public class Settings
     }
 
     /**
-     * Checks if the weekly reset criteria is fulfilled
-     * Criteria #1: Current day is monday
-     * Criteria #2: Targets are at least half completed - ToDo: Not Implemented
-     * TODO: Does this even belong here? Maybe startup even
+     * Checks if the weekly reset criteria of it being monday (for the first time) is fulfilled
      */
-    public boolean checkWeeklyReset()
+    public boolean isMonday()
     {
         int weekday = ((Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) + 5) % 7; //Monday == 0... and so on
         if(weekday == 6)

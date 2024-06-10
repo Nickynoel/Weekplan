@@ -266,6 +266,17 @@ public class TaskList
     }
 
     /**
+     * Checks if the progress was sufficient for a weekly reset so that not everything goes
+     * into the deep red.
+     * Current Criteria: Half of TotalTargetTime
+     * @return bool
+     */
+    public boolean isSufficientProgress()
+    {
+        return getTotalProgressTime() * 2 > getTotalTargetTime();
+    }
+
+    /**
      * Navigates based on the given resetProgram how the taskList is supposed to be reset
      *
      * @param resetProgram: parameter to choose the way of resetting
@@ -305,26 +316,6 @@ public class TaskList
         {
             t.setProgress(t.getProgress() - t.getTargetTime());
             t.setProgress(t.getProgress() / 2);
-        }
-        saveTasksOnFile();
-    }
-
-
-    /**
-     * Checks if the (usually weekly) reset criteria is fulfilled
-     * Criteria #1: Current day is monday
-     * Criteria #2: Goals are at least half completed
-     * TODO: Currently handled in Settings, maybe here later
-     */
-    public void checkReset()
-    {
-        int weekday = ((Calendar.getInstance()
-                .get(Calendar.DAY_OF_WEEK)) + 5) % 7; //Monday == 0... and so on
-        boolean sufficientProgress = (getTotalProgressTime() * 2 > getTotalTargetTime());
-        sufficientProgress = true; //no sufficient progress for now
-        if (weekday == 0 && sufficientProgress)
-        {
-            fullProgressReset();
         }
         saveTasksOnFile();
     }

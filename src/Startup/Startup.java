@@ -14,7 +14,7 @@ public class Startup
         _listOfTasks = TaskList.getInstance();
         _listOfSettings = Settings.getInstance(Settings.DEFAULTSETTINGSFILE);
 
-        if(_listOfSettings.checkWeeklyReset())
+        if(_listOfSettings.isMonday() && _listOfTasks.isSufficientProgress())
         {
             _listOfTasks.resetProgress(_listOfSettings.getResetProgram());
         }
