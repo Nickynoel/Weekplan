@@ -125,14 +125,12 @@ public class TaskListTest
     }
 
     @Test
-    public void testArrayAndListOfTaskTitles()
+    public void testListOfTaskTitles()
     {
         TaskList taskList = TaskList.getInstance(_testFile);
         taskList.addTask(_task2);
         taskList.addTask(_task1);
-        String[] titleArray = {Task.DEFAULTNAME, "Second", "First"};
         List<String> titleList = Arrays.asList(Task.DEFAULTNAME, "Second", "First");
-        assertArrayEquals(taskList.getArrayOfTaskTitles(), titleArray);
         assertEquals(taskList.getListOfTaskTitles(), titleList);
         assertTrue(_testFile.delete());
     }

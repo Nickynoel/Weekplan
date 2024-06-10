@@ -1,6 +1,7 @@
 package DeleteArea;
 
 import TaskList.TaskList;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -117,7 +118,7 @@ public class DeleteAreaUI
 
     public void loadTaskList(TaskList taskList)
     {
-        _jListOfTasks.setListData(taskList.getArrayOfTaskTitles());
+        _jListOfTasks.setListData(taskList.getListOfTaskTitles().toArray(new String[0]));
     }
 
     /**

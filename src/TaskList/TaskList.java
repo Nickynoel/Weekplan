@@ -101,22 +101,9 @@ public class TaskList
     }
 
     /**
-     * Returns the titles of all tasks as an array
+     * Returns a list with the titles of all tasks
      *
-     * @return array with all task-titles
-     */
-    public String[] getArrayOfTaskTitles()
-    {
-        String[] titleArray = new String[_taskList.size()];
-        for (int i = 0; i < _taskList.size(); i++)
-        {
-            titleArray[i] = _taskList.get(i).getTitle();
-        }
-        return titleArray;
-    }
-
-    /**
-     * Currently completely unused, though list > array
+     * @return list with all task-titles
      */
     public List<String> getListOfTaskTitles()
     {
@@ -189,7 +176,6 @@ public class TaskList
 
     /**
      * Removes the tasks in the positions, given by an array, of the _taskList
-     * TODO: as list maybe -> requires no duplicates
      *
      * @param array: indices of tasks in the list to be removed
      */
