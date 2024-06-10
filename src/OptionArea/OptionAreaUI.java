@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import Settings.Settings;
 
-
-
 /**
  * UI of OptionArea
  */
@@ -55,49 +53,85 @@ public class OptionAreaUI
         _mainframe.setTitle(WINDOWTITLE);
         _mainframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         _mainframe.setSize(WINDOWWIDTH,WINDOWHEIGHT);
-        _mainframe.setLayout(new FlowLayout(FlowLayout.CENTER));
+        _mainframe.setLayout(new GridLayout(4,1));
 
         _mainframe.setLocationRelativeTo(null);
     }
     
     /**
      * Puts JButtons onto the JFrame
-     * ToDo: This Layout is bad
      */
     private void initializeWindow()
     {
-        JPanel panel = new JPanel();
-        JLabel label = new JLabel("<html><span style='font-size:12px'>Total Target: (in h)</span></html>");
-        panel.add(label);
-        _mainframe.add(panel);
-        
-        JPanel panel0 = new JPanel();
-        panel0.add(_totalTargetInput);
-        _mainframe.add(panel0);
-        
-        JPanel panel01 = new JPanel();
-        JLabel resetLabel = new JLabel("<html><span style='font-size:12px'>Reset Type:</span></html>");
-        panel01.add(resetLabel);
-        _mainframe.add(panel01);
-        
-        JPanel panel02 = new JPanel();
-        panel02.add(_resetComboBox);
-        _mainframe.add(panel02);
-        
-        JPanel panel1 = new JPanel();
-        panel1.add(_addButton);
-        _mainframe.add(panel1);
-        
-        JPanel panel2 = new JPanel();
-        panel2.add(_deleteButton);
-        _mainframe.add(panel2);
-        
-        JPanel panel3 = new JPanel();
-        panel3.add(_backButton);
-        _mainframe.add(panel3);
+        _mainframe.add(generateTotalTargetTimePanel());
+        _mainframe.add(generateResetTypePanel());
+        _mainframe.add(generateTaskButtonsPanel());
+        _mainframe.add(generateBackButtonPanel());
 
         //_mainframe.setResizable(false);
         _mainframe.setVisible(true);
+    }
+
+    private JPanel generateTotalTargetTimePanel()
+    {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("<html><span style='font-size:12px'>Total Target: (in h)</span></html>");
+        labelPanel.add(label);
+        panel.add(labelPanel);
+
+        JPanel textFieldPanel = new JPanel();
+        textFieldPanel.add(_totalTargetInput);
+        panel.add(textFieldPanel);
+
+        return panel;
+    }
+
+    private JPanel generateResetTypePanel()
+    {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+
+        JPanel labelPanel = new JPanel();
+        JLabel resetLabel = new JLabel("<html><span style='font-size:12px'>Reset Type:</span></html>");
+        labelPanel.add(resetLabel);
+        panel.add(labelPanel);
+
+        JPanel comboBoxPanel = new JPanel();
+        comboBoxPanel.add(_resetComboBox);
+        panel.add(comboBoxPanel);
+
+        return panel;
+    }
+
+    private JPanel generateTaskButtonsPanel()
+    {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+
+        JPanel addButtonPanel = new JPanel();
+        addButtonPanel.add(_addButton);
+        panel.add(addButtonPanel);
+
+        JPanel deleteButtonPanel = new JPanel();
+        deleteButtonPanel.add(_deleteButton);
+        panel.add(deleteButtonPanel);
+
+        return panel;
+    }
+
+    private JPanel generateBackButtonPanel()
+    {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+
+        JPanel backButtonPanel = new JPanel();
+        backButtonPanel.add(_backButton);
+        panel.add(backButtonPanel);
+
+        return panel;
     }
 
     public void loadSettings(Settings settingList)
@@ -171,5 +205,4 @@ public class OptionAreaUI
     {
         _mainframe.dispose();
     }
-
 }
