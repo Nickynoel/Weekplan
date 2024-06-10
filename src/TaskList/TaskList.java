@@ -273,9 +273,11 @@ public class TaskList
         {
             case "Total":
                 fullProgressReset();
+                saveTasksOnFile();
                 break;
             case "On Goal":
                 adjustedProgressReset();
+                saveTasksOnFile();
                 break;
         }
     }
@@ -289,7 +291,6 @@ public class TaskList
         {
             t.setProgress(0);
         }
-        saveTasksOnFile();
     }
 
     /**
@@ -303,7 +304,6 @@ public class TaskList
             t.setProgress(t.getProgress() - t.getTargetTime());
             t.setProgress(t.getProgress() / 2);
         }
-        saveTasksOnFile();
     }
 
     /**
