@@ -84,9 +84,7 @@ public class WeekplanUI
     private void createElements()
     {
         createMenuBar();
-        createTaskTitleButtons();
-        createTaskProgressBars();
-        createAddButtons();
+        createTaskElements();
         createTotalProgressBar();
     }
 
@@ -102,44 +100,46 @@ public class WeekplanUI
     }
 
     /**
-     * Creates the titles as borderless JButtons with the names of the tasks
-     * as well as the _totalLabel
+     * Creates the three elements for each task and adds them to their list
      */
-    private void createTaskTitleButtons()
+    private void createTaskElements()
     {
-        for (Task t : _taskList.getList())
+        for (Task t:  _taskList.getList())
         {
-            JButton tmp = new JButton(t.getTitle());
-            tmp.setBorderPainted(false);
-            tmp.setContentAreaFilled(false);
-            _taskTitleButtons.add(tmp);
+            addTaskTitleButton(t);
+            addTaskProgressBar(t);
+            addAddButton();
         }
     }
 
     /**
-     * Creates the JProgressBars with the data of the tasks
+     * Creates a title as borderless JButton with the name of the task
      */
-    private void createTaskProgressBars()
+    private void addTaskTitleButton(Task task)
     {
-        for (Task t : _taskList.getList())
-        {
-            JProgressBar bar = new JProgressBar(0, t.getTargetTime());
-            bar.setValue(t.getProgress());
-            bar.setStringPainted(true);
-            _taskProgressBars.add(bar);
-        }
+        JButton tmp = new JButton(task.getTitle());
+        tmp.setBorderPainted(false);
+        tmp.setContentAreaFilled(false);
+        _taskTitleButtons.add(tmp);
+    }
+    /**
+     * Creates the JProgressBar with the data of the task
+     */
+    private void addTaskProgressBar(Task task)
+    {
+        JProgressBar bar = new JProgressBar(0, task.getTargetTime());
+        bar.setValue(task.getProgress());
+        bar.setStringPainted(true);
+        _taskProgressBars.add(bar);
     }
 
     /**
-     * Creates the remaining JButtons used to add progress to tasks in the UI
+     * Creates the remaining JButton used to add progress to the task in the UI
      */
-    private void createAddButtons()
+    private void addAddButton()
     {
-        for (Task t : _taskList.getList())
-        {
-            JButton button = new JButton("add");
-            _addTimeButtons.add(button);
-        }
+        JButton button = new JButton("add");
+        _addTimeButtons.add(button);
     }
 
     /**
