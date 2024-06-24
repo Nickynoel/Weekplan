@@ -2,7 +2,6 @@ package OptionArea;
 
 import Settings.Settings;
 import TaskList.TaskList;
-import DeleteArea.DeleteArea;
 import Weekplan.Weekplan;
 
 import javax.swing.*;
@@ -85,7 +84,7 @@ public class OptionArea
     private void goToDeleteArea()
     {
         _ui.close();
-        new DeleteArea();
+        Weekplan.getInstance().openDeleteArea();
     }
 
     /**

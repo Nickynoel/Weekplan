@@ -1,7 +1,6 @@
 package DeleteArea;
 
 import TaskList.TaskList;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,32 +16,32 @@ public class DeleteAreaUI
     private final int WINDOWHEIGHT = 300;
     private final String WINDOWTITLE = "Delete";
 
-    private JLabel _titleLabel;
+    private JLabel _descriptionLabel;
     private JList<String> _jListOfTasks;
     private JButton _deleteButton;
     private JButton _backButton;
     
-    private JFrame _mainframe;
+    private JDialog _dialogWindow;
     
     /**
      * Initializing the UI
      */
     public DeleteAreaUI()
     {
-        initializeVariables();
+        initializeElements();
         createWindow();
         initializeWindow();
     }
 
-    private void initializeVariables()
+    private void initializeElements()
     {
-        _titleLabel = new JLabel("List of current tasks");
+        _descriptionLabel = new JLabel("List of current tasks");
         _jListOfTasks = new JList<>();
         _deleteButton = new JButton("Delete");
         _deleteButton.setEnabled(false); //assumption that initial selection of the JList is empty
 
         _backButton = new JButton("Back");
-        _mainframe = new JFrame();
+        _dialogWindow = new JDialog();
     }
     
     /**
@@ -50,28 +49,27 @@ public class DeleteAreaUI
      */
     private void createWindow()
     {
-        _mainframe.setTitle(WINDOWTITLE);
-        _mainframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        _mainframe.setSize(WINDOWWIDTH,WINDOWHEIGHT);
-        _mainframe.setLayout(new BorderLayout());
+        _dialogWindow.setTitle(WINDOWTITLE);
+        _dialogWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        _dialogWindow.setSize(WINDOWWIDTH,WINDOWHEIGHT);
+        _dialogWindow.setLayout(new BorderLayout());
 
-        _mainframe.setLocationRelativeTo(null);
+        _dialogWindow.setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
+        _dialogWindow.setResizable(false);
     }
     
     /**
-     * insert the panels onto the _mainFrame
+     * insert the panels onto the _dialogWindow
      */
     private void initializeWindow()
     {
-        _mainframe.add(generateTopPanel(),BorderLayout.PAGE_START);
+        _dialogWindow.add(generateTopPanel(),BorderLayout.PAGE_START);
         
         JScrollPane scrollPane = new JScrollPane(generateCenterPanel());
         scrollPane.getVerticalScrollBar().setUnitIncrement(VERTICALSCROLLSPEED);
-        _mainframe.add(scrollPane);
+        _dialogWindow.add(scrollPane);
         
-        _mainframe.add(generateBotPanel(),BorderLayout.PAGE_END);
-        //_mainframe.setResizable(false);
-        _mainframe.setVisible(true);
+        _dialogWindow.add(generateBotPanel(),BorderLayout.PAGE_END);
     }
 
     /**
@@ -81,7 +79,7 @@ public class DeleteAreaUI
     private JPanel generateTopPanel()
     {
         JPanel panel = new JPanel();
-        panel.add(_titleLabel);
+        panel.add(_descriptionLabel);
 
         return panel;
     }
@@ -170,8 +168,18 @@ public class DeleteAreaUI
      */
     public void close()
     {
-        _mainframe.dispose();
+        _dialogWindow.dispose();
     }
 
 
+    public void setPositionRelativeToMainFrame(JFrame frame)
+    {
+        _dialogWindow.setLocation(new Point
+                (frame.getLocation().x + 80, frame.getLocation().y + 40));
+    }
+
+    public void showUI()
+    {
+        _dialogWindow.setVisible(true);
+    }
 }

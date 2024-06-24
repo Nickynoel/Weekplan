@@ -59,10 +59,11 @@ public class Weekplan
         plan.openTaskEdit();
     }
 
-    private void openDeleteArea()
+    public void openDeleteArea()
     {
-        _ui.close();
-        new DeleteArea();
+        final DeleteArea area = new DeleteArea(_ui.getMainframe());
+        area.addPropertyChangeListener(evt -> refreshUI());
+        area.showUI();
     }
 
     /**
@@ -118,6 +119,17 @@ public class Weekplan
         _listOfTasks.saveTasksOnFile();
     }
 //---------------------------- Listeners: End -----------------------------------
+    /**
+     * Refreshes the UI to accurately show new information
+     * Current behaviour: Close UI and redo it
+     * TODO: use _mainframe.removeAll(), .validate() and .repaint() within the UI class
+     */
+    private void refreshUI()
+    {
+        _ui.close();
+        Weekplan.getInstance();
+    }
+
     /**
      * Opens the editing field of a (newly created) task
      * - the "TaskEditArea" with the title "New Task"

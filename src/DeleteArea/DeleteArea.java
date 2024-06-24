@@ -1,7 +1,10 @@
 package DeleteArea;
 
 import TaskList.TaskList;
-import Weekplan.Weekplan;
+
+import javax.swing.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 /**
  * Functional class DeleteArea, in which the user is able to delete tasks out of the TaskList
@@ -10,14 +13,18 @@ import Weekplan.Weekplan;
 
 public class DeleteArea
 {
+    private final PropertyChangeSupport _support; //basically observable just newer
     private final TaskList _taskList;
     private final DeleteAreaUI _ui;
 
-    public DeleteArea()
+    public DeleteArea(JFrame frame)
     {
+        _support = new PropertyChangeSupport(this);
         _taskList = TaskList.getInstance();
+
         _ui = new DeleteAreaUI();
         _ui.loadTaskList(_taskList);
+        _ui.setPositionRelativeToMainFrame(frame);
 
         addListeners();
     }
@@ -51,11 +58,29 @@ public class DeleteArea
         int[] list = _ui.getJList().getSelectedIndices(); //returns a list of indices in increasing order
         _taskList.removeTasks(list);
         _taskList.saveTasksOnFile();
+        _support.firePropertyChange("Test", 0, 1);
     }
 
     private void exitDeleteArea()
     {
         _ui.close();
-        Weekplan.getInstance();
+    }
+
+    /**
+     * Allows listeners to be added
+     *
+     * @param pcl: the new listener
+     */
+    public void addPropertyChangeListener(PropertyChangeListener pcl)
+    {
+        _support.addPropertyChangeListener(pcl);
+    }
+
+    /**
+     * Sets the visibility of the UI to true
+     */
+    public void showUI()
+    {
+        _ui.showUI();
     }
 }
