@@ -72,8 +72,9 @@ public class Weekplan
     private void openOptionsArea()
     {
         _listOfTasks.saveTasksOnFile();
-        _ui.close();
-        new OptionArea();
+        final OptionArea area = new OptionArea(_ui.getMainframe());
+        area.addPropertyChangeListener(evt -> refreshUI());
+        area.showUI();
     }
 
     /**

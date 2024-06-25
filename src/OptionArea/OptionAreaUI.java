@@ -11,65 +11,53 @@ import Settings.Settings;
 public class OptionAreaUI
 {
     private final int WINDOWWIDTH = 300;
-    private final int WINDOWHEIGHT = 200;
+    private final int WINDOWHEIGHT = 170;
     private final String WINDOWTITLE = "Options";
 
     private JTextField _totalTargetInput;
     private JComboBox<String> _resetComboBox;
-    private JButton _addButton;
-    private JButton _deleteButton;
     private JButton _backButton;
     
-    private JFrame _mainframe;
+    private JFrame _dialogWindow;
     
     /**
      * Initializing the UI
      */
     public OptionAreaUI()
     {
-        initializeVariables();
+        initializeElements();
         createWindow();
         initializeWindow();
     }
 
-    private void initializeVariables()
+    private void initializeElements()
     {
         _totalTargetInput = new JTextField("",5);
         _resetComboBox = new JComboBox<>((Settings.RESETPROGRAMS).toArray(new String[0]));
 
-        _addButton = new JButton("Add Task");
-        _deleteButton = new JButton("Delete Tasks");
         _backButton = new JButton("Back");
-
-        _mainframe = new JFrame();
+        _dialogWindow = new JFrame();
     }
 
-    
     /**
-     * Builds the JFrame
+     * Builds the JDialog
      */
     private void createWindow()
     {
-        _mainframe.setTitle(WINDOWTITLE);
-        _mainframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        _mainframe.setSize(WINDOWWIDTH,WINDOWHEIGHT);
-        _mainframe.setLayout(new GridLayout(4,1));
-
-        _mainframe.setLocationRelativeTo(null);
+        _dialogWindow.setTitle(WINDOWTITLE);
+        _dialogWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        _dialogWindow.setSize(WINDOWWIDTH,WINDOWHEIGHT);
+        _dialogWindow.setLayout(new GridLayout(3,1));
     }
     
     /**
-     * Puts JButtons onto the JFrame
+     * Puts JButtons onto the Dialog window
      */
     private void initializeWindow()
     {
-        _mainframe.add(generateTotalTargetTimePanel());
-        _mainframe.add(generateResetTypePanel());
-        _mainframe.add(generateTaskButtonsPanel());
-        _mainframe.add(generateBackButtonPanel());
-
-        //_mainframe.setResizable(false);
-        _mainframe.setVisible(true);
+        _dialogWindow.add(generateTotalTargetTimePanel());
+        _dialogWindow.add(generateResetTypePanel());
+        _dialogWindow.add(generateBackButtonPanel());
     }
 
     private JPanel generateTotalTargetTimePanel()
@@ -102,22 +90,6 @@ public class OptionAreaUI
         JPanel comboBoxPanel = new JPanel();
         comboBoxPanel.add(_resetComboBox);
         panel.add(comboBoxPanel);
-
-        return panel;
-    }
-
-    private JPanel generateTaskButtonsPanel()
-    {
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-
-        JPanel addButtonPanel = new JPanel();
-        addButtonPanel.add(_addButton);
-        panel.add(addButtonPanel);
-
-        JPanel deleteButtonPanel = new JPanel();
-        deleteButtonPanel.add(_deleteButton);
-        panel.add(deleteButtonPanel);
 
         return panel;
     }
@@ -172,24 +144,6 @@ public class OptionAreaUI
     }
 
     /**
-     * Returns the addButton
-     * @return _addButton
-     */
-    public JButton getAddButton()
-    {
-        return _addButton;
-    }
-
-    /**
-     * Returns the deleteButton
-     * @return _deleteButton
-     */
-    public JButton getDeleteButton()
-    {
-        return _deleteButton;
-    }
-
-    /**
      * Returns the declining _backButton
      * @return _backButton
      */
@@ -203,6 +157,17 @@ public class OptionAreaUI
      */
     public void close()
     {
-        _mainframe.dispose();
+        _dialogWindow.dispose();
+    }
+
+    public void setPositionRelativeToMainFrame(JFrame frame)
+    {
+        _dialogWindow.setLocation(new Point
+                (frame.getLocation().x + 80, frame.getLocation().y + 40));
+    }
+
+    public void showUI()
+    {
+        _dialogWindow.setVisible(true);
     }
 }

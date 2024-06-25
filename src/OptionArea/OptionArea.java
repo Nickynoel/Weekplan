@@ -2,27 +2,33 @@ package OptionArea;
 
 import Settings.Settings;
 import TaskList.TaskList;
-import Weekplan.Weekplan;
 
 import javax.swing.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 /**
  * Functional class OptionArea, in which the user can choose between several options:
  * Change total targetTime to a positive number of hours
- * AddTask, DeleteTask, Back
  */
 
 public class OptionArea
 {
+    private final PropertyChangeSupport _support; //basically observable just newer
     private final Settings _settingList;
     private final OptionAreaUI _ui;
+    private boolean _isChanged;
 
-    public OptionArea()
+    public OptionArea(JFrame frame)
     {
+        _support = new PropertyChangeSupport(this);
         _settingList = Settings.getInstance(Settings.DEFAULTSETTINGSFILE);
+
         _ui = new OptionAreaUI();
         _ui.loadSettings(_settingList);
+        _ui.setPositionRelativeToMainFrame(frame);
 
+        _isChanged = false;
         addListeners();
     }
 
@@ -33,8 +39,6 @@ public class OptionArea
     {
         _ui.getTotalTargetInput().addActionListener(event -> changeTotalTargetTime());
         _ui.getResetComboBox().addActionListener(event -> changeResetType());
-        _ui.getAddButton().addActionListener(event -> createNewTask());
-        _ui.getDeleteButton().addActionListener(event -> goToDeleteArea());
         _ui.getBackButton().addActionListener(event -> goToWeekplan());
     }
 
@@ -52,6 +56,7 @@ public class OptionArea
             list.setTotalTargetTime(number * 60); // Turn entry from hours to minutes
             list.saveTasksOnFile();
             _ui.clearTotalTargetInput();
+            _isChanged = true;
         }
         else
         {
@@ -63,28 +68,7 @@ public class OptionArea
     {
         _settingList.setResetProgram(String.valueOf(_ui.getResetComboBox().getSelectedItem()));
         _settingList.saveSettings();
-    }
-
-    /**
-     * Creates a new blank task and goes back to Weekplan
-     */
-    private void createNewTask()
-    {
-        TaskList list = TaskList.getInstance();
-        list.addNewEmptyTask();
-        list.saveTasksOnFile();
-        _ui.close();
-        Weekplan plan = Weekplan.getInstance();
-        plan.openTaskEdit();
-    }
-
-    /**
-     * Opens a new menu with a list of tasks of which the chosen ones can be deleted
-     */
-    private void goToDeleteArea()
-    {
-        _ui.close();
-        Weekplan.getInstance().openDeleteArea();
+        _isChanged = true;
     }
 
     /**
@@ -92,8 +76,8 @@ public class OptionArea
      */
     private void goToWeekplan()
     {
+        if (_isChanged) _support.firePropertyChange("Test", 0, 1);
         _ui.close();
-        Weekplan.getInstance();
     }
 
     /**
@@ -106,5 +90,23 @@ public class OptionArea
     private boolean isValidTotalTime(String input)
     {
         return input.matches("\\d+") && !input.equals("0");
+    }
+
+    /**
+     * Allows listeners to be added
+     *
+     * @param pcl: the new listener
+     */
+    public void addPropertyChangeListener(PropertyChangeListener pcl)
+    {
+        _support.addPropertyChangeListener(pcl);
+    }
+
+    /**
+     * Sets the visibility of the UI to true
+     */
+    public void showUI()
+    {
+        _ui.showUI();
     }
 }
