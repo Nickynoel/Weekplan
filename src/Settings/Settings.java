@@ -58,12 +58,12 @@ public class Settings
         {
             if (s.startsWith(RESETPROGRAM))
             {
-                String prog = s.strip().split(" ")[1];
+                String prog = s.strip().split(",")[1];
                 _resetProgram = RESETPROGRAMS.contains(prog) ?  prog : "None";
             }
             if(s.startsWith(WEEKLYRESET))
             {
-                String week = s.strip().split(" ")[1];
+                String week = s.strip().split(",")[1];
                 _isSunday = Boolean.parseBoolean(week);
             }
         }
@@ -119,8 +119,8 @@ public class Settings
     private List<String> stringifySettings()
     {
         List<String> list = new ArrayList<>();
-        list.add(RESETPROGRAM + " " + _resetProgram);
-        list.add(WEEKLYRESET + " " + _isSunday);
+        list.add(RESETPROGRAM + "," + _resetProgram);
+        list.add(WEEKLYRESET + "," + _isSunday);
         return list;
     }
 }
