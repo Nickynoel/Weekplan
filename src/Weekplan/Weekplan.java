@@ -43,8 +43,6 @@ public class Weekplan
         for (JButton addButton : _ui.getAddButtonlist())
             addButton.addActionListener(event -> openAddProgressArea(addButton));
 
-        _ui.getOptionButton().addActionListener(event -> openOptionsArea());
-        _ui.getSaveButton().addActionListener(event -> saveTracker());
         _ui.getCloseButton().addActionListener(event -> closeTracker());
     }
 
@@ -71,7 +69,6 @@ public class Weekplan
      */
     private void openOptionsArea()
     {
-        _listOfTasks.saveTasksOnFile();
         final OptionArea area = new OptionArea(_ui.getMainframe());
         area.addPropertyChangeListener(evt -> refreshUI());
         area.showUI();
@@ -82,7 +79,6 @@ public class Weekplan
      */
     private void closeTracker()
     {
-        _listOfTasks.saveTasksOnFile();
         _ui.close();
     }
 
@@ -95,7 +91,10 @@ public class Weekplan
         Task task = _listOfTasks.get(taskNumber);
         final TaskEditArea area = new TaskEditArea(task, _ui.getMainframe());
 
-        area.addPropertyChangeListener(evt -> _ui.updateTask(task));
+        area.addPropertyChangeListener(evt -> {
+            _listOfTasks.saveTasksOnFile();
+            _ui.updateTask(task);
+        });
         area.showUI();
     }
 
@@ -108,17 +107,13 @@ public class Weekplan
         Task task = _listOfTasks.get(taskNumber);
         final AddProgressArea area = new AddProgressArea(task, _ui.getMainframe());
 
-        area.addPropertyChangeListener(evt -> _ui.updateProgress(task));
+        area.addPropertyChangeListener(evt -> {
+            _listOfTasks.saveTasksOnFile();
+            _ui.updateProgress(task);
+        });
         area.showUI();
     }
 
-    /**
-     * SaveButton.actionListener: Saves the task-values onto the file TaskList.FILENAME
-     */
-    private void saveTracker()
-    {
-        _listOfTasks.saveTasksOnFile();
-    }
 //---------------------------- Listeners: End -----------------------------------
     /**
      * Refreshes the UI to accurately show new information

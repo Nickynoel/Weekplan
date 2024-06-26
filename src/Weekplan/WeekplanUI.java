@@ -34,8 +34,8 @@ public class WeekplanUI
 
     private JLabel _totalLabel;
     private JProgressBar _totalProgress;
-    private JButton _saveButton;
-    private JButton _optionButton;
+//    private JButton _saveButton;
+//    private JButton _optionButton;
     private JButton _closeButton;
 
     private JFrame _mainframe;
@@ -69,8 +69,8 @@ public class WeekplanUI
         _optionsItem = new JMenuItem("Options", 'O');
         _closeItem = new JMenuItem("Close", 'E');
 
-        _saveButton = new JButton("Save");
-        _optionButton = new JButton("Options");
+//        _saveButton = new JButton("Save");
+//        _optionButton = new JButton("Options");
         _closeButton = new JButton("Close");
 
         _totalLabel = new JLabel("Error");
@@ -260,25 +260,9 @@ public class WeekplanUI
      */
     private JPanel buildBotPanel()
     {
-        JPanel botPanel = new JPanel();
-        botPanel.setLayout(new GridLayout(2, 1));
+//        JPanel botPanel = new JPanel();
+//        botPanel.setLayout(new GridLayout(1, 1));
         //upper half
-        botPanel.add(buildTotalPanel());
-        //lower half
-        botPanel.add(buildLowerBotPanel());
-
-        updateTotal();
-
-        return botPanel;
-    }
-
-    /**
-     * Builds the upper part of the BotPanel consisting of the total info
-     *
-     * @return upper part of bottom JPanel
-     */
-    private JPanel buildTotalPanel()
-    {
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
@@ -295,33 +279,15 @@ public class WeekplanUI
         JPanel panel3 = new JPanel();
         panel3.setLayout(new GridBagLayout());
         panel3.setPreferredSize(new Dimension(70, TASKHEIGHT));
-        panel3.add(_saveButton);
+        panel3.add(_closeButton);
 
         topPanel.add(panel1);
         topPanel.add(panel2);
         topPanel.add(panel3);
+
+        updateTotal();
+
         return topPanel;
-    }
-
-    /**
-     * Builds the lower part of the BotPanel consisting of remaining JButtons
-     *
-     * @return lower part of the bottom JPanel
-     */
-    private JPanel buildLowerBotPanel()
-    {
-        JPanel botPanel = new JPanel();
-        botPanel.setLayout(new GridLayout(1, 3));
-
-        JPanel panel4 = new JPanel();
-        panel4.add(_optionButton);
-        botPanel.add(panel4);
-
-        JPanel panel5 = new JPanel();
-        panel5.add(_closeButton);
-        botPanel.add(panel5);
-
-        return botPanel;
     }
 
     public JMenuItem getCreateItem()
@@ -444,26 +410,6 @@ public class WeekplanUI
     private void updateTotalBar()
     {
         _totalProgress.setValue(_taskList.getTotalProgressInPercent());
-    }
-
-    /**
-     * Returns the JButton for saving
-     *
-     * @return _saveButton
-     */
-    public JButton getSaveButton()
-    {
-        return _saveButton;
-    }
-
-    /**
-     * GetA for _optionButton
-     *
-     * @return _optionButton
-     */
-    public JButton getOptionButton()
-    {
-        return _optionButton;
     }
 
     /**
