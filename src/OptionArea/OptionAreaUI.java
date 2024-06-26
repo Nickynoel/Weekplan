@@ -163,7 +163,7 @@ public class OptionAreaUI
     public void setPositionRelativeToMainFrame(JFrame frame)
     {
         _dialogWindow.setLocation(new Point
-                (frame.getLocation().x + 80, frame.getLocation().y + 40));
+                (frame.getLocation().x + 60, frame.getLocation().y + 80));
     }
 
     public void showUI()
