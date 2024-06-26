@@ -34,8 +34,6 @@ public class WeekplanUI
 
     private JLabel _totalLabel;
     private JProgressBar _totalProgress;
-//    private JButton _saveButton;
-//    private JButton _optionButton;
     private JButton _closeButton;
 
     private JFrame _mainframe;
@@ -69,11 +67,9 @@ public class WeekplanUI
         _optionsItem = new JMenuItem("Options", 'O');
         _closeItem = new JMenuItem("Close", 'E');
 
-//        _saveButton = new JButton("Save");
-//        _optionButton = new JButton("Options");
+        _totalLabel = new JLabel("Error");
         _closeButton = new JButton("Close");
 
-        _totalLabel = new JLabel("Error");
         _mainframe = new JFrame();
         _totalProgress = new JProgressBar();
     }
@@ -260,9 +256,6 @@ public class WeekplanUI
      */
     private JPanel buildBotPanel()
     {
-//        JPanel botPanel = new JPanel();
-//        botPanel.setLayout(new GridLayout(1, 1));
-        //upper half
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
@@ -286,7 +279,6 @@ public class WeekplanUI
         topPanel.add(panel3);
 
         updateTotal();
-
         return topPanel;
     }
 
