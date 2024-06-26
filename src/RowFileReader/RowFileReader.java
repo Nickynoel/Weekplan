@@ -62,7 +62,7 @@ public class RowFileReader
     {
         List<String> stringList = new ArrayList<>();
 
-        try (Scanner res = new Scanner(file))
+        try (Scanner res = new Scanner(file, "UTF-8"))
         {
             while (res.hasNextLine())
             {
