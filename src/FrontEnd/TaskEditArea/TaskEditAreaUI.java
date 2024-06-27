@@ -1,12 +1,12 @@
-package TaskEditArea;
+package FrontEnd.TaskEditArea;
 
-import TaskList.Task.Task;
+import BackEnd.TaskList.Task.Task;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * UI of TaskEditArea
+ * UI of FrontEnd.TaskEditArea
  */
 
 public class TaskEditAreaUI

@@ -1,6 +1,6 @@
-package AddProgressArea;
+package FrontEnd.AddProgressArea;
 
-import TaskList.Task.Task;
+import BackEnd.TaskList.Task.Task;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -9,7 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * Functional class AddProgressArea for the window that accepts the input of the length of an action
+ * Functional class FrontEnd.AddProgressArea for the window that accepts the input of the length of an action
  * and adds its value to the progress of a given task
  */
 public class AddProgressArea

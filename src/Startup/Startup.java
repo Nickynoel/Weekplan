@@ -1,8 +1,8 @@
 package Startup;
 
-import Settings.Settings;
-import TaskList.TaskList;
-import Weekplan.Weekplan;
+import BackEnd.Settings.Settings;
+import BackEnd.TaskList.TaskList;
+import FrontEnd.Weekplan.Weekplan;
 
 public class Startup
 {

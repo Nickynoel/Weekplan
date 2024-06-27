@@ -1,6 +1,6 @@
-package TaskList;
+package BackEnd.TaskList;
 
-import TaskList.Task.Task;
+import BackEnd.TaskList.Task.Task;
 import org.junit.Test;
 
 import java.io.File;
@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * The Test class for TaskList
+ * The Test class for BackEnd.TaskList
  */
 
 public class TaskListTest
@@ -24,7 +24,7 @@ public class TaskListTest
     public void testDefaultConstructor()
     {
         TaskList taskList = TaskList.getInstance();
-        assertEquals(taskList.getSaveFile(), new File("Weekplan.csv"));
+        assertEquals(taskList.getSaveFile(), new File("FrontEnd.Weekplan.csv"));
     }
 
     @Test
@@ -198,7 +198,7 @@ public class TaskListTest
  *     @Test
  *     public void test()
  *     {
- *         TaskList taskList = TaskList.getInstance(testFile);
+ *         BackEnd.TaskList taskList = BackEnd.TaskList.getInstance(testFile);
  *         assertTrue(testFile.delete());
  *     }
  */

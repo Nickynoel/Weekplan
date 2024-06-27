@@ -1,6 +1,6 @@
-package TaskList.Action;
+package BackEnd.ActionQueue.Action;
 
-import TaskList.Task.Task;
+import BackEnd.TaskList.Task.Task;
 
 /*
  * A simple tuple of a task and a progress to reflect an action in the weekplan.

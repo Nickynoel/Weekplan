@@ -1,7 +1,7 @@
-package Weekplan;
+package FrontEnd.Weekplan;
 
-import TaskList.Task.Task;
-import TaskList.TaskList;
+import BackEnd.TaskList.Task.Task;
+import BackEnd.TaskList.TaskList;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * UI of the class Weekplan
+ * UI of the class FrontEnd.Weekplan
  * Renewed Version of WeekplanUI
  */
 public class WeekplanUI

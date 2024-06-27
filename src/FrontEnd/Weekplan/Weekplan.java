@@ -1,13 +1,13 @@
-package Weekplan;
+package FrontEnd.Weekplan;
 
-import AddProgressArea.AddProgressArea;
-import DeleteArea.DeleteArea;
-import OptionArea.OptionArea;
-import TaskEditArea.TaskEditArea;
-import TaskList.Task.Task;
-import TaskList.TaskList;
-import TaskList.ActionQueue;
-import TaskList.Action.Action;
+import FrontEnd.AddProgressArea.AddProgressArea;
+import FrontEnd.DeleteArea.DeleteArea;
+import FrontEnd.OptionArea.OptionArea;
+import FrontEnd.TaskEditArea.TaskEditArea;
+import BackEnd.TaskList.Task.Task;
+import BackEnd.TaskList.TaskList;
+import BackEnd.ActionQueue.ActionQueue;
+import BackEnd.ActionQueue.Action.Action;
 
 import javax.swing.*;
 
@@ -17,8 +17,8 @@ import javax.swing.*;
 public class Weekplan
 {
     private TaskList _listOfTasks;
-    private WeekplanUI _ui;
     private ActionQueue _actionQueue;
+    private WeekplanUI _ui;
 
     public static Weekplan getInstance()
     {
@@ -30,8 +30,8 @@ public class Weekplan
     private Weekplan()
     {
         _listOfTasks = TaskList.getInstance();
-        _ui = new WeekplanUI(_listOfTasks);
         _actionQueue = new ActionQueue();
+        _ui = new WeekplanUI(_listOfTasks);
     }
 
     private void addListeners()
@@ -72,7 +72,7 @@ public class Weekplan
     }
 
     /**
-     * OptionButton.actionListener: Closes window and opens OptionArea
+     * OptionButton.actionListener: Closes window and opens FrontEnd.OptionArea
      */
     private void openOptionsArea()
     {
@@ -114,7 +114,7 @@ public class Weekplan
     }
 
     /**
-     * TitleButton.actionListener: Opens TaskEditArea and gives it an observer
+     * TitleButton.actionListener: Opens FrontEnd.TaskEditArea and gives it an observer
      */
     private void openTaskEditArea(JButton button)
     {
@@ -130,7 +130,7 @@ public class Weekplan
     }
 
     /**
-     * AddButton.actionListener: Opens AddProgressArea and gives it an observer
+     * AddButton.actionListener: Opens FrontEnd.AddProgressArea and gives it an observer
      */
     private void openAddProgressArea(JButton button)
     {
@@ -161,7 +161,7 @@ public class Weekplan
 
     /**
      * Opens the editing field of a (newly created) task
-     * - the "TaskEditArea" with the title "New Task"
+     * - the "FrontEnd.TaskEditArea" with the title "New Task"
      * TODO: This smells
      */
     public void openTaskEdit()

@@ -1,12 +1,12 @@
-package AddProgressArea;
+package FrontEnd.AddProgressArea;
 
-import TaskList.Task.Task;
+import BackEnd.TaskList.Task.Task;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * UI of AddProgressArea
+ * UI of FrontEnd.AddProgressArea
  */
 
 public class AddProgressAreaUI

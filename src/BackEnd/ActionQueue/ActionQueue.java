@@ -1,11 +1,11 @@
-package TaskList;
+package BackEnd.ActionQueue;
 
 /*
  * Class that records the prior progresses to undo and redo if wished
  * ToDo: Test as Singleton
  */
 
-import TaskList.Action.Action;
+import BackEnd.ActionQueue.Action.Action;
 
 import java.util.Stack;
 

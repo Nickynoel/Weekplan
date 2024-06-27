@@ -1,11 +1,11 @@
-package OptionArea;
+package FrontEnd.OptionArea;
 
 import javax.swing.*;
 import java.awt.*;
-import Settings.Settings;
+import BackEnd.Settings.Settings;
 
 /**
- * UI of OptionArea
+ * UI of FrontEnd.OptionArea
  */
 
 public class OptionAreaUI

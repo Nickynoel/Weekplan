@@ -1,12 +1,12 @@
-package DeleteArea;
+package FrontEnd.DeleteArea;
 
-import TaskList.TaskList;
+import BackEnd.TaskList.TaskList;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * UI of DeleteArea
+ * UI of FrontEnd.DeleteArea
  */
 
 public class DeleteAreaUI

@@ -1,13 +1,13 @@
-package TaskEditArea;
+package FrontEnd.TaskEditArea;
 
-import TaskList.Task.Task;
+import BackEnd.TaskList.Task.Task;
 
 import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * Functional class TaskEditArea for the window that allows editing basic values of the given Task:
+ * Functional class FrontEnd.TaskEditArea for the window that allows editing basic values of the given Task:
  * Name, targetTime
  */
 public class TaskEditArea
@@ -125,6 +125,6 @@ public class TaskEditArea
      */
     public void showUI()
     {
-        _ui.showUI(); // important for the observer Weekplan
+        _ui.showUI(); // important for the observer FrontEnd.Weekplan
     }
 }

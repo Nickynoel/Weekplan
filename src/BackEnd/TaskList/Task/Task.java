@@ -1,4 +1,4 @@
-package TaskList.Task;
+package BackEnd.TaskList.Task;
 
 /**
  * Class of the main component of the program, a task consisting of

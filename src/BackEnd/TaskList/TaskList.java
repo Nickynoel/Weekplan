@@ -1,8 +1,8 @@
-package TaskList;
+package BackEnd.TaskList;
 
 import RowFileReader.RowFileReader;
 import RowFileWriter.RowFileWriter;
-import TaskList.Task.*;
+import BackEnd.TaskList.Task.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.List;
 public class TaskList
 {
     //Globally accessible file
-    private static final File DEFAULTFILENAME = new File("Weekplan.csv");
+    private static final File DEFAULTFILENAME = new File("FrontEnd.Weekplan.csv");
 
     private final File _saveFile;
     private final List<Task> _taskList;

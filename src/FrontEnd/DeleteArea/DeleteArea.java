@@ -1,13 +1,13 @@
-package DeleteArea;
+package FrontEnd.DeleteArea;
 
-import TaskList.TaskList;
+import BackEnd.TaskList.TaskList;
 
 import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * Functional class DeleteArea, in which the user is able to delete tasks out of the TaskList
+ * Functional class FrontEnd.DeleteArea, in which the user is able to delete tasks out of the BackEnd.TaskList
  * Returns to Startup afterward
  */
 

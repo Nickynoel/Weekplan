@@ -1,14 +1,14 @@
-package OptionArea;
+package FrontEnd.OptionArea;
 
-import Settings.Settings;
-import TaskList.TaskList;
+import BackEnd.Settings.Settings;
+import BackEnd.TaskList.TaskList;
 
 import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * Functional class OptionArea, in which the user can choose between several options:
+ * Functional class FrontEnd.OptionArea, in which the user can choose between several options:
  * Change total targetTime to a positive number of hours
  */
 
@@ -72,7 +72,7 @@ public class OptionArea
     }
 
     /**
-     * Returns back to Weekplan
+     * Returns back to FrontEnd.Weekplan
      */
     private void goToWeekplan()
     {

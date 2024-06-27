@@ -1,4 +1,4 @@
-package Settings;
+package BackEnd.Settings;
 
 import RowFileReader.RowFileReader;
 import RowFileWriter.RowFileWriter;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Settings
 {
-    public static final File DEFAULTSETTINGSFILE = new File("Settings.txt");
+    public static final File DEFAULTSETTINGSFILE = new File("BackEnd.Settings.txt");
     public static final List<String> RESETPROGRAMS = Arrays.asList("Total", "On Goal", "None"); // ToDo: As Enum?
     private final String RESETPROGRAM = "Resetprogram:";
     private final String WEEKLYRESET = "Weekly Reset:";
