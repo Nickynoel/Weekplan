@@ -70,7 +70,7 @@ public class AddProgressArea
                 int number = Integer.parseInt(_ui.getUserInput());
                 _task.addProgress(number);
                 //Tells the PropertyChangeListeners that a change happens if number!=0
-                _support.firePropertyChange("Test", 0, number);
+                _support.firePropertyChange("Test", "0", number);
                 _ui.close();
             }
             //should never happen, cause the textField-keyListener checks this

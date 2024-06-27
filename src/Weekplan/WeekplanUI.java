@@ -31,6 +31,8 @@ public class WeekplanUI
     private JMenuItem _deleteItem;
     private JMenuItem _optionsItem;
     private JMenuItem _closeItem;
+    private JMenuItem _undoItem;
+    private JMenuItem _redoItem;
 
     private JLabel _totalLabel;
     private JProgressBar _totalProgress;
@@ -64,8 +66,13 @@ public class WeekplanUI
         _menuBar = new JMenuBar();
         _createItem = new JMenuItem("New Task", 'N');
         _deleteItem = new JMenuItem("Delete Tasks", 'D');
-        _optionsItem = new JMenuItem("Options", 'O');
+        _optionsItem = new JMenuItem("Options", 'P');
         _closeItem = new JMenuItem("Close", 'E');
+
+        _undoItem = new JMenuItem("Undo", 'U');
+        _undoItem.setEnabled(false);
+        _redoItem = new JMenuItem("Redo", 'R');
+        _redoItem.setEnabled(false);
 
         _totalLabel = new JLabel("Error");
         _closeButton = new JButton("Close");
@@ -93,6 +100,12 @@ public class WeekplanUI
         menu.add(_optionsItem);
         menu.add(_closeItem);
         _menuBar.add(menu);
+
+        JMenu options = new JMenu("Options");
+        options.setMnemonic('O');
+        options.add(_undoItem);
+        options.add(_redoItem);
+        _menuBar.add(options);
     }
 
     /**
@@ -302,6 +315,16 @@ public class WeekplanUI
         return _closeItem;
     }
 
+    public JMenuItem getUndoItem()
+    {
+        return _undoItem;
+    }
+
+    public JMenuItem getRedoItem()
+    {
+        return _redoItem;
+    }
+
     /**
      * Returns the list of Title-Buttons
      *
@@ -441,5 +464,17 @@ public class WeekplanUI
     {
         int index = _taskList.indexOf(Task.DEFAULTNAME);
         _taskTitleButtons.get(index).doClick();
+    }
+
+    public void enableUndoButton()
+    {
+        _undoItem.setEnabled(true);
+        _redoItem.setEnabled(false);
+    }
+
+    public void enableRedoButton()
+    {
+        _undoItem.setEnabled(false);
+        _redoItem.setEnabled(true);
     }
 }

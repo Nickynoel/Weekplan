@@ -333,4 +333,6 @@ public class TaskList
                 : (sign + progressHours + "," + progressMinutes + " of " + goalHours + "," +
                     goalMinutes + " hours");
     }
+
+
 }

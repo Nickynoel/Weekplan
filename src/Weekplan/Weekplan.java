@@ -17,6 +17,9 @@ public class Weekplan
     private TaskList _listOfTasks;
     private WeekplanUI _ui;
 
+    private Task _lastTask;
+    private int _lastTaskProgress;
+
     public static Weekplan getInstance()
     {
         Weekplan plan = new Weekplan();
@@ -28,6 +31,9 @@ public class Weekplan
     {
         _listOfTasks = TaskList.getInstance();
         _ui = new WeekplanUI(_listOfTasks);
+
+        _lastTask = null;
+        _lastTaskProgress = 0;
     }
 
     private void addListeners()
@@ -36,6 +42,9 @@ public class Weekplan
         _ui.getDeleteItem().addActionListener(event -> openDeleteArea());
         _ui.getOptionsItem().addActionListener(event -> openOptionsArea());
         _ui.getCloseItem().addActionListener(event -> closeTracker());
+
+        _ui.getUndoItem().addActionListener(event -> undoLastAction());
+        _ui.getRedoItem().addActionListener(event -> redoLastAction());
 
         for (JButton taskTitle : _ui.getTitleButtonList())
             taskTitle.addActionListener(event -> openTaskEditArea(taskTitle));
@@ -83,6 +92,26 @@ public class Weekplan
     }
 
     /**
+     * Undo the last commited progress
+     */
+    public void undoLastAction()
+    {
+        _lastTask.addProgress(_lastTaskProgress * -1);
+        _ui.updateProgress(_lastTask);
+        _ui.enableRedoButton();
+    }
+
+    /**
+     * Redo the last commited progress
+     */
+    public void redoLastAction()
+    {
+        _lastTask.addProgress(_lastTaskProgress);
+        _ui.updateProgress(_lastTask);
+        _ui.enableUndoButton();
+    }
+
+    /**
      * TitleButton.actionListener: Opens TaskEditArea and gives it an observer
      */
     private void openTaskEditArea(JButton button)
@@ -108,8 +137,11 @@ public class Weekplan
         final AddProgressArea area = new AddProgressArea(task, _ui.getMainframe());
 
         area.addPropertyChangeListener(evt -> {
+            _lastTaskProgress = (int) evt.getNewValue();
+            _lastTask = task;
             _listOfTasks.saveTasksOnFile();
             _ui.updateProgress(task);
+            _ui.enableUndoButton();
         });
         area.showUI();
     }
