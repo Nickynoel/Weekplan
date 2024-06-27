@@ -24,7 +24,7 @@ public class TaskListTest
     public void testDefaultConstructor()
     {
         TaskList taskList = TaskList.getInstance();
-        assertEquals(taskList.getSaveFile(), new File("FrontEnd.Weekplan.csv"));
+        assertEquals(taskList.getSaveFile(), new File("Weekplan.csv"));
     }
 
     @Test

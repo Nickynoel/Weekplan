@@ -16,7 +16,7 @@ import java.util.List;
 public class TaskList
 {
     //Globally accessible file
-    private static final File DEFAULTFILENAME = new File("FrontEnd.Weekplan.csv");
+    private static final File DEFAULTFILENAME = new File("Weekplan.csv");
 
     private final File _saveFile;
     private final List<Task> _taskList;
