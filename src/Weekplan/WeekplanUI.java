@@ -469,12 +469,20 @@ public class WeekplanUI
     public void enableUndoButton()
     {
         _undoItem.setEnabled(true);
-        _redoItem.setEnabled(false);
     }
 
     public void enableRedoButton()
     {
-        _undoItem.setEnabled(false);
         _redoItem.setEnabled(true);
+    }
+
+    public void disableUndoButton()
+    {
+        _undoItem.setEnabled(false);
+    }
+
+    public void disableRedoButton()
+    {
+        _redoItem.setEnabled(false);
     }
 }

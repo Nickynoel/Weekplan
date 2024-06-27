@@ -6,6 +6,8 @@ import OptionArea.OptionArea;
 import TaskEditArea.TaskEditArea;
 import TaskList.Task.Task;
 import TaskList.TaskList;
+import TaskList.ActionQueue;
+import TaskList.Action.Action;
 
 import javax.swing.*;
 
@@ -16,9 +18,7 @@ public class Weekplan
 {
     private TaskList _listOfTasks;
     private WeekplanUI _ui;
-
-    private Task _lastTask;
-    private int _lastTaskProgress;
+    private ActionQueue _actionQueue;
 
     public static Weekplan getInstance()
     {
@@ -31,9 +31,7 @@ public class Weekplan
     {
         _listOfTasks = TaskList.getInstance();
         _ui = new WeekplanUI(_listOfTasks);
-
-        _lastTask = null;
-        _lastTaskProgress = 0;
+        _actionQueue = new ActionQueue();
     }
 
     private void addListeners()
@@ -96,8 +94,10 @@ public class Weekplan
      */
     public void undoLastAction()
     {
-        _lastTask.addProgress(_lastTaskProgress * -1);
-        _ui.updateProgress(_lastTask);
+        Action lastAction = _actionQueue.undoLastAction();
+        _ui.updateProgress(lastAction.getTask());
+        if (_actionQueue.hasNoPriorActions())
+            _ui.disableUndoButton();
         _ui.enableRedoButton();
     }
 
@@ -106,9 +106,11 @@ public class Weekplan
      */
     public void redoLastAction()
     {
-        _lastTask.addProgress(_lastTaskProgress);
-        _ui.updateProgress(_lastTask);
+        Action lastAction = _actionQueue.redoLastAction();
+        _ui.updateProgress(lastAction.getTask());
         _ui.enableUndoButton();
+        if (_actionQueue.hasNoUndoneActions())
+            _ui.disableRedoButton();
     }
 
     /**
@@ -137,8 +139,7 @@ public class Weekplan
         final AddProgressArea area = new AddProgressArea(task, _ui.getMainframe());
 
         area.addPropertyChangeListener(evt -> {
-            _lastTaskProgress = (int) evt.getNewValue();
-            _lastTask = task;
+            _actionQueue.addAction(new Action(task, (int) evt.getNewValue()));
             _listOfTasks.saveTasksOnFile();
             _ui.updateProgress(task);
             _ui.enableUndoButton();
