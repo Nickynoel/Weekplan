@@ -1,13 +1,13 @@
 package BackEnd.TaskList;
 
 import BackEnd.TaskList.Task.Task;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The Test class for BackEnd.TaskList
