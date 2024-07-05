@@ -18,9 +18,17 @@ public class TaskList
     //Globally accessible file
     private static final File DEFAULTFILENAME = new File("Weekplan.csv");
 
+    //Singleton Pattern: https://www.youtube.com/watch?v=tSZn4wkBIu8
+    private static TaskList _instance;
+
     private final File _saveFile;
     private final List<Task> _taskList;
 
+    /**
+     * Special factory for test classes which has to use a separate filepath
+     * @param file Test.csv
+     * @return should only provide a default list
+     */
     public static TaskList getInstance(File file)
     {
         return new TaskList(file);
@@ -28,7 +36,9 @@ public class TaskList
 
     public static TaskList getInstance()
     {
-        return new TaskList(DEFAULTFILENAME);
+        if (_instance == null)
+            _instance = new TaskList(DEFAULTFILENAME);
+        return _instance;
     }
 
     private TaskList(File file)
@@ -40,7 +50,7 @@ public class TaskList
         if (_taskList.isEmpty())
             createDefaultList();
         else
-            _taskList.sort(new TaskComparatorByProgressInPercent());
+            sortList();
     }
 
     /**
@@ -59,12 +69,12 @@ public class TaskList
 
     private void createDefaultList()
     {
-        emptyList();
+        clearList();
         addNewEmptyTask();
         saveTasksOnFile();
     }
 
-    private void emptyList()
+    private void clearList()
     {
         _taskList.clear();
     }
@@ -226,8 +236,7 @@ public class TaskList
      */
     public int getTotalProgressInPercent()
     {
-        double sum = _taskList.stream()
-                .map(Task::getProgressInPercent)
+        double sum = _taskList.stream().map(Task::getProgressInPercent)
                 .reduce(0.0, (subtotal, element) -> subtotal + Math.min(element, 100));
         return (int) (sum / _taskList.size());
     }
@@ -255,6 +264,7 @@ public class TaskList
      * Checks if the progress was sufficient for a weekly reset so that not everything goes
      * into the deep red.
      * Current Criteria: Half of TotalTargetTime
+     *
      * @return bool
      */
     public boolean isSufficientProgress()
@@ -328,11 +338,12 @@ public class TaskList
         int goalHours = getTotalTargetTime() / 60;
         int goalMinutes = (getTotalTargetTime() / 6) % 10;
 
-        return progressMinutes == 0
-                ? (sign + progressHours + " of " + goalHours + "," + goalMinutes + " hours")
-                : (sign + progressHours + "," + progressMinutes + " of " + goalHours + "," +
-                    goalMinutes + " hours");
+        return progressMinutes == 0 ? (sign + progressHours + " of " + goalHours + "," + goalMinutes + " hours") : (sign + progressHours + "," + progressMinutes + " of " + goalHours + "," + goalMinutes + " hours");
     }
 
 
+    public void sortList()
+    {
+        _taskList.sort(new TaskComparatorByProgressInPercent());
+    }
 }
