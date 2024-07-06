@@ -66,7 +66,14 @@ public class Weekplan
     public void openDeleteArea()
     {
         final DeleteArea area = new DeleteArea(_ui.getMainframe());
-        area.addPropertyChangeListener(evt -> refreshUI());
+        area.addPropertyChangeListener(evt -> {
+            _actionQueue.filterActions();
+            if (_actionQueue.hasNoPriorActions())
+                _ui.disableUndoButton();
+            if (_actionQueue.hasNoUndoneActions())
+                _ui.disableRedoButton();
+            refreshUI();
+        });
         area.showUI();
     }
 

@@ -6,6 +6,7 @@ package BackEnd.ActionQueue;
  */
 
 import BackEnd.ActionQueue.Action.Action;
+import BackEnd.TaskList.TaskList;
 
 import java.util.Stack;
 
@@ -14,10 +15,14 @@ public class ActionQueue
     private Stack<Action> _priorActions;
     private Stack<Action> _undoneActions;
 
+    private TaskList _listOfTasks;
+
     public ActionQueue()
     {
         _priorActions = new Stack<>();
         _undoneActions = new Stack<>();
+
+        _listOfTasks = TaskList.getInstance();
     }
 
     public void addAction(Action action)
@@ -58,6 +63,25 @@ public class ActionQueue
     public boolean hasNoUndoneActions()
     {
         return _undoneActions.empty();
+    }
+
+    public void filterActions()
+    {
+        Stack<Action> tmp = new Stack<>();
+        for (Action a: _priorActions)
+        {
+            if (_listOfTasks.indexOf(a.getTask()) != -1)
+                tmp.push(a);
+        }
+        _priorActions = tmp;
+
+        Stack<Action> tmp2 = new Stack<>();
+        for (Action a: _undoneActions)
+        {
+            if(_listOfTasks.indexOf(a.getTask()) != -1)
+                tmp2.push(a);
+        }
+        _undoneActions = tmp2;
     }
 
 }
