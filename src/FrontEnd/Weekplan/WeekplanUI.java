@@ -465,14 +465,13 @@ public class WeekplanUI
         return _mainframe;
     }
 
-
     /**
-     * Opens a newly created task standardized with the title "New"
-     * by opening the first entry of Task.DEFAULTNAME in the _taskList
+     * Opens the task menu of a given (usually newly generated) task
+     * @param task Task of which the menu is opened
      */
-    public void openNewTaskMenu()
+    public void openTaskMenu(Task task)
     {
-        int index = _taskList.indexOf(Task.DEFAULTNAME);
+        int index = _taskList.indexOf(task);
         _taskTitleButtons.get(index).doClick();
     }
 

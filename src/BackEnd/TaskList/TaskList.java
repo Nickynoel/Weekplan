@@ -70,7 +70,7 @@ public class TaskList
     private void createDefaultList()
     {
         clearList();
-        addNewEmptyTask();
+        addNewDefaultTask();
         saveTasksOnFile();
     }
 
@@ -79,9 +79,11 @@ public class TaskList
         _taskList.clear();
     }
 
-    public void addNewEmptyTask()
+    public Task addNewDefaultTask()
     {
-        _taskList.add(Task.getInstance());
+        Task t = Task.getInstance();
+        _taskList.add(t);
+        return t;
     }
 
     public void saveTasksOnFile()

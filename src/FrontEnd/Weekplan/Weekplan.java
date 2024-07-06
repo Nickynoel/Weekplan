@@ -57,10 +57,10 @@ public class Weekplan
 
     private void createTask()
     {
-        _listOfTasks.addNewEmptyTask();
+        Task task = _listOfTasks.addNewDefaultTask();
         _listOfTasks.saveTasksOnFile();
         refreshUI();
-        openTaskEdit(); //TODO: THIS! -> Direct call
+        _ui.openTaskMenu(task);
     }
 
     public void openDeleteArea()
@@ -167,15 +167,5 @@ public class Weekplan
 
         for (JButton addButton : _ui.getAddButtonlist())
             addButton.addActionListener(event -> openAddProgressArea(addButton));
-    }
-
-    /**
-     * Opens the editing field of a (newly created) task
-     * - the "FrontEnd.TaskEditArea" with the title "New Task"
-     * TODO: This smells
-     */
-    public void openTaskEdit()
-    {
-        _ui.openNewTaskMenu();
     }
 }

@@ -49,9 +49,9 @@ public class TaskListTest
     public void testAddNewEmptyTask()
     {
         TaskList taskList = TaskList.getInstance(_testFile);
-        taskList.addNewEmptyTask();
+        taskList.addNewDefaultTask();
         assertEquals(taskList.getSize(), 2);
-        taskList.addNewEmptyTask();
+        taskList.addNewDefaultTask();
         assertNotEquals(taskList.getSize(), 2);
         assertEquals(taskList.getSize(), 3);
         assertTrue(_testFile.delete());
