@@ -22,6 +22,7 @@ public class WeekplanUI
 
     private TaskList _taskList;
 
+    private JPanel _itemPanel;
     private List<JButton> _taskTitleButtons;
     private List<JProgressBar> _taskProgressBars;
     private List<JButton> _addTimeButtons;
@@ -74,6 +75,8 @@ public class WeekplanUI
         _redoItem = new JMenuItem("Redo", 'R');
         _redoItem.setEnabled(false);
 
+        _itemPanel = new JPanel();
+
         _totalLabel = new JLabel("Error");
         _closeButton = new JButton("Close");
 
@@ -87,7 +90,7 @@ public class WeekplanUI
     private void createElements()
     {
         createMenuBar();
-        createTaskElements();
+        addTaskElements();
         createTotalProgressBar();
     }
 
@@ -111,7 +114,7 @@ public class WeekplanUI
     /**
      * Creates the three elements for each task and adds them to their list
      */
-    private void createTaskElements()
+    private void addTaskElements()
     {
         for (Task t:  _taskList.getList())
         {
@@ -119,6 +122,13 @@ public class WeekplanUI
             addTaskProgressBar(t);
             addAddButton();
         }
+    }
+
+    private void removeTaskElements()
+    {
+        _taskTitleButtons.clear();
+        _taskProgressBars.clear();
+        _addTimeButtons.clear();
     }
 
     /**
@@ -179,8 +189,8 @@ public class WeekplanUI
 
     private void initializeWindow()
     {
-        JPanel centerPanel = buildCenterPanel();
-        JScrollPane scrollPane = new JScrollPane(centerPanel);
+        _itemPanel = buildCenterPanel();
+        JScrollPane scrollPane = new JScrollPane(_itemPanel);
         scrollPane.getVerticalScrollBar().setUnitIncrement(VERTICALSCROLLSPEED);
         _mainframe.add(scrollPane);
 
@@ -485,4 +495,25 @@ public class WeekplanUI
     {
         _redoItem.setEnabled(false);
     }
+
+    public void refreshTaskDisplay()
+    {
+        _itemPanel.removeAll();
+        removeTaskElements();
+        addTaskElements();
+        for (int i = 0; i < _taskList.getSize(); i++)
+        {
+            JPanel taskPanel = new JPanel();
+            //for vertical space in between
+            taskPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+            taskPanel.add(buildTitlePanel(i));
+            taskPanel.add(buildProgressbarPanel(i));
+            taskPanel.add(buildAddButtonPanel(i));
+            _itemPanel.add(taskPanel);
+        }
+        _itemPanel.validate();
+        _itemPanel.repaint();
+    }
+
+
 }

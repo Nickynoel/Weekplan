@@ -59,9 +59,8 @@ public class Weekplan
     {
         _listOfTasks.addNewEmptyTask();
         _listOfTasks.saveTasksOnFile();
-        _ui.close();
-        Weekplan plan = Weekplan.getInstance();
-        plan.openTaskEdit();
+        refreshUI();
+        openTaskEdit(); //TODO: THIS! -> Direct call
     }
 
     public void openDeleteArea()
@@ -151,12 +150,16 @@ public class Weekplan
     /**
      * Refreshes the UI to accurately show new information
      * Current behaviour: Close UI and redo it
-     * TODO: use _mainframe.removeAll(), .validate() and .repaint() within the UI class
      */
     private void refreshUI()
     {
-        _ui.close();
-        Weekplan.getInstance();
+        _listOfTasks.sortList();
+        _ui.refreshTaskDisplay();
+        for (JButton taskTitle : _ui.getTitleButtonList())
+            taskTitle.addActionListener(event -> openTaskEditArea(taskTitle));
+
+        for (JButton addButton : _ui.getAddButtonlist())
+            addButton.addActionListener(event -> openAddProgressArea(addButton));
     }
 
     /**
