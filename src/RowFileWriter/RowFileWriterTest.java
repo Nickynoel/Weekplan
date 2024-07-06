@@ -2,6 +2,7 @@ package RowFileWriter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +21,7 @@ public class RowFileWriterTest
     public void testSaveFile() throws FileNotFoundException
     {
         RowFileWriter wr = RowFileWriter.getInstance(_list, _testFile);
-        // ToDo: JUnit5 should have assertDoesNotThrow
+        assertNotNull(wr);
         wr.saveFile();
 
         Scanner res = new Scanner(_testFile);
