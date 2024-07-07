@@ -16,37 +16,40 @@ public class ActionQueueTest
     @Test
     public void testConstructor()
     {
-        ActionQueue queue = new ActionQueue();
+        ActionQueue queue = ActionQueue.getInstance();
         assertTrue(queue.hasNoPriorActions());
         assertTrue(queue.hasNoUndoneActions());
+        queue.reset();
     }
 
     @Test
     public void testAddAction()
     {
-        ActionQueue queue = new ActionQueue();
+        ActionQueue queue = ActionQueue.getInstance();
         Action action = new Action(Task.getInstance(), 15);
         queue.addAction(action);
         assertFalse(queue.hasNoPriorActions());
         assertTrue(queue.hasNoUndoneActions());
+        queue.reset();
     }
 
     @Test
     public void testUndoLastAction()
     {
-        ActionQueue queue = new ActionQueue();
+        ActionQueue queue = ActionQueue.getInstance();
         Action action = new Action(Task.getInstance(), 15);
         queue.addAction(action);
         Action action2 = queue.undoLastAction();
         assertEquals(action, action2);
         assertTrue(queue.hasNoPriorActions());
         assertFalse(queue.hasNoUndoneActions());
+        queue.reset();
     }
 
     @Test
     public void testRedoLastAction()
     {
-        ActionQueue queue = new ActionQueue();
+        ActionQueue queue = ActionQueue.getInstance();
         Action action = new Action(Task.getInstance(), 15);
         queue.addAction(action);
         Action action2 = queue.undoLastAction();
@@ -55,5 +58,6 @@ public class ActionQueueTest
         assertTrue(queue.hasNoUndoneActions());
         Action action3 = queue.undoLastAction();
         assertEquals(action2, action3);
+        queue.reset();
     }
 }

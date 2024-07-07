@@ -30,7 +30,7 @@ public class Weekplan
     private Weekplan()
     {
         _listOfTasks = TaskList.getInstance();
-        _actionQueue = new ActionQueue();
+        _actionQueue = ActionQueue.getInstance();
         _ui = new WeekplanUI(_listOfTasks);
     }
 

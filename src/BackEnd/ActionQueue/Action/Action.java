@@ -26,4 +26,14 @@ public class Action
     {
         return _progress;
     }
+
+    public void undoProgress()
+    {
+        _task.addProgress(_progress * -1);
+    }
+
+    public void redoProgress()
+    {
+        _task.addProgress(_progress);
+    }
 }
