@@ -15,14 +15,15 @@ import java.util.List;
 
 public class Settings
 {
-    public static final File DEFAULTSETTINGSFILE = new File("BackEnd.Settings.txt");
+    public static final File DEFAULTSETTINGSFILE = new File("Settings.txt");
     public static final List<String> RESETPROGRAMS = Arrays.asList("Total", "On Goal", "None"); // ToDo: As Enum?
     private final String RESETPROGRAM = "Resetprogram:";
     private final String WEEKLYRESET = "Weekly Reset:";
 
-    private File _saveFile;
+    private final File _saveFile;
     private String _resetProgram;
     private boolean _isSunday;
+
     /**
      * Factory method that returns the _settings given a file
      * @param file: file with the settings saved
@@ -30,16 +31,12 @@ public class Settings
      */
     public static Settings getInstance(File file)
     {
-        return new Settings(file);
+        Settings s = new Settings(file);
+        s.loadSettingsList(file);
+        return s;
     }
     
     private Settings(File file)
-    {
-        initializeFields(file);
-        loadSettingsList(file);
-    }
-
-    private void initializeFields(File file)
     {
         _saveFile = file;
         _resetProgram = "None";
@@ -54,17 +51,20 @@ public class Settings
     {
         RowFileReader reader = RowFileReader.getInstance(file);
 
-        for (String s: reader.getList())
+        if (reader != null)
         {
-            if (s.startsWith(RESETPROGRAM))
+            for (String s: reader.getList())
             {
-                String prog = s.strip().split(",")[1];
-                _resetProgram = RESETPROGRAMS.contains(prog) ?  prog : "None";
-            }
-            if(s.startsWith(WEEKLYRESET))
-            {
-                String week = s.strip().split(",")[1];
-                _isSunday = Boolean.parseBoolean(week);
+                if (s.startsWith(RESETPROGRAM))
+                {
+                    String prog = s.strip().split(",")[1];
+                    _resetProgram = RESETPROGRAMS.contains(prog) ?  prog : "None";
+                }
+                if(s.startsWith(WEEKLYRESET))
+                {
+                    String week = s.strip().split(",")[1];
+                    _isSunday = Boolean.parseBoolean(week);
+                }
             }
         }
     }
@@ -74,8 +74,9 @@ public class Settings
      */
     public boolean isMonday()
     {
-        int weekday = ((Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) + 5) % 7; //Monday == 0... and so on
-        if(weekday == 6)
+        // Monday == 0... and so on
+        int weekday = ((Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) + 5) % 7;
+        if (weekday == 6)
         {
             _isSunday = true;
             saveSettings();
@@ -104,7 +105,8 @@ public class Settings
      */
     public void setResetProgram(String prog)
     {
-        if (RESETPROGRAMS.contains(prog)) _resetProgram = prog;
+        if (RESETPROGRAMS.contains(prog))
+            _resetProgram = prog;
     }
     
     /**
@@ -113,9 +115,14 @@ public class Settings
     public void saveSettings()
     {
         RowFileWriter writer = RowFileWriter.getInstance(stringifySettings(), _saveFile);
-        writer.saveFile();
+        if (writer != null)
+            writer.saveFile();
     }
 
+    /**
+     * Turns the settings into a string form
+     * @return The settings as strings in a list
+     */
     private List<String> stringifySettings()
     {
         List<String> list = new ArrayList<>();
