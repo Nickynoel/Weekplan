@@ -21,11 +21,19 @@ class ActionTest
 
     @Test
     public void testUndoProgress() {
-        // TODO
+        Task task = Task.getInstance("Test", 30, 60);
+        Action action = new Action(task, 5);
+        assertEquals(task.getProgress(), 30);
+        action.undoProgress();
+        assertEquals(task.getProgress(), 25);
     }
 
     @Test
     public void testRedoProgress() {
-        // TODO
+        Task task = Task.getInstance("Test", 30, 60);
+        Action action = new Action(task, 5);
+        assertEquals(task.getProgress(), 30);
+        action.redoProgress();
+        assertEquals(task.getProgress(), 35);
     }
 }
