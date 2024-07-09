@@ -173,21 +173,57 @@ public class TaskListTest
         assertTrue(_testFile.delete());
     }
 
+    @Test
+    public void testSortList(){
+        TaskList taskList = TaskList.getInstance(_testFile);
+        taskList.addTask(_task2);
+        taskList.addTask(_task1);
+        // current order: default (0%), _task2 (50%), _task1 (10%)
+        // target order: default (0%), _task1 (10%), _task2 (50%)
+        assertEquals(taskList.get(2), _task1);
+        taskList.sortList();
+        assertEquals(taskList.get(2), _task2);
+        assertNotEquals(taskList.get(2), _task1);
+        assertTrue(_testFile.delete());
+    }
+
+    @Test
+    public void testContainsTask(){
+        TaskList taskList = TaskList.getInstance(_testFile);
+        assertFalse(taskList.containsTask(_task3));
+        taskList.addTask(_task3);
+        assertTrue(taskList.containsTask(_task3));
+        assertTrue(_testFile.delete());
+    }
+
+    @Test
+    public void testGetTotalProgressInText(){
+        TaskList taskList = TaskList.getInstance(_testFile);
+        assertEquals(taskList.getTotalProgressInText(), "0 of 1,0 hours");
+        taskList.get(0).addProgress(6);
+        assertEquals(taskList.getTotalProgressInText(), "0,1 of 1,0 hours");
+        assertTrue(_testFile.delete());
+    }
+
+    @Test
+    public void testIsSufficientProgress(){
+        TaskList taskList = TaskList.getInstance(_testFile);
+        assertFalse(taskList.isSufficientProgress()); // 0%
+        taskList.get(0).addProgress(60);
+        assertTrue(taskList.isSufficientProgress()); // 100%
+        assertTrue(_testFile.delete());
+    }
 }
 
 /*
  * Functions to Test: TODO
- * sortList
- * containsTask
- * getTotalProgressInText
- * isSufficientProgress
  *
  *
  * DefaultTest
  *     @Test
  *     public void test()
  *     {
- *         BackEnd.TaskList taskList = BackEnd.TaskList.getInstance(testFile);
+ *         TaskList taskList = TaskList.getInstance(testFile);
  *         assertTrue(testFile.delete());
  *     }
  */
