@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * The Test class for BackEnd.TaskList
+ * The Test class for TaskList
  */
 
 public class TaskListTest
@@ -23,7 +23,7 @@ public class TaskListTest
     @Test
     public void testDefaultConstructor() {
         TaskList taskList = TaskList.getInstance();
-        assertEquals(taskList.getSaveFile(), new File("Weekplan.csv"));
+        assertEquals(taskList.getSaveFile(), new File("WeekPlan.csv"));
     }
 
     @Test
@@ -216,7 +216,7 @@ public class TaskListTest
 }
 
 /*
- * Functions to Test: TODO
+ * Functions to Test:
  *
  *
  * DefaultTest

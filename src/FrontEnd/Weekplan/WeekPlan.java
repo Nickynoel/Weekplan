@@ -64,7 +64,7 @@ public class WeekPlan
     public void openDeleteArea() {
         final DeleteArea area = new DeleteArea(_ui.getMainframe());
         area.addPropertyChangeListener(evt -> {
-            _actionQueue.filterActions();
+            _actionQueue.filterActions(_listOfTasks);
             if (_actionQueue.hasNoPriorActions())
                 _ui.disableUndoButton();
             if (_actionQueue.hasNoUndoneActions())

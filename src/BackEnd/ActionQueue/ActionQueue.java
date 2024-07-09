@@ -61,9 +61,7 @@ public class ActionQueue
         return _undoneActions.empty();
     }
 
-    public void filterActions() {
-        TaskList taskList = TaskList.getInstance();
-
+    public void filterActions(TaskList taskList) {
         Stack<Action> tmp = new Stack<>();
         for (Action a : _priorActions) {
             if (taskList.containsTask(a.getTask()))

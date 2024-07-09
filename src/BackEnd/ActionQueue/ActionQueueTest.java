@@ -2,7 +2,10 @@ package BackEnd.ActionQueue;
 
 import BackEnd.ActionQueue.Action.Action;
 import BackEnd.TaskList.Task.Task;
+import BackEnd.TaskList.TaskList;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -59,6 +62,28 @@ public class ActionQueueTest
 
     @Test
     public void testFilterActions() {
-        // TODO
+        File testfile = new File("Test.csv");
+        TaskList taskList = TaskList.getInstance(testfile);
+
+        Task task = taskList.get(0);
+        Task task2 = Task.getInstance("New", 0, 30);
+        ActionQueue queue = ActionQueue.getInstance();
+        Action action = new Action(task, 15);
+        Action action2 = new Action(task2, 15);
+
+        queue.addNewAction(action);
+        queue.addNewAction(action2);
+        queue.addNewAction(action);
+
+        queue.filterActions(taskList); // Filters out task2 as it is not in the list
+        assertFalse(queue.hasNoPriorActions());
+        assertTrue(queue.hasNoUndoneActions());
+        queue.undoLastAction();
+        assertFalse(queue.hasNoPriorActions());
+        queue.undoLastAction();
+        assertTrue(queue.hasNoPriorActions());
+
+        assertTrue(testfile.delete());
+        queue.reset();
     }
 }
