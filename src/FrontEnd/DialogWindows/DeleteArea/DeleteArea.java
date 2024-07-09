@@ -1,4 +1,4 @@
-package FrontEnd.DeleteArea;
+package FrontEnd.DialogWindows.DeleteArea;
 
 import BackEnd.TaskList.TaskList;
 
@@ -7,7 +7,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * Functional class FrontEnd.DeleteArea, in which the user is able to delete tasks out of the BackEnd.TaskList
+ * Functional class FrontEnd.DialogWindows.DeleteArea, in which the user is able to delete tasks out of the BackEnd.TaskList
  * Returns to Startup afterward
  */
 

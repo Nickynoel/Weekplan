@@ -1,4 +1,4 @@
-package FrontEnd.OptionArea;
+package FrontEnd.DialogWindows.OptionArea;
 
 import javax.swing.*;
 import java.awt.*;

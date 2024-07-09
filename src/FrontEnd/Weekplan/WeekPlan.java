@@ -1,9 +1,9 @@
 package FrontEnd.Weekplan;
 
-import FrontEnd.AddProgressArea.AddProgressArea;
-import FrontEnd.DeleteArea.DeleteArea;
-import FrontEnd.OptionArea.OptionArea;
-import FrontEnd.TaskEditArea.TaskEditArea;
+import FrontEnd.DialogWindows.AddProgressArea.AddProgressArea;
+import FrontEnd.DialogWindows.DeleteArea.DeleteArea;
+import FrontEnd.DialogWindows.OptionArea.OptionArea;
+import FrontEnd.DialogWindows.TaskEditArea.TaskEditArea;
 import BackEnd.TaskList.Task.Task;
 import BackEnd.TaskList.TaskList;
 import BackEnd.ActionQueue.ActionQueue;
@@ -75,7 +75,7 @@ public class WeekPlan
     }
 
     /**
-     * OptionButton.actionListener: Closes window and opens FrontEnd.OptionArea
+     * OptionButton.actionListener: Closes window and opens FrontEnd.DialogWindows.OptionArea
      */
     private void openOptionsArea() {
         final OptionArea area = new OptionArea(_ui.getMainframe());
@@ -113,7 +113,7 @@ public class WeekPlan
     }
 
     /**
-     * TitleButton.actionListener: Opens FrontEnd.TaskEditArea and gives it an observer
+     * TitleButton.actionListener: Opens FrontEnd.DialogWindows.TaskEditArea and gives it an observer
      */
     private void openTaskEditArea(JButton button) {
         int taskNumber = _ui.getTitleButtonList().indexOf(button);
@@ -128,7 +128,7 @@ public class WeekPlan
     }
 
     /**
-     * AddButton.actionListener: Opens FrontEnd.AddProgressArea and gives it an observer
+     * AddButton.actionListener: Opens FrontEnd.DialogWindows.AddProgressArea and gives it an observer
      */
     private void openAddProgressArea(JButton button) {
         int taskNumber = _ui.getAddButtonlist().indexOf(button);

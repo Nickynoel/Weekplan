@@ -1,4 +1,4 @@
-package FrontEnd.OptionArea;
+package FrontEnd.DialogWindows.OptionArea;
 
 import BackEnd.Settings.Settings;
 import BackEnd.TaskList.TaskList;
@@ -8,7 +8,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * Functional class FrontEnd.OptionArea, in which the user can choose between several options:
+ * Functional class FrontEnd.DialogWindows.OptionArea, in which the user can choose between several options:
  * Change total targetTime to a positive number of hours
  */
 

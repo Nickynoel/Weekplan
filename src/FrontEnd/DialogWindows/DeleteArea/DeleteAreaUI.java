@@ -1,4 +1,4 @@
-package FrontEnd.DeleteArea;
+package FrontEnd.DialogWindows.DeleteArea;
 
 import BackEnd.TaskList.TaskList;
 
@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * UI of FrontEnd.DeleteArea
+ * UI of FrontEnd.DialogWindows.DeleteArea
  */
 
 public class DeleteAreaUI

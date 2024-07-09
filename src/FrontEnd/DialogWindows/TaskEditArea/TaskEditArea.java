@@ -1,4 +1,4 @@
-package FrontEnd.TaskEditArea;
+package FrontEnd.DialogWindows.TaskEditArea;
 
 import BackEnd.TaskList.Task.Task;
 

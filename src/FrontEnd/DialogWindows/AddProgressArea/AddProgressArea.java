@@ -1,4 +1,4 @@
-package FrontEnd.AddProgressArea;
+package FrontEnd.DialogWindows.AddProgressArea;
 
 import BackEnd.TaskList.Task.Task;
 

@@ -1,4 +1,4 @@
-package FrontEnd.TaskEditArea;
+package FrontEnd.DialogWindows.TaskEditArea;
 
 import BackEnd.TaskList.Task.Task;
 
@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * UI of FrontEnd.TaskEditArea
+ * UI of FrontEnd.DialogWindows.TaskEditArea
  */
 
 public class TaskEditAreaUI
