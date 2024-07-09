@@ -12,11 +12,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class ActionTest
 {
     @Test
-    void testConstructor()
-    {
+    public void testConstructor() {
         Task task = Task.getInstance();
         Action action = new Action(task, 5);
         assertEquals(action.getTask(), task);
         assertEquals(action.getProgress(), 5);
+    }
+
+    @Test
+    public void testUndoProgress() {
+        // TODO
+    }
+
+    @Test
+    public void testRedoProgress() {
+        // TODO
     }
 }

@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * UI of the class FrontEnd.Weekplan
- * Renewed Version of WeekplanUI
+ * UI of the class WeekPlan
+ * Renewed Version of WeekPlanUI
  */
-public class WeekplanUI
+public class WeekPlanUI
 {
     private final int VERTICALSCROLLSPEED = 30;
     private final int WINDOWWIDTH = 400;
     private final int WINDOWHEIGHT = 370;
-    private final String WINDOWTITLE = "Weekplan";
+    private final String WINDOWTITLE = "Nicky's Java Program";
     private final int TASKHEIGHT = 40;
 
     private TaskList _taskList;
@@ -46,8 +46,7 @@ public class WeekplanUI
      *
      * @param list the list of tasks
      */
-    public WeekplanUI(TaskList list)
-    {
+    public WeekPlanUI(TaskList list) {
         initializeVariables(list);
         createElements();
         createWindow();
@@ -57,8 +56,7 @@ public class WeekplanUI
     /**
      * Initializes variables
      */
-    private void initializeVariables(TaskList list)
-    {
+    private void initializeVariables(TaskList list) {
         _taskList = list;
         _taskTitleButtons = new ArrayList<>();
         _taskProgressBars = new ArrayList<>();
@@ -84,18 +82,18 @@ public class WeekplanUI
         _totalProgress = new JProgressBar();
     }
 
+    // ----------------------- Creation of UI -----------------------------------
+
     /**
      * Creates the elements within the UI
      */
-    private void createElements()
-    {
+    private void createElements() {
         createMenuBar();
         addTaskElements();
         createTotalProgressBar();
     }
 
-    private void createMenuBar()
-    {
+    private void createMenuBar() {
         JMenu menu = new JMenu("File");
         menu.setMnemonic('F');
         menu.add(_createItem);
@@ -114,18 +112,15 @@ public class WeekplanUI
     /**
      * Creates the three elements for each task and adds them to their list
      */
-    private void addTaskElements()
-    {
-        for (Task t:  _taskList.getList())
-        {
+    private void addTaskElements() {
+        for (Task t : _taskList.getList()) {
             addTaskTitleButton(t);
             addTaskProgressBar(t);
             addAddButton();
         }
     }
 
-    private void removeTaskElements()
-    {
+    private void removeTaskElements() {
         _taskTitleButtons.clear();
         _taskProgressBars.clear();
         _addTimeButtons.clear();
@@ -134,18 +129,17 @@ public class WeekplanUI
     /**
      * Creates a title as borderless JButton with the name of the task
      */
-    private void addTaskTitleButton(Task task)
-    {
+    private void addTaskTitleButton(Task task) {
         JButton tmp = new JButton(task.getTitle());
         tmp.setBorderPainted(false);
         tmp.setContentAreaFilled(false);
         _taskTitleButtons.add(tmp);
     }
+
     /**
      * Creates the JProgressBar with the data of the task
      */
-    private void addTaskProgressBar(Task task)
-    {
+    private void addTaskProgressBar(Task task) {
         JProgressBar bar = new JProgressBar(0, task.getTargetTime());
         bar.setValue(task.getProgress());
         bar.setStringPainted(true);
@@ -155,8 +149,7 @@ public class WeekplanUI
     /**
      * Creates the remaining JButton used to add progress to the task in the UI
      */
-    private void addAddButton()
-    {
+    private void addAddButton() {
         JButton button = new JButton("add");
         _addTimeButtons.add(button);
     }
@@ -165,8 +158,7 @@ public class WeekplanUI
      * Creates the elements used in the bottom part of the JDialog
      * Maximum cant be 100, cause the progress has to be of type int in JProgressBar
      */
-    private void createTotalProgressBar()
-    {
+    private void createTotalProgressBar() {
         _totalProgress.setMinimum(0);
         _totalProgress.setMaximum(100);
         _totalProgress.setStringPainted(true);
@@ -175,8 +167,7 @@ public class WeekplanUI
     /**
      * Builds the JFrame
      */
-    private void createWindow()
-    {
+    private void createWindow() {
         _mainframe.setTitle(WINDOWTITLE);
         _mainframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //closes window
         _mainframe.setSize(WINDOWWIDTH, WINDOWHEIGHT);
@@ -187,9 +178,9 @@ public class WeekplanUI
 
     }
 
-    private void initializeWindow()
-    {
-        _itemPanel = buildCenterPanel();
+    private void initializeWindow() {
+        _itemPanel.setLayout(new GridLayout(0, 1));
+        buildItemPanel();
         JScrollPane scrollPane = new JScrollPane(_itemPanel);
         scrollPane.getVerticalScrollBar().setUnitIncrement(VERTICALSCROLLSPEED);
         _mainframe.add(scrollPane);
@@ -199,29 +190,16 @@ public class WeekplanUI
         _mainframe.setVisible(true);
     }
 
-    /**
-     * Builds the central JPanel of the _mainframe
-     * consisting of x rows consisting of a JLabel, a JTextField and a JButton representing a Task
-     *
-     * @return central JPanel
-     */
-    private JPanel buildCenterPanel()
-    {
-        JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new GridLayout(0, 1));
-
-        for (int i = 0; i < _taskList.getSize(); i++)
-        {
+    private void buildItemPanel() {
+        for (int i = 0; i < _taskList.getSize(); i++) {
             JPanel taskPanel = new JPanel();
             //for vertical space in between
             taskPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
             taskPanel.add(buildTitlePanel(i));
             taskPanel.add(buildProgressbarPanel(i));
             taskPanel.add(buildAddButtonPanel(i));
-            centerPanel.add(taskPanel);
+            _itemPanel.add(taskPanel);
         }
-
-        return centerPanel;
     }
 
     /**
@@ -230,8 +208,7 @@ public class WeekplanUI
      * @param i Index of Task for which the panel is built
      * @return Left part of centerPanel
      */
-    private JPanel buildTitlePanel(int i)
-    {
+    private JPanel buildTitlePanel(int i) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout()); //makes sure that the labels are in the center
         panel.setPreferredSize(new Dimension(120, TASKHEIGHT));
@@ -245,8 +222,7 @@ public class WeekplanUI
      * @param i Index of Task for which the panel is built
      * @return Left part of centerPanel
      */
-    private JPanel buildProgressbarPanel(int i)
-    {
+    private JPanel buildProgressbarPanel(int i) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout()); //makes sure that the progressBars are in the center
         panel.setPreferredSize(new Dimension(150, TASKHEIGHT));
@@ -260,8 +236,7 @@ public class WeekplanUI
      * @param i Index of Task for which the panel is built
      * @return Left part of centerPanel
      */
-    private JPanel buildAddButtonPanel(int i)
-    {
+    private JPanel buildAddButtonPanel(int i) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout()); //makes sure that the buttons are in the center
         panel.setPreferredSize(new Dimension(70, TASKHEIGHT));
@@ -271,67 +246,61 @@ public class WeekplanUI
 
 
     /**
-     * Builds the bottom JPanel of the _mainframe
-     * consisting of one row consisting of a JLabel, a JTextField and a JButton for the total
-     * and a row of additional JButtons: for now just the _optionButton
+     * Builds the bottom JPanel of the _mainframe which consists of one row consisting of a JLabel,
+     * a JTextField for the total progress and a JButton to close the program
      *
      * @return bottom JPanel
      */
-    private JPanel buildBotPanel()
-    {
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+    private JPanel buildBotPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridBagLayout());
-        panel1.setPreferredSize(new Dimension(120, TASKHEIGHT));
-        panel1.add(_totalLabel);
+        JPanel subPanel1 = new JPanel();
+        subPanel1.setLayout(new GridBagLayout());
+        subPanel1.setPreferredSize(new Dimension(120, TASKHEIGHT));
+        subPanel1.add(_totalLabel);
 
-        JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridBagLayout());
-        panel2.setPreferredSize(new Dimension(150, TASKHEIGHT));
-        panel2.add(_totalProgress);
+        JPanel subPanel2 = new JPanel();
+        subPanel2.setLayout(new GridBagLayout());
+        subPanel2.setPreferredSize(new Dimension(150, TASKHEIGHT));
+        subPanel2.add(_totalProgress);
 
-        JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridBagLayout());
-        panel3.setPreferredSize(new Dimension(70, TASKHEIGHT));
-        panel3.add(_closeButton);
+        JPanel subPanel3 = new JPanel();
+        subPanel3.setLayout(new GridBagLayout());
+        subPanel3.setPreferredSize(new Dimension(70, TASKHEIGHT));
+        subPanel3.add(_closeButton);
 
-        topPanel.add(panel1);
-        topPanel.add(panel2);
-        topPanel.add(panel3);
+        panel.add(subPanel1);
+        panel.add(subPanel2);
+        panel.add(subPanel3);
 
         updateTotal();
-        return topPanel;
+        return panel;
     }
 
-    public JMenuItem getCreateItem()
-    {
+    // -------- Creation of UI: End ----------- Getters: Start ---------------------
+
+    public JMenuItem getCreateItem() {
         return _createItem;
     }
 
-    public JMenuItem getDeleteItem()
-    {
+    public JMenuItem getDeleteItem() {
         return _deleteItem;
     }
 
-    public JMenuItem getOptionsItem()
-    {
+    public JMenuItem getOptionsItem() {
         return _optionsItem;
     }
 
-    public JMenuItem getCloseItem()
-    {
+    public JMenuItem getCloseItem() {
         return _closeItem;
     }
 
-    public JMenuItem getUndoItem()
-    {
+    public JMenuItem getUndoItem() {
         return _undoItem;
     }
 
-    public JMenuItem getRedoItem()
-    {
+    public JMenuItem getRedoItem() {
         return _redoItem;
     }
 
@@ -340,8 +309,7 @@ public class WeekplanUI
      *
      * @return a list of all Title-Buttons
      */
-    public List<JButton> getTitleButtonList()
-    {
+    public List<JButton> getTitleButtonList() {
         return _taskTitleButtons;
     }
 
@@ -350,9 +318,48 @@ public class WeekplanUI
      *
      * @return the list of JButtons for adding progress
      */
-    public List<JButton> getAddButtonlist()
-    {
+    public List<JButton> getAddButtonlist() {
         return _addTimeButtons;
+    }
+
+    /**
+     * GetA for _closeButton
+     *
+     * @return _closeButton
+     */
+    public JButton getCloseButton() {
+        return _closeButton;
+    }
+
+    /**
+     * GetA for the _mainframe
+     *
+     * @return _mainframe
+     */
+    public JFrame getMainframe() {
+        return _mainframe;
+    }
+
+    /**
+     * Opens the task menu of a given (usually newly generated) task
+     *
+     * @param task Task of which the menu is opened
+     */
+    public void openTaskMenu(Task task) {
+        int index = _taskList.indexOf(task);
+        _taskTitleButtons.get(index).doClick();
+    }
+
+    // ---------------- Getters: End ------------- Setters/Updaters: Start --------------------
+
+    /**
+     * A change of progress is signaled to the UI and shown appropriately
+     *
+     * @param task: task in which the progress changed
+     */
+    public void updateProgress(Task task) {
+        colorProgressBar(task);
+        updateTotal();
     }
 
     /**
@@ -360,21 +367,9 @@ public class WeekplanUI
      *
      * @param task: task which was edited
      */
-    public void updateTask(Task task)
-    {
+    public void updateTask(Task task) {
         updateTaskName(task);
         updateTargetTime(task);
-        colorProgressBar(task);
-        updateTotal();
-    }
-
-    /**
-     * A change of progress is signaled to the UI and shown appropriately
-     *
-     * @param task: task in which the progress changed
-     */
-    public void updateProgress(Task task)
-    {
         colorProgressBar(task);
         updateTotal();
     }
@@ -384,8 +379,7 @@ public class WeekplanUI
      *
      * @param task: the task which title might have changed
      */
-    private void updateTaskName(Task task)
-    {
+    private void updateTaskName(Task task) {
         int taskNumber = _taskList.indexOf(task);
         _taskTitleButtons.get(taskNumber).setText(task.getTitle());
     }
@@ -395,8 +389,7 @@ public class WeekplanUI
      *
      * @param task: the task which goal might have changed
      */
-    private void updateTargetTime(Task task)
-    {
+    private void updateTargetTime(Task task) {
         int taskNumber = _taskList.indexOf(task);
         _taskProgressBars.get(taskNumber).setMaximum(task.getTargetTime());
     }
@@ -406,8 +399,7 @@ public class WeekplanUI
      *
      * @param task task corresponding the JProgressBar
      */
-    private void colorProgressBar(Task task)
-    {
+    private void colorProgressBar(Task task) {
         JProgressBar bar = _taskProgressBars.get(_taskList.indexOf(task));
         bar.setValue(task.getProgress());
     }
@@ -415,8 +407,7 @@ public class WeekplanUI
     /**
      * Updates the total area consisting of the JLabel and the JProgressbar
      */
-    private void updateTotal()
-    {
+    private void updateTotal() {
         updateTotalLabel();
         updateTotalBar();
     }
@@ -424,95 +415,49 @@ public class WeekplanUI
     /**
      * Updates the text on the _totalLabel
      */
-    private void updateTotalLabel()
-    {
+    private void updateTotalLabel() {
         _totalLabel.setText(_taskList.getTotalProgressInText());
     }
 
     /**
      * Colors the final JProgressbar, that takes data from all tasks
      */
-    private void updateTotalBar()
-    {
+    private void updateTotalBar() {
         _totalProgress.setValue(_taskList.getTotalProgressInPercent());
     }
 
+    public void enableUndoButton() {
+        _undoItem.setEnabled(true);
+    }
+
+    public void enableRedoButton() {
+        _redoItem.setEnabled(true);
+    }
+
+    public void disableUndoButton() {
+        _undoItem.setEnabled(false);
+    }
+
+    public void disableRedoButton() {
+        _redoItem.setEnabled(false);
+    }
+
     /**
-     * GetA for _closeButton
-     *
-     * @return _closeButton
+     * Reloads the tasks shown in the UI
      */
-    public JButton getCloseButton()
-    {
-        return _closeButton;
+    public void refreshTaskDisplay() {
+        removeTaskElements();
+        addTaskElements();
+        _itemPanel.removeAll();
+        buildItemPanel();
+        _itemPanel.validate();
+        _itemPanel.repaint();
     }
 
     /**
      * Closes the UI
      */
-    public void close()
-    {
+    public void close() {
         _mainframe.dispose();
     }
-
-    /**
-     * GetA for the _mainframe
-     *
-     * @return _mainframe
-     */
-    public JFrame getMainframe()
-    {
-        return _mainframe;
-    }
-
-    /**
-     * Opens the task menu of a given (usually newly generated) task
-     * @param task Task of which the menu is opened
-     */
-    public void openTaskMenu(Task task)
-    {
-        int index = _taskList.indexOf(task);
-        _taskTitleButtons.get(index).doClick();
-    }
-
-    public void enableUndoButton()
-    {
-        _undoItem.setEnabled(true);
-    }
-
-    public void enableRedoButton()
-    {
-        _redoItem.setEnabled(true);
-    }
-
-    public void disableUndoButton()
-    {
-        _undoItem.setEnabled(false);
-    }
-
-    public void disableRedoButton()
-    {
-        _redoItem.setEnabled(false);
-    }
-
-    public void refreshTaskDisplay()
-    {
-        _itemPanel.removeAll();
-        removeTaskElements();
-        addTaskElements();
-        for (int i = 0; i < _taskList.getSize(); i++)
-        {
-            JPanel taskPanel = new JPanel();
-            //for vertical space in between
-            taskPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-            taskPanel.add(buildTitlePanel(i));
-            taskPanel.add(buildProgressbarPanel(i));
-            taskPanel.add(buildAddButtonPanel(i));
-            _itemPanel.add(taskPanel);
-        }
-        _itemPanel.validate();
-        _itemPanel.repaint();
-    }
-
-
 }

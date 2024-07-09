@@ -7,7 +7,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * Functional class FrontEnd.TaskEditArea for the window that allows editing basic values of the given Task:
+ * Functional class TaskEditArea for the window that allows editing basic values of the given Task:
  * Name, targetTime
  */
 public class TaskEditArea
@@ -20,8 +20,7 @@ public class TaskEditArea
     private String _taskName;
     private int _taskTargetTime;
 
-    public TaskEditArea(Task task, JFrame frame)
-    {
+    public TaskEditArea(Task task, JFrame frame) {
         _support = new PropertyChangeSupport(this);
         _task = task;
 
@@ -32,14 +31,13 @@ public class TaskEditArea
         _taskName = task.getTitle();
         _taskTargetTime = task.getTargetTime();
 
-        addListener();
+        addUIListeners();
     }
-    
+
     /**
      * Adds the listeners of all components in the UI
      */
-    private void addListener()
-    {
+    private void addUIListeners() {
         _ui.getBackButton().addActionListener(event -> _ui.close());
 
         _ui.getTaskField().addActionListener(event -> changeTaskTitle());
@@ -47,14 +45,14 @@ public class TaskEditArea
         _ui.getConfirmButton().addActionListener(event -> submitChanges());
     }
 
+    // ----------------------- Listeners: Start ----------------------------------
+
     /**
      * If the entry is valid, it becomes the temporarily new name of the task
      */
-    private void changeTaskTitle()
-    {
+    private void changeTaskTitle() {
         String input = _ui.getTaskField().getText();
-        if (isValidTaskTitle(input))
-        {
+        if (isValidTaskTitle(input)) {
             _taskName = input;
             _ui.setTaskLabel(_taskName);
             _ui.clearTaskField();
@@ -64,11 +62,9 @@ public class TaskEditArea
     /**
      * If the entry is valid, it becomes the temporarily new targetTime of the task
      */
-    private void changeTaskTargetTime()
-    {
+    private void changeTaskTargetTime() {
         String input = _ui.getTargetTimeField().getText();
-        if (isValidTargetTime(input))
-        {
+        if (isValidTargetTime(input)) {
             _taskTargetTime = Integer.parseInt(input);
             _ui.setTargetTimeLabel(_taskTargetTime);
             _ui.clearTargetTimeField();
@@ -78,8 +74,7 @@ public class TaskEditArea
     /**
      * Closes the UI and saves the temporarily changed values as new values for the task
      */
-    private void submitChanges()
-    {
+    private void submitChanges() {
         _task.setTitle(_taskName);
         _task.setTargetTime(_taskTargetTime);
         _support.firePropertyChange("Foo", 0, 1);
@@ -93,8 +88,7 @@ public class TaskEditArea
      * @param s: String to potentially become the title of a task
      * @return result as boolean
      */
-    private boolean isValidTaskTitle(String s)
-    {
+    private boolean isValidTaskTitle(String s) {
         return s.equals(s.trim()) && !s.contains("#");
     }
 
@@ -105,26 +99,25 @@ public class TaskEditArea
      * @param input: String to potentially become the target time of a task
      * @return result as boolean
      */
-    private boolean isValidTargetTime(String input)
-    {
+    private boolean isValidTargetTime(String input) {
         return input.matches("\\d+") && !input.equals("0");
     }
+
+    //---------------------------- Listeners: End -----------------------------------
 
     /**
      * Allows listeners to be added
      *
      * @param pcl: the new listener
      */
-    public void addPropertyChangeListener(PropertyChangeListener pcl)
-    {
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
         _support.addPropertyChangeListener(pcl);
     }
 
     /**
      * Makes the UI visible
      */
-    public void showUI()
-    {
+    public void showUI() {
         _ui.showUI(); // important for the observer FrontEnd.Weekplan
     }
 }

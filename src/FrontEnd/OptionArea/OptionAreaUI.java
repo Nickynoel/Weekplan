@@ -2,10 +2,11 @@ package FrontEnd.OptionArea;
 
 import javax.swing.*;
 import java.awt.*;
+
 import BackEnd.Settings.Settings;
 
 /**
- * UI of FrontEnd.OptionArea
+ * UI of OptionArea
  */
 
 public class OptionAreaUI
@@ -17,56 +18,54 @@ public class OptionAreaUI
     private JTextField _totalTargetInput;
     private JComboBox<String> _resetComboBox;
     private JButton _backButton;
-    
+
     private JFrame _dialogWindow;
-    
+
     /**
      * Initializing the UI
      */
-    public OptionAreaUI()
-    {
+    public OptionAreaUI() {
         initializeElements();
         createWindow();
         initializeWindow();
     }
 
-    private void initializeElements()
-    {
-        _totalTargetInput = new JTextField("",5);
+    private void initializeElements() {
+        _totalTargetInput = new JTextField("", 5);
         _resetComboBox = new JComboBox<>((Settings.RESETPROGRAMS).toArray(new String[0]));
 
         _backButton = new JButton("Back");
         _dialogWindow = new JFrame();
     }
 
+    // ----------------------- Creation of UI -----------------------------------
+
     /**
      * Builds the JDialog
      */
-    private void createWindow()
-    {
+    private void createWindow() {
         _dialogWindow.setTitle(WINDOWTITLE);
         _dialogWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        _dialogWindow.setSize(WINDOWWIDTH,WINDOWHEIGHT);
-        _dialogWindow.setLayout(new GridLayout(3,1));
+        _dialogWindow.setSize(WINDOWWIDTH, WINDOWHEIGHT);
+        _dialogWindow.setLayout(new GridLayout(3, 1));
     }
-    
+
     /**
      * Puts JButtons onto the Dialog window
      */
-    private void initializeWindow()
-    {
+    private void initializeWindow() {
         _dialogWindow.add(generateTotalTargetTimePanel());
         _dialogWindow.add(generateResetTypePanel());
         _dialogWindow.add(generateBackButtonPanel());
     }
 
-    private JPanel generateTotalTargetTimePanel()
-    {
+    private JPanel generateTotalTargetTimePanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
 
         JPanel labelPanel = new JPanel();
-        JLabel label = new JLabel("<html><span style='font-size:12px'>Total Target: (in h)</span></html>");
+        JLabel label = new JLabel(
+                "<html><span style='font-size:12px'>Total Target: (in h)</span></html>");
         labelPanel.add(label);
         panel.add(labelPanel);
 
@@ -77,13 +76,13 @@ public class OptionAreaUI
         return panel;
     }
 
-    private JPanel generateResetTypePanel()
-    {
+    private JPanel generateResetTypePanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
 
         JPanel labelPanel = new JPanel();
-        JLabel resetLabel = new JLabel("<html><span style='font-size:12px'>Reset Type:</span></html>");
+        JLabel resetLabel = new JLabel(
+                "<html><span style='font-size:12px'>Reset Type:</span></html>");
         labelPanel.add(resetLabel);
         panel.add(labelPanel);
 
@@ -94,8 +93,7 @@ public class OptionAreaUI
         return panel;
     }
 
-    private JPanel generateBackButtonPanel()
-    {
+    private JPanel generateBackButtonPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
 
@@ -106,68 +104,69 @@ public class OptionAreaUI
         return panel;
     }
 
-    public void loadSettings(Settings settingList)
-    {
+    // ----- Internal Creation of UI: End ----------- External Creation of UI: Start --------------
+
+    public void loadSettings(Settings settingList) {
         setResetProgram(settingList.getResetProgram());
     }
 
-    /**
-     * GetA for the _totalTargetInput JTextField
-     * @return _totalTargetInput
-     */
-    public JTextField getTotalTargetInput()
-    {
-        return _totalTargetInput;
+    public void setPositionRelativeToMainFrame(JFrame frame) {
+        _dialogWindow.setLocation(
+                new Point(frame.getLocation().x + 60, frame.getLocation().y + 80));
     }
 
-    public void clearTotalTargetInput()
-    {
-        _totalTargetInput.setText("");
+    // ----------- External Creation of UI: End -------------- Getters: Start -------------------
+
+    /**
+     * GetA for the _totalTargetInput JTextField
+     *
+     * @return _totalTargetInput
+     */
+    public JTextField getTotalTargetInput() {
+        return _totalTargetInput;
     }
 
     /**
      * GetA for the _resetJComboBox
+     *
      * @return _resetComboBox
      */
-    public JComboBox<String> getResetComboBox()
-    {
+    public JComboBox<String> getResetComboBox() {
         return _resetComboBox;
     }
 
     /**
-     * Defaults the comboBox-index to the current index
-     * @param resetProgram: the reset-program given from the settings
+     * Returns the declining _backButton
+     *
+     * @return _backButton
      */
-    public void setResetProgram(String resetProgram)
-    {
-        _resetComboBox.setSelectedItem(resetProgram);
+    public JButton getBackButton() {
+        return _backButton;
+    }
+
+    // ---------------- Getters: End ------------- Setters/Updaters: Start --------------------
+
+    public void clearTotalTargetInput() {
+        _totalTargetInput.setText("");
     }
 
     /**
-     * Returns the declining _backButton
-     * @return _backButton
+     * Defaults the comboBox-index to the current index
+     *
+     * @param resetProgram: the reset-program given from the settings
      */
-    public JButton getBackButton()
-    {
-        return _backButton;
+    public void setResetProgram(String resetProgram) {
+        _resetComboBox.setSelectedItem(resetProgram);
+    }
+
+    public void showUI() {
+        _dialogWindow.setVisible(true);
     }
 
     /**
      * Closes the UI
      */
-    public void close()
-    {
+    public void close() {
         _dialogWindow.dispose();
-    }
-
-    public void setPositionRelativeToMainFrame(JFrame frame)
-    {
-        _dialogWindow.setLocation(new Point
-                (frame.getLocation().x + 60, frame.getLocation().y + 80));
-    }
-
-    public void showUI()
-    {
-        _dialogWindow.setVisible(true);
     }
 }

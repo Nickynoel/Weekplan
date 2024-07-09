@@ -19,8 +19,7 @@ public class OptionArea
     private final OptionAreaUI _ui;
     private boolean _isChanged;
 
-    public OptionArea(JFrame frame)
-    {
+    public OptionArea(JFrame frame) {
         _support = new PropertyChangeSupport(this);
         _settingList = Settings.getInstance(Settings.DEFAULTSETTINGSFILE);
 
@@ -29,27 +28,26 @@ public class OptionArea
         _ui.setPositionRelativeToMainFrame(frame);
 
         _isChanged = false;
-        addListeners();
+        addUIListeners();
     }
 
     /**
      * Adds the listeners of the components of AddAreaUI
      */
-    private void addListeners()
-    {
+    private void addUIListeners() {
         _ui.getTotalTargetInput().addActionListener(event -> changeTotalTargetTime());
         _ui.getResetComboBox().addActionListener(event -> changeResetType());
-        _ui.getBackButton().addActionListener(event -> goToWeekplan());
+        _ui.getBackButton().addActionListener(event -> goToWeekPlan());
     }
+
+    // ----------------------- Listeners: Start ----------------------------------
 
     /**
      * Sets the total amount to a given number and adjust individual target times
      */
-    private void changeTotalTargetTime()
-    {
+    private void changeTotalTargetTime() {
         String input = _ui.getTotalTargetInput().getText();
-        if (isValidTotalTime(input))
-        {
+        if (isValidTotalTime(input)) {
             int number = Integer.parseInt(input);
             TaskList list = TaskList.getInstance();
 
@@ -58,25 +56,23 @@ public class OptionArea
             _ui.clearTotalTargetInput();
             _isChanged = true;
         }
-        else
-        {
+        else {
             JOptionPane.showMessageDialog(new JFrame(), "Entry is not a positive integer");
         }
     }
 
-    private void changeResetType()
-    {
+    private void changeResetType() {
         _settingList.setResetProgram(String.valueOf(_ui.getResetComboBox().getSelectedItem()));
         _settingList.saveSettings();
         _isChanged = true;
     }
 
     /**
-     * Returns back to FrontEnd.Weekplan
+     * Returns back to the WeekPlan
      */
-    private void goToWeekplan()
-    {
-        if (_isChanged) _support.firePropertyChange("Test", 0, 1);
+    private void goToWeekPlan() {
+        if (_isChanged)
+            _support.firePropertyChange("Test", 0, 1);
         _ui.close();
     }
 
@@ -87,26 +83,25 @@ public class OptionArea
      * @param input: String to potentially become the length of a task
      * @return result as boolean
      */
-    private boolean isValidTotalTime(String input)
-    {
+    private boolean isValidTotalTime(String input) {
         return input.matches("\\d+") && !input.equals("0");
     }
+
+    //---------------------------- Listeners: End -----------------------------------1
 
     /**
      * Allows listeners to be added
      *
      * @param pcl: the new listener
      */
-    public void addPropertyChangeListener(PropertyChangeListener pcl)
-    {
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
         _support.addPropertyChangeListener(pcl);
     }
 
     /**
      * Sets the visibility of the UI to true
      */
-    public void showUI()
-    {
+    public void showUI() {
         _ui.showUI();
     }
 }

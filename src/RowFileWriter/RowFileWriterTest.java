@@ -18,8 +18,7 @@ public class RowFileWriterTest
     File _testFile = new File("Test.txt");
 
     @Test
-    public void testSaveFile() throws FileNotFoundException
-    {
+    public void testSaveFile() throws FileNotFoundException {
         RowFileWriter wr = RowFileWriter.getInstance(_list, _testFile);
         assertNotNull(wr);
         wr.saveFile();

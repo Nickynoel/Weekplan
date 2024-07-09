@@ -21,15 +21,13 @@ public class TaskListTest
     Task _task3 = Task.getInstance("Third", 100, 50);
 
     @Test
-    public void testDefaultConstructor()
-    {
+    public void testDefaultConstructor() {
         TaskList taskList = TaskList.getInstance();
         assertEquals(taskList.getSaveFile(), new File("Weekplan.csv"));
     }
 
     @Test
-    public void testFileConstructor()
-    {
+    public void testFileConstructor() {
         TaskList taskList = TaskList.getInstance(_testFile);
         assertTrue(_testFile.delete());
         assertEquals(taskList.getSaveFile(), new File("Test.csv"));
@@ -38,16 +36,14 @@ public class TaskListTest
     }
 
     @Test
-    public void testGetSize()
-    {
+    public void testGetSize() {
         TaskList taskList = TaskList.getInstance(_testFile);
         assertEquals(taskList.getSize(), 1);
         assertTrue(_testFile.delete());
     }
 
     @Test
-    public void testAddNewEmptyTask()
-    {
+    public void testAddNewDefaultTask() {
         TaskList taskList = TaskList.getInstance(_testFile);
         taskList.addNewDefaultTask();
         assertEquals(taskList.getSize(), 2);
@@ -58,8 +54,7 @@ public class TaskListTest
     }
 
     @Test
-    public void testAddTask()
-    {
+    public void testAddTask() {
         TaskList taskList = TaskList.getInstance(_testFile);
         taskList.addTask(_task1);
         taskList.addTask(_task1);
@@ -68,8 +63,7 @@ public class TaskListTest
     }
 
     @Test
-    public void testIndexOf()
-    {
+    public void testIndexOf() {
         TaskList taskList = TaskList.getInstance(_testFile);
         taskList.addTask(_task1);
         taskList.addTask(_task3);
@@ -79,8 +73,7 @@ public class TaskListTest
     }
 
     @Test
-    public void testRemoveTasks()
-    {
+    public void testRemoveTasks() {
         TaskList taskList = TaskList.getInstance(_testFile);
         int[] tmp = {0};
         taskList.removeTasks(tmp);
@@ -101,8 +94,7 @@ public class TaskListTest
     }
 
     @Test
-    public void testGet()
-    {
+    public void testGet() {
         TaskList taskList = TaskList.getInstance(_testFile);
         assertThrows(IndexOutOfBoundsException.class, () -> taskList.get(1));
         taskList.addTask(_task1);
@@ -111,8 +103,7 @@ public class TaskListTest
     }
 
     @Test
-    public void testSaveTasksOnFile()
-    {
+    public void testSaveTasksOnFile() {
         TaskList taskList = TaskList.getInstance(_testFile);
         taskList.addTask(_task3);
         taskList.saveTasksOnFile();
@@ -125,8 +116,7 @@ public class TaskListTest
     }
 
     @Test
-    public void testListOfTaskTitles()
-    {
+    public void testGetListOfTaskTitles() {
         TaskList taskList = TaskList.getInstance(_testFile);
         taskList.addTask(_task2);
         taskList.addTask(_task1);
@@ -136,8 +126,7 @@ public class TaskListTest
     }
 
     @Test
-    public void testGetTotalTargetTime()
-    {
+    public void testGetTotalTargetTime() {
         TaskList taskList = TaskList.getInstance(_testFile);
         taskList.addTask(_task2);
         assertEquals(taskList.getTotalTargetTime(), 110);
@@ -145,8 +134,7 @@ public class TaskListTest
     }
 
     @Test
-    public void testGetTotalProgressTime()
-    {
+    public void testGetTotalProgressTime() {
         TaskList taskList = TaskList.getInstance(_testFile);
         taskList.addTask(_task2);
         assertEquals(taskList.getTotalProgressTime(), 25);
@@ -154,8 +142,7 @@ public class TaskListTest
     }
 
     @Test
-    public void testGetTotalProgressInPercent()
-    {
+    public void testGetTotalProgressInPercent() {
         TaskList taskList = TaskList.getInstance(_testFile);
         taskList.addTask(_task2);
         assertEquals(taskList.getTotalProgressInPercent(), 25.0, 0.001);
@@ -163,8 +150,7 @@ public class TaskListTest
     }
 
     @Test
-    public void testSetTotalTime()
-    {
+    public void testSetTotalTargetTime() {
         TaskList taskList = TaskList.getInstance(_testFile);
         taskList.addTask(_task3);
         taskList.addTask(_task1);
@@ -176,8 +162,7 @@ public class TaskListTest
     }
 
     @Test
-    public void testResetProgress()
-    {
+    public void testResetProgress() {
         TaskList taskList = TaskList.getInstance(_testFile);
         taskList.get(0).addProgress(120);
         taskList.resetProgress("On Goal");
@@ -191,8 +176,12 @@ public class TaskListTest
 }
 
 /*
- * Functions to Test:
- * checkReset()??? maybe
+ * Functions to Test: TODO
+ * sortList
+ * containsTask
+ * getTotalProgressInText
+ * isSufficientProgress
+ *
  *
  * DefaultTest
  *     @Test

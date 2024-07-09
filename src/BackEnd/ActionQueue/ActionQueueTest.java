@@ -14,8 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class ActionQueueTest
 {
     @Test
-    public void testConstructor()
-    {
+    public void testConstructor() {
         ActionQueue queue = ActionQueue.getInstance();
         assertTrue(queue.hasNoPriorActions());
         assertTrue(queue.hasNoUndoneActions());
@@ -23,22 +22,20 @@ public class ActionQueueTest
     }
 
     @Test
-    public void testAddAction()
-    {
+    public void testAddNewAction() {
         ActionQueue queue = ActionQueue.getInstance();
         Action action = new Action(Task.getInstance(), 15);
-        queue.addAction(action);
+        queue.addNewAction(action);
         assertFalse(queue.hasNoPriorActions());
         assertTrue(queue.hasNoUndoneActions());
         queue.reset();
     }
 
     @Test
-    public void testUndoLastAction()
-    {
+    public void testUndoLastAction() {
         ActionQueue queue = ActionQueue.getInstance();
         Action action = new Action(Task.getInstance(), 15);
-        queue.addAction(action);
+        queue.addNewAction(action);
         Action action2 = queue.undoLastAction();
         assertEquals(action, action2);
         assertTrue(queue.hasNoPriorActions());
@@ -47,11 +44,10 @@ public class ActionQueueTest
     }
 
     @Test
-    public void testRedoLastAction()
-    {
+    public void testRedoLastAction() {
         ActionQueue queue = ActionQueue.getInstance();
         Action action = new Action(Task.getInstance(), 15);
-        queue.addAction(action);
+        queue.addNewAction(action);
         Action action2 = queue.undoLastAction();
         queue.redoLastAction();
         assertFalse(queue.hasNoPriorActions());
@@ -59,5 +55,10 @@ public class ActionQueueTest
         Action action3 = queue.undoLastAction();
         assertEquals(action2, action3);
         queue.reset();
+    }
+
+    @Test
+    public void testFilterActions() {
+        // TODO
     }
 }

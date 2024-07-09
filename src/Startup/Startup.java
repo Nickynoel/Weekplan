@@ -2,23 +2,19 @@ package Startup;
 
 import BackEnd.Settings.Settings;
 import BackEnd.TaskList.TaskList;
-import FrontEnd.Weekplan.Weekplan;
+import FrontEnd.Weekplan.WeekPlan;
 
 public class Startup
 {
-    private static TaskList _listOfTasks;
-    private static Settings _listOfSettings;
-    
-    public static void main(String[] args)
-    {
-        _listOfTasks = TaskList.getInstance();
-        _listOfSettings = Settings.getInstance(Settings.DEFAULTSETTINGSFILE);
+    public static void main(String[] args) {
+        TaskList listOfTasks = TaskList.getInstance();
+        Settings listOfSettings = Settings.getInstance(Settings.DEFAULTSETTINGSFILE);
 
-        if(_listOfSettings.isMonday() && _listOfTasks.isSufficientProgress())
-        {
-            _listOfTasks.resetProgress(_listOfSettings.getResetProgram());
+        if (listOfSettings.isMonday() && listOfTasks.isSufficientProgress()) {
+            listOfTasks.resetProgress(listOfSettings.getResetProgram());
         }
-        Weekplan.getInstance();
+
+        WeekPlan.getInstance();
     }
 }
 

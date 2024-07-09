@@ -11,17 +11,15 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TaskTest
 {
     @Test
-    public void testDefaultConstructor()
-    {
+    public void testDefaultConstructor() {
         Task task = Task.getInstance();
-        assertEquals(task.getTitle(),Task.DEFAULTNAME);
+        assertEquals(task.getTitle(), Task.DEFAULTNAME);
         assertEquals(task.getProgress(), 0);
         assertEquals(task.getTargetTime(), 60);
-
     }
 
     @Test
-    public void testValueConstructor(){
+    public void testValueConstructor() {
         Task task = Task.getInstance("Hello", 42, 69);
         assertEquals(task.getTitle(), "Hello");
         assertEquals(task.getProgress(), 42);
@@ -29,7 +27,7 @@ public class TaskTest
     }
 
     @Test
-    public void testInputConstructor(){
+    public void testInputConstructor() {
         Task task = Task.getInstance("Hello,42,69");
         assertEquals(task.getTitle(), "Hello");
         assertEquals(task.getProgress(), 42);
@@ -37,40 +35,40 @@ public class TaskTest
     }
 
     @Test
-    public void testGetTitle(){
+    public void testGetTitle() {
         Task task = Task.getInstance("Hello", 42, 69);
         assertEquals(task.getTitle(), "Hello");
     }
 
     @Test
-    public void testSetTitle(){
+    public void testSetTitle() {
         Task task = Task.getInstance("Hello", 42, 69);
         task.setTitle("Doom");
         assertEquals(task.getTitle(), "Doom");
     }
 
     @Test
-    public void testGetProgress(){
+    public void testGetProgress() {
         Task task = Task.getInstance("Hello", 42, 69);
         assertEquals(task.getProgress(), 42);
     }
 
     @Test
-    public void testSetProgress(){
+    public void testSetProgress() {
         Task task = Task.getInstance("Hello", 42, 69);
         task.setProgress(420);
         assertEquals(task.getProgress(), 420);
     }
 
     @Test
-    public void testAddProgress(){
+    public void testAddProgress() {
         Task task = Task.getInstance("Hello", 42, 69);
         task.addProgress(69);
         assertEquals(task.getProgress(), 111);
     }
 
     @Test
-    public void testGetProgressInPercent(){
+    public void testGetProgressInPercent() {
         Task task = Task.getInstance("Hello", 42, 420);
         Task task2 = Task.getInstance("Hello", 4, 4000);
         assertEquals(task.getProgressInPercent(), 10.0, 0.0005);
@@ -78,13 +76,13 @@ public class TaskTest
     }
 
     @Test
-    public void testGetTargetTime(){
+    public void testGetTargetTime() {
         Task task = Task.getInstance("Hello", 42, 420);
         assertEquals(task.getTargetTime(), 420);
     }
 
     @Test
-    public void testSetTargetTime(){
+    public void testSetTargetTime() {
         Task task = Task.getInstance("Hello", 42, 420);
         task.setTargetTime(69);
         assertEquals(task.getTargetTime(), 69);
@@ -94,9 +92,8 @@ public class TaskTest
     }
 
     @Test
-    public void testToSavableString(){
+    public void testToSavableString() {
         Task task = Task.getInstance("Hello", 42, 420);
         assertEquals(task.toSavableString(), "Hello,42,420");
     }
-
 }

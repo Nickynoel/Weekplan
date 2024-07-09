@@ -4,6 +4,7 @@ import RowFileReader.RowFileReader;
 import RowFileWriter.RowFileWriter;
 import BackEnd.TaskList.Task.*;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,100 +17,95 @@ import java.util.List;
 public class TaskList
 {
     //Globally accessible file
-    private static final File DEFAULTFILENAME = new File("Weekplan.csv");
+    private static final File DEFAULTFILENAME = new File("WeekPlan.csv");
 
     //Singleton Pattern: https://www.youtube.com/watch?v=tSZn4wkBIu8
     private static TaskList _instance;
 
-    private final File _saveFile;
-    private final List<Task> _taskList;
-
     /**
      * Special factory for test classes which has to use a separate filepath
+     *
      * @param file Test.csv
      * @return should only provide a default list
      */
-    public static TaskList getInstance(File file)
-    {
+    public static TaskList getInstance(File file) {
         return new TaskList(file);
     }
 
-    public static TaskList getInstance()
-    {
+    public static TaskList getInstance() {
         if (_instance == null)
             _instance = new TaskList(DEFAULTFILENAME);
         return _instance;
     }
 
-    private TaskList(File file)
-    {
+    private final File _saveFile;
+    private final List<Task> _taskList;
+
+    private TaskList(File file) {
         _saveFile = file;
         _taskList = new ArrayList<>();
-        loadTasksFromFile(file);
 
+        loadTasksFromFile(file);
         if (_taskList.isEmpty())
             createDefaultList();
-        else
-            sortList();
+        sortList();
     }
 
     /**
      * The actual generation of the list, by loading the data from the file
      * If the file doesn't exist, the RowFileReader will create it as an empty file
      */
-    private void loadTasksFromFile(File file)
-    {
+    private void loadTasksFromFile(File file) {
         RowFileReader reader = RowFileReader.getInstance(file);
-        List<String> savedStrings = reader.getList();
-        for (String s : savedStrings)
-        {
-            _taskList.add(Task.getInstance(s));
+        if (reader != null) {
+            List<String> savedStrings = reader.getList();
+            for (String s : savedStrings) {
+                _taskList.add(Task.getInstance(s));
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(new JFrame(), "Error when reading from save file!");
         }
     }
 
-    private void createDefaultList()
-    {
-        clearList();
+    public void sortList() {
+        _taskList.sort(new TaskComparatorByProgressInPercent());
+    }
+
+    private void createDefaultList() {
+        _taskList.clear();
         addNewDefaultTask();
         saveTasksOnFile();
     }
 
-    private void clearList()
-    {
-        _taskList.clear();
-    }
-
-    public Task addNewDefaultTask()
-    {
+    public Task addNewDefaultTask() {
         Task t = Task.getInstance();
         _taskList.add(t);
         return t;
     }
 
-    public void saveTasksOnFile()
-    {
+    public void saveTasksOnFile() {
         List<String> list = new ArrayList<>();
-        for (Task t : _taskList)
-        {
+        for (Task t : _taskList) {
             list.add(t.toSavableString());
         }
         RowFileWriter writer = RowFileWriter.getInstance(list, _saveFile);
-        writer.saveFile();
+        if (writer != null) {
+            writer.saveFile();
+        }
+        else {
+            JOptionPane.showMessageDialog(new JFrame(), "Error during save process!");
+        }
     }
 
-    public File getSaveFile()
-    {
+    // --------------------- Getters: Start ----------------------------------------
+
+    public File getSaveFile() {
         return _saveFile;
     }
 
-    public List<Task> getList()
-    {
+    public List<Task> getList() {
         return _taskList;
-    }
-
-    public void addTask(Task t)
-    {
-        _taskList.add(t);
     }
 
     /**
@@ -117,16 +113,13 @@ public class TaskList
      *
      * @return list with all task-titles
      */
-    public List<String> getListOfTaskTitles()
-    {
+    public List<String> getListOfTaskTitles() {
         List<String> titleList = new ArrayList<>();
         _taskList.forEach(x -> titleList.add(x.getTitle()));
         return titleList;
     }
 
-
-    public int getSize()
-    {
+    public int getSize() {
         return _taskList.size();
     }
 
@@ -136,8 +129,7 @@ public class TaskList
      * @param task: the checked task
      * @return the task's position
      */
-    public int indexOf(Task task)
-    {
+    public int indexOf(Task task) {
         return _taskList.indexOf(task);
     }
 
@@ -148,12 +140,9 @@ public class TaskList
      * @param taskTitle: the title of the task
      * @return the task's position
      */
-    public int indexOf(String taskTitle)
-    {
-        for (int i = 0; i < _taskList.size(); i++)
-        {
-            if (getTitle(i).equals(taskTitle))
-            {
+    public int indexOf(String taskTitle) {
+        for (int i = 0; i < _taskList.size(); i++) {
+            if (getTitle(i).equals(taskTitle)) {
                 return i;
             }
         }
@@ -166,10 +155,8 @@ public class TaskList
      * @param i: index of the task
      * @return title of the i-th task
      */
-    private String getTitle(int i)
-    {
-        if (_taskList.get(i) != null)
-        {
+    private String getTitle(int i) {
+        if (_taskList.get(i) != null) {
             return _taskList.get(i).getTitle();
         }
         return "ERROR!";
@@ -181,23 +168,12 @@ public class TaskList
      * @param i: position in the list
      * @return the task in the position i
      */
-    public Task get(int i)
-    {
+    public Task get(int i) {
         return _taskList.get(i);
     }
 
-    /**
-     * Removes the tasks in the positions, given by an array, of the _taskList
-     *
-     * @param array: indices of tasks in the list to be removed
-     */
-    public void removeTasks(int[] array)
-    {
-        //going the list backwards and deleting them from the _taskList to ensure indices
-        for (int i = array.length - 1; i >= 0; i--)
-        {
-            _taskList.remove(array[i]);
-        }
+    public boolean containsTask(Task task) {
+        return _taskList.contains(task);
     }
 
     /**
@@ -205,11 +181,9 @@ public class TaskList
      *
      * @return sum of target times
      */
-    public int getTotalTargetTime()
-    {
+    public int getTotalTargetTime() {
         int sum = 0;
-        for (Task t : _taskList)
-        {
+        for (Task t : _taskList) {
             sum += t.getTargetTime();
         }
         return sum;
@@ -220,11 +194,9 @@ public class TaskList
      *
      * @return sum of progresses times
      */
-    public int getTotalProgressTime()
-    {
+    public int getTotalProgressTime() {
         int sum = 0;
-        for (Task t : _taskList)
-        {
+        for (Task t : _taskList) {
             sum += t.getProgress();
         }
         return sum;
@@ -236,30 +208,33 @@ public class TaskList
      *
      * @return total percent progress
      */
-    public int getTotalProgressInPercent()
-    {
+    public int getTotalProgressInPercent() {
         double sum = _taskList.stream().map(Task::getProgressInPercent)
                 .reduce(0.0, (subtotal, element) -> subtotal + Math.min(element, 100));
         return (int) (sum / _taskList.size());
     }
 
     /**
-     * Changes the total amount of target time to a certain value and adjusts
-     * the times of the individual tasks
+     * Creates a string that reflects the progress in form "xx,x of xx,x hours"
      *
-     * @param time: total time intended for the week
+     * @return String that reflects the full progress for the TotalLabel of the UI
      */
-    public void setTotalTargetTime(int time)
-    {
-        int totalTime = 0;
-        for (Task t : _taskList)
-        {
-            totalTime += t.getTargetTime();
+    public String getTotalProgressInText() {
+        String sign = "";
+        int progressHours = getTotalProgressTime() / 60;
+        int progressMinutes = (getTotalProgressTime() / 6) % 10;
+
+        //If the progress is negative, create an extra sign to display properly
+        if (progressHours < 0 || progressMinutes < 0) {
+            progressMinutes = Math.abs(progressMinutes);
+            progressHours = Math.abs(progressHours);
+            sign = "-";
         }
-        for (Task t : _taskList)
-        {
-            t.setTargetTime((t.getTargetTime() * time) / totalTime);
-        }
+
+        int goalHours = getTotalTargetTime() / 60;
+        int goalMinutes = (getTotalTargetTime() / 6) % 10;
+
+        return progressMinutes == 0 ? (sign + progressHours + " of " + goalHours + "," + goalMinutes + " hours") : (sign + progressHours + "," + progressMinutes + " of " + goalHours + "," + goalMinutes + " hours");
     }
 
     /**
@@ -269,20 +244,53 @@ public class TaskList
      *
      * @return bool
      */
-    public boolean isSufficientProgress()
-    {
+    public boolean isSufficientProgress() {
         return getTotalProgressTime() * 2 > getTotalTargetTime();
     }
+
+    // ----------- Getters: End ------------ Setters: Start -------------------------------
+
+    public void addTask(Task t) {
+        _taskList.add(t);
+    }
+
+    /**
+     * Removes the tasks in the positions, given by an array, of the _taskList
+     *
+     * @param array: indices of tasks in the list to be removed
+     */
+    public void removeTasks(int[] array) {
+        //going the list backwards and deleting them from the _taskList to ensure indices
+        for (int i = array.length - 1; i >= 0; i--) {
+            _taskList.remove(array[i]);
+        }
+    }
+
+    /**
+     * Changes the total amount of target time to a certain value and adjusts
+     * the times of the individual tasks
+     *
+     * @param time: total time intended for the week
+     */
+    public void setTotalTargetTime(int time) {
+        int totalTime = 0;
+        for (Task t : _taskList) {
+            totalTime += t.getTargetTime();
+        }
+        for (Task t : _taskList) {
+            t.setTargetTime((t.getTargetTime() * time) / totalTime);
+        }
+    }
+
+    // --------- Setters: End ------------- ResetProgram Implementations: Start --------------
 
     /**
      * Navigates based on the given resetProgram how the taskList is supposed to be reset
      *
      * @param resetProgram: parameter to choose the way of resetting
      */
-    public void resetProgress(String resetProgram)
-    {
-        switch (resetProgram)
-        {
+    public void resetProgress(String resetProgram) {
+        switch (resetProgram) {
             case "Total":
                 fullProgressReset();
                 saveTasksOnFile();
@@ -297,10 +305,8 @@ public class TaskList
     /**
      * Resets the progress of the tasks
      */
-    private void fullProgressReset()
-    {
-        for (Task t : _taskList)
-        {
+    private void fullProgressReset() {
+        for (Task t : _taskList) {
             t.setProgress(0);
         }
     }
@@ -309,43 +315,10 @@ public class TaskList
      * Standard weekly reset, subtracting the weekly goal and
      * halves the backlog or prior work
      */
-    private void adjustedProgressReset()
-    {
-        for (Task t : _taskList)
-        {
+    private void adjustedProgressReset() {
+        for (Task t : _taskList) {
             t.setProgress(t.getProgress() - t.getTargetTime());
             t.setProgress(t.getProgress() / 2);
         }
-    }
-
-    /**
-     * Creates a string that reflects the progress in form "xx,x of xx,x hours"
-     *
-     * @return String that reflects the full progress for the TotalLabel of the UI
-     */
-    public String getTotalProgressInText()
-    {
-        String sign = "";
-        int progressHours = getTotalProgressTime() / 60;
-        int progressMinutes = (getTotalProgressTime() / 6) % 10;
-
-        //If the progress is negative, create an extra sign to display properly
-        if (progressHours < 0 || progressMinutes < 0)
-        {
-            progressMinutes = Math.abs(progressMinutes);
-            progressHours = Math.abs(progressHours);
-            sign = "-";
-        }
-
-        int goalHours = getTotalTargetTime() / 60;
-        int goalMinutes = (getTotalTargetTime() / 6) % 10;
-
-        return progressMinutes == 0 ? (sign + progressHours + " of " + goalHours + "," + goalMinutes + " hours") : (sign + progressHours + "," + progressMinutes + " of " + goalHours + "," + goalMinutes + " hours");
-    }
-
-
-    public void sortList()
-    {
-        _taskList.sort(new TaskComparatorByProgressInPercent());
     }
 }

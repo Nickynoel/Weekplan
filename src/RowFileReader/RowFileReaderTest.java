@@ -21,18 +21,15 @@ public class RowFileReaderTest
     String _line2 = "asf";
 
     @Test
-    public void testConstructor()
-    {
+    public void testConstructor() {
         //write test file
-        try (FileWriter wr = new FileWriter(_testFile, StandardCharsets.UTF_8))
-        {
+        try (FileWriter wr = new FileWriter(_testFile, StandardCharsets.UTF_8)) {
             wr.write(_line1 + "\n"); //Write tested String into file
             wr.write(_line2 + "\n");
         }
-        catch (IOException e)
-        {
-            JOptionPane.showMessageDialog
-                    (new JFrame(), "Unexpected error while reading from the file!");
+        catch (IOException e) {
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "Unexpected error while reading from the file!");
         }
 
         //actual test class reading the test file

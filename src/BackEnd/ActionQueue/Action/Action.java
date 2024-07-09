@@ -11,29 +11,24 @@ public class Action
     private final Task _task;
     private final int _progress;
 
-    public Action(Task task, int progress)
-    {
+    public Action(Task task, int progress) {
         _task = task;
         _progress = progress;
     }
 
-    public Task getTask()
-    {
+    public Task getTask() {
         return _task;
     }
 
-    public int getProgress()
-    {
+    public int getProgress() {
         return _progress;
     }
 
-    public void undoProgress()
-    {
+    public void undoProgress() {
         _task.addProgress(_progress * -1);
     }
 
-    public void redoProgress()
-    {
+    public void redoProgress() {
         _task.addProgress(_progress);
     }
 }

@@ -14,28 +14,25 @@ import javax.swing.*;
 /**
  * Functional class of the main UI
  */
-public class Weekplan
+public class WeekPlan
 {
-    private TaskList _listOfTasks;
-    private ActionQueue _actionQueue;
-    private WeekplanUI _ui;
+    private final TaskList _listOfTasks;
+    private final ActionQueue _actionQueue;
+    private final WeekPlanUI _ui;
 
-    public static Weekplan getInstance()
-    {
-        Weekplan plan = new Weekplan();
-        plan.addListeners();
+    public static WeekPlan getInstance() {
+        WeekPlan plan = new WeekPlan();
+        plan.addUIListeners();
         return plan;
     }
 
-    private Weekplan()
-    {
+    private WeekPlan() {
         _listOfTasks = TaskList.getInstance();
         _actionQueue = ActionQueue.getInstance();
-        _ui = new WeekplanUI(_listOfTasks);
+        _ui = new WeekPlanUI(_listOfTasks);
     }
 
-    private void addListeners()
-    {
+    private void addUIListeners() {
         _ui.getCreateItem().addActionListener(event -> createTask());
         _ui.getDeleteItem().addActionListener(event -> openDeleteArea());
         _ui.getOptionsItem().addActionListener(event -> openOptionsArea());
@@ -44,27 +41,27 @@ public class Weekplan
         _ui.getUndoItem().addActionListener(event -> undoLastAction());
         _ui.getRedoItem().addActionListener(event -> redoLastAction());
 
-        for (JButton taskTitle : _ui.getTitleButtonList())
+        for (JButton taskTitle : _ui.getTitleButtonList()) {
             taskTitle.addActionListener(event -> openTaskEditArea(taskTitle));
+        }
 
-        for (JButton addButton : _ui.getAddButtonlist())
+        for (JButton addButton : _ui.getAddButtonlist()) {
             addButton.addActionListener(event -> openAddProgressArea(addButton));
+        }
 
         _ui.getCloseButton().addActionListener(event -> closeTracker());
     }
 
-//---------------------------- Listeners: Start -----------------------------------
+    //---------------------------- Listeners: Start -----------------------------------
 
-    private void createTask()
-    {
+    private void createTask() {
         Task task = _listOfTasks.addNewDefaultTask();
         _listOfTasks.saveTasksOnFile();
         refreshUI();
         _ui.openTaskMenu(task);
     }
 
-    public void openDeleteArea()
-    {
+    public void openDeleteArea() {
         final DeleteArea area = new DeleteArea(_ui.getMainframe());
         area.addPropertyChangeListener(evt -> {
             _actionQueue.filterActions();
@@ -80,8 +77,7 @@ public class Weekplan
     /**
      * OptionButton.actionListener: Closes window and opens FrontEnd.OptionArea
      */
-    private void openOptionsArea()
-    {
+    private void openOptionsArea() {
         final OptionArea area = new OptionArea(_ui.getMainframe());
         area.addPropertyChangeListener(evt -> refreshUI());
         area.showUI();
@@ -90,16 +86,14 @@ public class Weekplan
     /**
      * CloseButton.actionListener: Saves the Tracker and closes it
      */
-    private void closeTracker()
-    {
+    private void closeTracker() {
         _ui.close();
     }
 
     /**
      * Undo the last commited progress
      */
-    public void undoLastAction()
-    {
+    public void undoLastAction() {
         Action lastAction = _actionQueue.undoLastAction();
         _ui.updateProgress(lastAction.getTask());
         if (_actionQueue.hasNoPriorActions())
@@ -110,8 +104,7 @@ public class Weekplan
     /**
      * Redo the last commited progress
      */
-    public void redoLastAction()
-    {
+    public void redoLastAction() {
         Action lastAction = _actionQueue.redoLastAction();
         _ui.updateProgress(lastAction.getTask());
         _ui.enableUndoButton();
@@ -122,8 +115,7 @@ public class Weekplan
     /**
      * TitleButton.actionListener: Opens FrontEnd.TaskEditArea and gives it an observer
      */
-    private void openTaskEditArea(JButton button)
-    {
+    private void openTaskEditArea(JButton button) {
         int taskNumber = _ui.getTitleButtonList().indexOf(button);
         Task task = _listOfTasks.get(taskNumber);
         final TaskEditArea area = new TaskEditArea(task, _ui.getMainframe());
@@ -138,14 +130,13 @@ public class Weekplan
     /**
      * AddButton.actionListener: Opens FrontEnd.AddProgressArea and gives it an observer
      */
-    private void openAddProgressArea(JButton button)
-    {
+    private void openAddProgressArea(JButton button) {
         int taskNumber = _ui.getAddButtonlist().indexOf(button);
         Task task = _listOfTasks.get(taskNumber);
         final AddProgressArea area = new AddProgressArea(task, _ui.getMainframe());
 
         area.addPropertyChangeListener(evt -> {
-            _actionQueue.addAction(new Action(task, (int) evt.getNewValue()));
+            _actionQueue.addNewAction(new Action(task, (int) evt.getNewValue()));
             _listOfTasks.saveTasksOnFile();
             _ui.updateProgress(task);
             _ui.enableUndoButton();
@@ -153,19 +144,22 @@ public class Weekplan
         area.showUI();
     }
 
-//---------------------------- Listeners: End -----------------------------------
+    //---------------------------- Listeners: End -----------------------------------
+
     /**
      * Refreshes the UI to accurately show new information
      * Current behaviour: Close UI and redo it
      */
-    private void refreshUI()
-    {
+    private void refreshUI() {
         _listOfTasks.sortList();
         _ui.refreshTaskDisplay();
-        for (JButton taskTitle : _ui.getTitleButtonList())
-            taskTitle.addActionListener(event -> openTaskEditArea(taskTitle));
 
-        for (JButton addButton : _ui.getAddButtonlist())
+        for (JButton taskTitle : _ui.getTitleButtonList()) {
+            taskTitle.addActionListener(event -> openTaskEditArea(taskTitle));
+        }
+
+        for (JButton addButton : _ui.getAddButtonlist()) {
             addButton.addActionListener(event -> openAddProgressArea(addButton));
+        }
     }
 }

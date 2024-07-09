@@ -50,6 +50,8 @@ public class TaskEditAreaUI
         _dialog = new JDialog();
     }
 
+    // ----------------------- Creation of UI -----------------------------------
+
     /**
      * Builds the JDialog
      */
@@ -122,6 +124,8 @@ public class TaskEditAreaUI
         return panel;
     }
 
+    // ----- Internal Creation of UI: End ----------- External Creation of UI: Start --------------
+
     public void loadTaskData(Task task)
     {
         setTitle(task.getTitle() + ": " + task.getProgress() + " Min.");
@@ -129,12 +133,6 @@ public class TaskEditAreaUI
         setTargetTimeLabel(task.getTargetTime());
     }
 
-    public void setPositionRelativeToMainFrame(JFrame frame)
-    {
-        _dialog.setLocation(new Point
-                (frame.getLocation().x + 50, frame.getLocation().y + 100));
-    }
-    
     /**
      * Sets the title of the window according to the task at hand
      *
@@ -156,6 +154,14 @@ public class TaskEditAreaUI
             _taskLabel.setText("Name: " + newName);
     }
 
+    public void setPositionRelativeToMainFrame(JFrame frame)
+    {
+        _dialog.setLocation(new Point
+                (frame.getLocation().x + 50, frame.getLocation().y + 100));
+    }
+
+    // ----------- External Creation of UI: End -------------- Getters: Start -------------------
+
     /**
      * GetA for _taskField
      * @return _taskField
@@ -164,6 +170,37 @@ public class TaskEditAreaUI
     {
         return _taskField;
     }
+
+    /**
+     * GetA for _lengthField
+     * @return _lengthField
+     */
+    public JTextField getTargetTimeField()
+    {
+        return _targetTimeField;
+    }
+
+    /**
+     * Returns the confirmation button
+     *
+     * @return _confirmButton
+     */
+    public JButton getConfirmButton()
+    {
+        return _confirmButton;
+    }
+
+    /**
+     * Returns the declining _backButton
+     *
+     * @return _backButton
+     */
+    public JButton getBackButton()
+    {
+        return _backButton;
+    }
+
+    // ---------------- Getters: End ------------- Setters/Updaters: Start --------------------
 
     public void clearTaskField()
     {
@@ -178,40 +215,11 @@ public class TaskEditAreaUI
         _targetTimeLabel.setText("Goal: " + newTargetTime + " Minutes");
     }
 
-    /**
-     * GetA for _lengthField
-     * @return _lengthField
-     */
-    public JTextField getTargetTimeField()
-    {
-        return _targetTimeField;
-    }
-
     public void clearTargetTimeField()
     {
         _targetTimeField.setText("");
     }
-    
-    /**
-     * Returns the confirmation button
-     *
-     * @return _confirmButton
-     */
-    public JButton getConfirmButton()
-    {
-        return _confirmButton;
-    }
-    
-    /**
-     * Returns the declining _backButton
-     *
-     * @return _backButton
-     */
-    public JButton getBackButton()
-    {
-        return _backButton;
-    }
-    
+
     /**
      * Shows the UI
      */
@@ -227,5 +235,4 @@ public class TaskEditAreaUI
     {
         _dialog.dispose();
     }
-
 }

@@ -6,14 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * UI of FrontEnd.AddProgressArea
+ * UI of AddProgressArea
  */
 
 public class AddProgressAreaUI
 {
     private final int WINDOWWIDTH = 200;
     private final int WINDOWHEIGHT = 140;
-    private final String WINDOWTITLE = "Add";
+    private final String WINDOWTITLE = "Add Progress";
 
     private JLabel _descriptionLabel;
     private JTextField _inputField;
@@ -42,6 +42,8 @@ public class AddProgressAreaUI
         _backButton = new JButton("back");
         _dialogWindow = new JDialog();
     }
+
+    // ----------------------- Creation of UI -----------------------------------
 
     private void createWindow()
     {
@@ -92,10 +94,19 @@ public class AddProgressAreaUI
         return mainPanel;
     }
 
+    // ----- Internal Creation of UI: End ----------- External Creation of UI: Start --------------
 
     public void loadTaskData(Task task)
     {
         setTitle(task.getTitle());
+    }
+
+    /**
+     * Sets the title of the UI
+     */
+    private void setTitle(String s)
+    {
+        _dialogWindow.setTitle(s);
     }
 
     /**
@@ -108,13 +119,7 @@ public class AddProgressAreaUI
                 (frame.getLocation().x + 100, frame.getLocation().y + 100));
     }
 
-    /**
-     * Sets the title of the UI
-     */
-    private void setTitle(String s)
-    {
-        _dialogWindow.setTitle(s);
-    }
+    // ----------- External Creation of UI: End -------------- Getters: Start -------------------
 
     /**
      * Returns the textField of the UI
@@ -139,23 +144,7 @@ public class AddProgressAreaUI
     {
         return _confirmButton;
     }
-    
-    /**
-     * Enables the _confirmButton
-     */
-    public void enableConfirmButton()
-    {
-        _confirmButton.setEnabled(true);
-    }
-    
-    /**
-     * Disables the _confirmButton
-     */
-    public void disableConfirmButton()
-    {
-        _confirmButton.setEnabled(false);
-    }
-    
+
     /**
      * Returns the _backButton
      */
@@ -163,7 +152,25 @@ public class AddProgressAreaUI
     {
         return _backButton;
     }
-    
+
+    // ---------------- Getters: End ------------- Setters/Updaters: Start --------------------
+
+    /**
+     * Enables the _confirmButton
+     */
+    public void enableConfirmButton()
+    {
+        _confirmButton.setEnabled(true);
+    }
+
+    /**
+     * Disables the _confirmButton
+     */
+    public void disableConfirmButton()
+    {
+        _confirmButton.setEnabled(false);
+    }
+
     /**
      * Sets the visibility of the UI to true
      */
